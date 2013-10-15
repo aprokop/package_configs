@@ -1,0 +1,107 @@
+#!/bin/sh
+EXTRA_ARGS=$@
+
+rm -f  CMakeCache.txt
+rm -rf CMakeFiles/
+
+CC=gcc
+CXX=g++
+OMPI_MPICC=gcc
+OMPI_MPICXX=g++
+
+ARGS=(
+    -D BUILD_SHARED_LIBS=ON
+
+    -D Trilinos_ENABLE_INSTALL_CMAKE_CONFIG_FILES=OFF
+    -D Trilinos_DEPS_XML_OUTPUT_FILE=""
+    -D Trilinos_ENABLE_SHADOW_WARNINGS=OFF
+
+    -D CMAKE_INSTALL_PREFIX:PATH=$HOME/local/opt/trilinos-drekar
+    -D CMAKE_BUILD_TYPE:STRING=RELEASE
+
+    -D Trilinos_ENABLE_EXPLICIT_INSTANTIATION=ON
+
+    -D TPL_ENABLE_MPI=ON
+    -D MPI_BASE_DIR=/home/aprokop/local/opt/openmpi-1.6.2/
+
+    -D CMAKE_CXX_FLAGS="-g -O3"
+
+    -D Trilinos_ENABLE_Fortran=ON
+
+    -D TPL_ENABLE_Pthread=OFF
+
+    -D TPL_ENABLE_Boost=ON
+    -D Boost_INCLUDE_DIRS=/home/aprokop/local/opt/boost-1.53.0/include
+    -D TPL_ENABLE_BoostLib=ON
+    -D BoostLib_INCLUDE_DIRS=/home/aprokop/local/opt/boost-1.53.0/include
+    -D BoostLib_LIBRARY_DIRS=/home/aprokop/local/opt/boost-1.53.0/lib
+
+    -D TPL_ENABLE_SuperLU=ON
+    -D TPL_SuperLU_INCLUDE_DIRS=/home/aprokop/local/opt/superlu-4.3/include/
+    -D TPL_SuperLU_LIBRARIES=/home/aprokop/local/opt/superlu-4.3/lib/libsuperlu_4.3.so
+
+    -D TPL_ENABLE_HDF5=ON
+    -D TPL_HDF5_INCLUDE_DIRS=/home/aprokop/local/opt/hdf5-1.8.11/include
+    -D TPL_HDF5_LIBRARIES=/home/aprokop/local/opt/hdf5-1.8.11/lib/libhdf5.so
+
+    -D TPL_ENABLE_Netcdf=ON
+    -D TPL_Netcdf_INCLUDE_DIRS=/home/aprokop/local/opt/netcdf-wo4-4.3.0/include
+    -D TPL_Netcdf_LIBRARIES=/home/aprokop/local/opt/netcdf-wo4-4.3.0/lib/libnetcdf.so
+
+    -D Trilinos_ENABLE_TESTS=OFF
+    -D Trilinos_ENABLE_OpenMP=OFF
+
+    -D Trilinos_ENABLE_ALL_PACKAGES=OFF
+    -D Trilinos_ENABLE_ALL_OPTIONAL_PACKAGES=OFF
+    -D Trilinos_ASSERT_MISSING_PACKAGES=OFF
+
+    -D Trilinos_EXTRA_REPOSITORIES="Drekar,DrekarResearch"
+
+    -D Trilinos_ENABLE_Amesos=ON
+    -D Trilinos_ENABLE_Amesos2=ON
+        -D Amesos2_ENABLE_EXPLICIT_INSTANTIATION=OFF
+    -D Trilinos_ENABLE_Aztec=ON
+    -D Trilinos_ENABLE_Belos=ON
+    -D Trilinos_ENABLE_Drekar=ON
+        -D Drekar_ENABLE_TESTS=ON
+        -D Drekar_ENABLE_EXAMPLES=ON
+        -D Drekar_ENABLE_EXPLICIT_INSTANTIATION=ON
+    -D Trilinos_ENABLE_DrekarMHD=ON
+        -D DrekarMHD_ENABLE_TESTS=ON
+        -D DrekarMHD_ENABLE_EXAMPLES=ON
+        -D DrekarMHD_ENABLE_EXPLICIT_INSTANTIATION=ON
+    -D Trilinos_ENABLE_Drekar_Exp=OFF
+        -D Drekar_Exp_ENABLE_TESTS=ON
+        -D Drekar_Exp_ENABLE_EXAMPLES=ON
+        -D Drekar_Exp_ENABLE_EXPLICIT_INSTANTIATION=ON
+    -D Trilinos_ENABLE_EpetraExt=ON
+        -D EpetraExt_ENABLE_HDF5=OFF
+    -D Trilinos_ENABLE_FEI=ON
+    -D Trilinos_ENABLE_Intrepid=ON
+        -D Intrepid_ENABLE_DEBUG_INF_CHECK=OFF
+    -D Trilinos_ENABLE_Ifpack2=ON
+        -D Ifpack2_ENABLE_EXPLICIT_INSTANTIATION=OFF
+    -D Trilinos_ENABLE_ML=ON
+    -D Trilinos_ENABLE_MueLu=ON
+        -D MueLu_INST_DOUBLE_INT_LONGLONGINT=ON
+    -D Trilinos_ENABLE_Panzer=ON
+        -D Panzer_ENABLE_EXPLICIT_INSTANTIATION=ON
+        -D Panzer_ENABLE_TESTS=ON
+    -D Trilinos_ENABLE_Shards=ON
+    -D Trilinos_ENABLE_Teuchos=ON
+        -D Teuchos_ENABLE_LONG_LONG_INT=ON
+    -D Trilinos_ENABLE_SEACAS=ON
+        -D SEACAS_ENABLE_APREPRO=OFF
+        # -D SEACAS_ENABLE_NETCDF4_SUPPORT=ON
+        -D SEACAS_ENABLE_EXODUS=ON
+        -D SEACASExodus_ENABLE_MPI=OFF
+    -D Trilinos_ENABLE_SEACASIoss=ON
+    -D Trilinos_ENABLE_STK=ON
+    -D Trilinos_ENABLE_Stokhos=OFF
+    -D Trilinos_ENABLE_Stratimikos=ON
+    -D Trilinos_ENABLE_Teko=ON
+    -D Trilinos_ENABLE_Zoltan=ON
+    -D Trilinos_ENABLE_Zoltan2=ON
+        -D Zoltan2_ENABLE_Experimental=ON
+    )
+cmake ${ARGS[@]} $EXTRA_ARGS ../../

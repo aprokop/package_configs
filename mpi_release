@@ -76,4 +76,5 @@ ARGS=(
         -D Zoltan2_ENABLE_TESTS=ON
         -D Zoltan2_ENABLE_Experimental=ON
     )
-cmake ${ARGS[@]} $EXTRA_ARGS ../../
+cmake "${ARGS[@]}" $EXTRA_ARGS ../../
+# cmake -GNinja "${ARGS[@]}" $EXTRA_ARGS ../../

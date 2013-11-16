@@ -4,6 +4,11 @@ EXTRA_ARGS=$@
 rm -f CMakeCache.txt
 rm -f CMakeFiles/
 
+SYSTEM_HEADERS=""
+for header_dir in `env | grep CPATH | split_path | sed 's/CPATH=//'`;
+  do SYSTEM_HEADERS="$SYSTEM_HEADERS -isystem $header_dir"
+done
+
 # An example
 ARGS=(
     -D BUILD_SHARED_LIBS=ON
@@ -23,7 +28,7 @@ ARGS=(
     -D TPL_ENABLE_MPI=ON
     -D MPI_BASE_DIR=/home/aprokop/local/opt/openmpi-1.6.2/
 
-    -D CMAKE_CXX_FLAGS:STRING="-g -O2 -fno-var-tracking"
+    -D CMAKE_CXX_FLAGS:STRING="-g -O2 -fno-var-tracking $SYSTEM_HEADERS"
 
     -D TPL_ENABLE_Boost=ON
     -D TPL_Boost_INCLUDE_DIRS=/home/aprokop/local/opt/boost-1.52.0/include

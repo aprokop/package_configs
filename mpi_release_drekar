@@ -9,6 +9,11 @@ CXX=g++
 OMPI_MPICC=gcc
 OMPI_MPICXX=g++
 
+SYSTEM_HEADERS=""
+for header_dir in `env | grep CPATH | split_path | sed 's/CPATH=//'`;
+  do SYSTEM_HEADERS="$SYSTEM_HEADERS -isystem $header_dir"
+done
+
 ARGS=(
     -D BUILD_SHARED_LIBS=ON
 
@@ -24,7 +29,7 @@ ARGS=(
     -D TPL_ENABLE_MPI=ON
     -D MPI_BASE_DIR=/home/aprokop/local/opt/openmpi-1.6.2/
 
-    -D CMAKE_CXX_FLAGS="-g -O3"
+    -D CMAKE_CXX_FLAGS="-g -O3 $SYSTEM_HEADERS"
 
     -D Trilinos_ENABLE_Fortran=ON
 

@@ -8,7 +8,13 @@ SYSTEM_HEADERS=""
 for header_dir in `env | grep CPATH | split_path | sed 's/CPATH=//'`;
   do SYSTEM_HEADERS="$SYSTEM_HEADERS -isystem $header_dir"
 done
-echo $SYSTEM_HEADERS
+
+CXX_COMPILER_SPECIFIC=""
+if [ "$OMPI_MPICXX" == "g++" ]; then
+    CXX_FLAGS_COMPILER_SPECIFIC="-Wno-unused-local-typedefs"
+elif [ "$OMPI_MPICXX" == "clang++" ]; then
+    CXX_FLAGS_COMPILER_SPECIFIC=""
+fi
 
 ARGS=(
     -D BUILD_SHARED_LIBS=ON
@@ -25,7 +31,7 @@ ARGS=(
     -D TPL_ENABLE_MPI=ON
     -D MPI_BASE_DIR=/home/aprokop/local/opt/openmpi-1.6.2/
 
-    -D CMAKE_CXX_FLAGS_RELEASE="-g -Wno-unused-local-typedefs $SYSTEM_HEADERS"
+    -D CMAKE_CXX_FLAGS_RELEASE="-g $CXX_FLAGS_COMPILER_SPECIFIC $SYSTEM_HEADERS"
 
     -D TPL_ENABLE_SuperLU=ON
     -D TPL_SuperLU_INCLUDE_DIRS=/home/aprokop/local/opt/superlu-4.3/include/

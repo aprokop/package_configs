@@ -23,7 +23,7 @@ ARGS=(
     -D Teuchos_ENABLE_LONG_LONG_INT=ON
 
     -D TPL_ENABLE_MPI=ON
-    -D MPI_BASE_DIR=/home/aprokop/local/opt/openmpi-1.6.2/
+    -D MPI_BASE_DIR=/home/aprokop/local/opt/openmpi-1.7.3/
 
     -D CMAKE_CXX_FLAGS:STRING="-g -O3 $SYSTEM_HEADERS" # "-Wshadow -Wunused-parameter"
 

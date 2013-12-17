@@ -31,7 +31,7 @@ ARGS=(
     -D TPL_ENABLE_MPI=ON
     -D MPI_BASE_DIR=/home/aprokop/local/opt/openmpi-1.7.3/
 
-    -D CMAKE_CXX_FLAGS_RELEASE="-g $CXX_FLAGS_COMPILER_SPECIFIC $SYSTEM_HEADERS"
+    -D CMAKE_CXX_FLAGS="-g $CXX_FLAGS_COMPILER_SPECIFIC $SYSTEM_HEADERS"
 
     -D TPL_ENABLE_SuperLU=ON
     -D TPL_SuperLU_INCLUDE_DIRS=/home/aprokop/local/opt/superlu-4.3/include/
@@ -57,6 +57,7 @@ ARGS=(
     -D Trilinos_ENABLE_Isorropia=ON
     -D Trilinos_ENABLE_Kokkos=ON
     -D Trilinos_ENABLE_ML=ON
+        -D ML_ENABLE_EXAMPLES=ON
         -D ML_ENABLE_Timing=ON
         -D ML_ENABLE_TESTS=ON
     -D Trilinos_ENABLE_MueLu=ON

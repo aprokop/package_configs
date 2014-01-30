@@ -29,7 +29,7 @@ ARGS=(
     -D TPL_ENABLE_MPI=ON
     -D MPI_BASE_DIR=/home/aprokop/local/opt/openmpi-1.7.3/
 
-    -D CMAKE_CXX_FLAGS="-g -O3 $SYSTEM_HEADERS"
+    -D CMAKE_CXX_FLAGS="-g $SYSTEM_HEADERS"
 
     -D Trilinos_ENABLE_Fortran=ON
 

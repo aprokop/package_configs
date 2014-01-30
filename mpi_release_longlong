@@ -25,7 +25,7 @@ ARGS=(
     -D TPL_ENABLE_MPI=ON
     -D MPI_BASE_DIR=/home/aprokop/local/opt/openmpi-1.7.3/
 
-    -D CMAKE_CXX_FLAGS:STRING="-g -O3 $SYSTEM_HEADERS" # "-Wshadow -Wunused-parameter"
+    -D CMAKE_CXX_FLAGS="-g $SYSTEM_HEADERS"
 
     -D TPL_ENABLE_Boost=OFF
     -D TPL_Boost_INCLUDE_DIRS=/home/aprokop/local/opt/boost-1.52.0/include

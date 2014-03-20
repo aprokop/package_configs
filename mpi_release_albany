@@ -26,13 +26,13 @@ ARGS=(
     -D Trilinos_ENABLE_EXPLICIT_INSTANTIATION=ON
 
     -D TPL_ENABLE_MPI=ON
-    -D MPI_BASE_DIR=/home/aprokop/local/opt/openmpi-1.7.3/
+    -D MPI_BASE_DIR=/home/aprokop/local/opt/openmpi-1.7.4/
 
     -D CMAKE_CXX_FLAGS="-g -O2 -fno-var-tracking $SYSTEM_HEADERS"
 
     -D TPL_ENABLE_Boost=ON
-    -D TPL_Boost_INCLUDE_DIRS=/home/aprokop/local/opt/boost-1.52.0/include
-    -D TPL_Boost_LIBRARIES=/home/aprokop/local/opt/boost-1.52.0/lib/libboost_graph.so
+    -D TPL_Boost_INCLUDE_DIRS=/home/aprokop/local/opt/boost-1.53.0/include
+    -D TPL_Boost_LIBRARIES=/home/aprokop/local/opt/boost-1.53.0/lib/libboost_graph.so
 
     -D TPL_ENABLE_SuperLU=ON
     -D TPL_SuperLU_INCLUDE_DIRS=/home/aprokop/local/opt/superlu-4.3/include/

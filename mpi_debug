@@ -1,7 +1,7 @@
 #!/bin/sh
 EXTRA_ARGS=$@
 
-rm -f CMakeCache.txt
+rm -f  CMakeCache.txt
 rm -rf CMakeFiles/
 
 SYSTEM_HEADERS=""
@@ -9,22 +9,29 @@ for header_dir in `env | grep CPATH | split_path | sed 's/CPATH=//'`;
   do SYSTEM_HEADERS="$SYSTEM_HEADERS -isystem $header_dir"
 done
 
+CXX_COMPILER_SPECIFIC=""
+if [ "$OMPI_MPICXX" == "g++" ]; then
+    CXX_FLAGS_COMPILER_SPECIFIC="-Wno-unused-local-typedefs"
+elif [ "$OMPI_MPICXX" == "clang++" ]; then
+    CXX_FLAGS_COMPILER_SPECIFIC=""
+fi
+
 ARGS=(
     -D BUILD_SHARED_LIBS=ON
 
-    -D Trilinos_ENABLE_INSTALL_CMAKE_CONFIG_FILES:BOOL=OFF
-    -D Trilinos_DEPS_XML_OUTPUT_FILE:FILEPATH=""
+    -D Trilinos_ENABLE_INSTALL_CMAKE_CONFIG_FILES=OFF
+    -D Trilinos_DEPS_XML_OUTPUT_FILE=""
     -D Trilinos_ENABLE_SHADOW_WARNINGS=ON
 
-    -D CMAKE_INSTALL_PREFIX:PATH=$HOME/local/opt/trilinos/
-    -D CMAKE_BUILD_TYPE:STRING=DEBUG
+    -D CMAKE_INSTALL_PREFIX=$HOME/local/opt/trilinos/
+    -D CMAKE_BUILD_TYPE=DEBUG
 
     -D Trilinos_ENABLE_EXPLICIT_INSTANTIATION=ON
 
     -D TPL_ENABLE_MPI=ON
-    -D MPI_BASE_DIR=/home/aprokop/local/opt/openmpi-1.7.3/
+    -D MPI_BASE_DIR=/home/aprokop/local/opt/openmpi-1.7.4/
 
-    -D CMAKE_CXX_FLAGS:STRING="-O1 -g -fno-omit-frame-pointer -fno-optimize-sibling-calls $SYSTEM_HEADERS"
+    -D CMAKE_CXX_FLAGS="-g -O2 -fno-omit-frame-pointer -fno-optimize-sibling-calls $CXX_FLAGS_COMPILER_SPECIFIC $SYSTEM_HEADERS"
 
     -D TPL_ENABLE_Boost=ON
     -D TPL_Boost_INCLUDE_DIRS=/home/aprokop/local/opt/boost-1.53.0/include
@@ -45,19 +52,13 @@ ARGS=(
     -D Trilinos_ENABLE_Amesos=ON
     -D Trilinos_ENABLE_Amesos2=ON
         -D Amesos2_ENABLE_SuperLU=ON
-        -D Amesos2_ENABLE_TESTS=ON
     -D Trilinos_ENABLE_AztecOO=ON
     -D Trilinos_ENABLE_Epetra=ON
-        -D Epetra_ENABLE_TESTS=ON
-    -D Trilinos_ENABLE_Xpetra=ON
-        -D Xpetra_ENABLE_Experimental=ON
-        -D Xpetra_ENABLE_TESTS=ON
-    -D Trilinos_ENABLE_Tpetra=ON
-        -D Tpetra_ENABLE_TESTS=ON
+        -D Epetra_ENABLE_Teuchos=ON
     -D Trilinos_ENABLE_EpetraExt=ON
     -D Trilinos_ENABLE_Ifpack=ON
     -D Trilinos_ENABLE_Ifpack2=ON
-        -D Ifpack2_ENABLE_TESTS=ON
+    -D Trilinos_ENABLE_Isorropia=ON
     -D Trilinos_ENABLE_Kokkos=ON
     -D Trilinos_ENABLE_ML=ON
         -D ML_ENABLE_TESTS=ON
@@ -65,13 +66,21 @@ ARGS=(
         -D MueLu_ENABLE_Experimental=ON
         -D MueLu_ENABLE_TESTS=ON
         -D MueLu_ENABLE_EXAMPLES=ON
+        -D MueLu_ENABLE_DEBUG=ON
         -D MueLu_ENABLE_Ifpack2=ON
         -D MueLu_ENABLE_Amesos2=ON
+        -D MueLu_ENABLE_Ifpack2=ON
         -D MueLu_ENABLE_Boost_for_real=ON
     -D Trilinos_ENABLE_Stratimikos=ON
+    -D Trilinos_ENABLE_Teuchos=ON
+        -D Teuchos_ENABLE_COMPLEX=ON
+    -D Trilinos_ENABLE_Tpetra=ON
+    -D Trilinos_ENABLE_Xpetra=ON
+        -D Xpetra_ENABLE_Experimental=ON
+        -D Xpetra_ENABLE_TESTS=ON
     -D Trilinos_ENABLE_Zoltan=ON
     -D Trilinos_ENABLE_Zoltan2=ON
-        -D Zoltan2_ENABLE_TESTS=ON
         -D Zoltan2_ENABLE_Experimental=ON
+        -D Zoltan2_ENABLE_TESTS=ON
     )
-cmake "${ARGS[@]}" $EXTRA_ARGS ../..
+cmake "${ARGS[@]}" $EXTRA_ARGS ../../

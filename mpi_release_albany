@@ -26,7 +26,7 @@ ARGS=(
     -D Trilinos_ENABLE_EXPLICIT_INSTANTIATION=ON
 
     -D TPL_ENABLE_MPI=ON
-    -D MPI_BASE_DIR=/home/aprokop/local/opt/openmpi-1.7.4/
+    -D MPI_BASE_DIR=/home/aprokop/local/opt/openmpi-1.8/
 
     -D CMAKE_CXX_FLAGS="-g -O2 -fno-var-tracking $SYSTEM_HEADERS"
 

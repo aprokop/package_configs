@@ -1,47 +1,55 @@
 #!/bin/sh
 EXTRA_ARGS=$@
 
-rm -f CMakeCache.txt
-rm -f CMakeFiles/
+rm -f  CMakeCache.txt
+rm -rf CMakeFiles/
+rm -f  build.ninja
+rm -f  rules.ninja
 
-SYSTEM_HEADERS=""
-for header_dir in `env | grep CPATH | split_path | sed 's/CPATH=//'`;
-  do SYSTEM_HEADERS="$SYSTEM_HEADERS -isystem $header_dir"
-done
+BOOST_PATH="/home/aprokop/local/opt/boost-1.56.0/"
 
-# An example
 ARGS=(
-    -D BUILD_SHARED_LIBS=ON
-    -D CMAKE_VERBOSE_MAKEFILE=OFF
+    # -D BUILD_SHARED_LIBS=ON
 
-    -D Trilinos_ENABLE_INSTALL_CMAKE_CONFIG_FILES=ON
-    -D Trilinos_ENABLE_Export_Makefiles=ON
-    -D Trilinos_DEPS_XML_OUTPUT_FILE:FILEPATH=""
-    -D Trilinos_ENABLE_SHADOW_WARNINGS=OFF
+    -D CMAKE_VERBOSE_MAKEFILE=OFF
     -D Trilinos_VERBOSE_CONFIGURE=OFF
 
-    -D CMAKE_INSTALL_PREFIX:PATH=$HOME/local/opt/trilinos_albany/
-    -D CMAKE_BUILD_TYPE:STRING=RELEASE
+    -D Trilinos_ENABLE_INSTALL_CMAKE_CONFIG_FILES=ON
+    -D Trilinos_DEPS_XML_OUTPUT_FILE=""
+    -D Trilinos_ENABLE_SHADOW_WARNINGS=OFF
+
+    -D CMAKE_INSTALL_PREFIX=$HOME/local/opt/trilinos_albany/
+    -D CMAKE_BUILD_TYPE=RELEASE
 
     -D Trilinos_ENABLE_EXPLICIT_INSTANTIATION=ON
 
     -D TPL_ENABLE_MPI=ON
     -D MPI_BASE_DIR=/home/aprokop/local/opt/openmpi-1.8/
 
-    -D CMAKE_CXX_FLAGS="-g -O2 -fno-var-tracking $SYSTEM_HEADERS"
+    -D CMAKE_CXX_FLAGS="-g -Wall -Wextra -Wno-unused-parameter"
 
     -D TPL_ENABLE_Boost=ON
-    -D TPL_Boost_INCLUDE_DIRS=/home/aprokop/local/opt/boost-1.53.0/include
-    -D TPL_Boost_LIBRARIES=/home/aprokop/local/opt/boost-1.53.0/lib/libboost_graph.so
+    -D Boost_INCLUDE_DIRS="$BOOST_PATH/include"
+    -D Boost_LIBRARY_DIRS="$BOOST_PATH/lib/"
+    -D TPL_ENABLE_BoostAlbLib=ON
+    -D BoostAlbLib_INCLUDE_DIRS="$BOOST_PATH/include"
+    -D BoostAlbLib_LIBRARY_DIRS="$BOOST_PATH/lib"
 
     -D TPL_ENABLE_SuperLU=ON
     -D TPL_SuperLU_INCLUDE_DIRS=/home/aprokop/local/opt/superlu-4.3/include/
     -D TPL_SuperLU_LIBRARIES=/home/aprokop/local/opt/superlu-4.3/lib/libsuperlu_4.3.so
 
+    -D TPL_ENABLE_HDF5=ON
+    -D TPL_HDF5_INCLUDE_DIRS=/home/aprokop/local/opt/hdf5-1.8.11/include
+    -D TPL_HDF5_LIBRARY_DIRS=/home/aprokop/local/opt/hdf5-1.8.11/lib
+
+    -D TPL_ENABLE_Netcdf=ON
+    -D TPL_Netcdf_INCLUDE_DIRS=/home/aprokop/local/opt/netcdf-wo4-4.3.0/include
+    -D TPL_Netcdf_LIBRARIES=/home/aprokop/local/opt/netcdf-wo4-4.3.0/lib/libnetcdf.so
+
     -D Trilinos_ENABLE_TESTS=OFF
     -D Trilinos_ENABLE_EXAMPLES=OFF
-    -D Trilinos_ENABLE_OpenMP=OFF
-    -D Trilinos_ENABLE_Fortran=OFF
+    # -D Trilinos_ENABLE_OpenMP=OFF
 
     -D Trilinos_ENABLE_ALL_PACKAGES=OFF
     -D Trilinos_ENABLE_ALL_OPTIONAL_PACKAGES=OFF
@@ -51,43 +59,51 @@ ARGS=(
     -D Trilinos_ENABLE_Amesos2=ON
         -D Amesos2_ENABLE_SuperLU=ON
     -D Trilinos_ENABLE_AztecOO=ON
+    -D Trilinos_ENABLE_Didasko=ON
     -D Trilinos_ENABLE_Epetra=ON
-    -D Trilinos_ENABLE_Xpetra=ON
-        -D Xpetra_ENABLE_Experimental=ON
-    -D Trilinos_ENABLE_Tpetra=ON
     -D Trilinos_ENABLE_EpetraExt=ON
+        -D EpetraExt_ENABLE_HDF5=OFF
+    -D Trilinos_ENABLE_FEI=ON
+    -D Trilinos_ENABLE_GlobiPack=ON
     -D Trilinos_ENABLE_Ifpack=ON
     -D Trilinos_ENABLE_Ifpack2=ON
+    -D Trilinos_ENABLE_Intrepid=ON
+    -D Trilinos_ENABLE_Isorropia=ON
     -D Trilinos_ENABLE_Kokkos=ON
+    -D Trilinos_ENABLE_Mesquite=ON
     -D Trilinos_ENABLE_ML=ON
+    -D Trilinos_ENABLE_MOOCHO=ON
     -D Trilinos_ENABLE_MueLu=ON
         -D MueLu_ENABLE_Experimental=ON
         -D MueLu_ENABLE_Ifpack2=ON
         -D MueLu_ENABLE_Amesos2=ON
+    -D Trilinos_ENABLE_OptiPack=ON
+    -D Trilinos_ENABLE_NOX=ON
+    -D Trilinos_ENABLE_Phalanx=ON
+        -D Phalanx_ENABLE_TEUCHOS_TIME_MONITOR=ON
+    -D Trilinos_ENABLE_Piro=ON
+        -D Piro_ENABLE_TESTS=ON
+    -D Trilinos_ENABLE_RBGen=ON
+    -D Trilinos_ENABLE_Rythmos=ON
+    -D Trilinos_ENABLE_Sacado=ON
+    -D Trilinos_ENABLE_SEACAS=ON
+    -D Trilinos_ENABLE_Shards=ON
+    -D Trilinos_ENABLE_STKClassic=ON
+    -D Trilinos_ENABLE_Stokhos=ON
+        -D Stokhos_ENABLE_TEUCHOS_TIME_MONITOR=ON
+    -D Trilinos_ENABLE_Stratimikos=ON
+        -D Stratimikos_ENABLE_TEUCHOS_TIME_MONITOR=ON
+    -D Trilinos_ENABLE_Teko=ON
+    -D Trilinos_ENABLE_ThreadPool=ON
+    -D Trilinos_ENABLE_Thyra=ON
+        -D Trilinos_ENABLE_ThyraTpetraAdapters=ON
+    -D Trilinos_ENABLE_Tpetra=ON
+    -D Trilinos_ENABLE_TrilinosCouplings=ON
+    -D Trilinos_ENABLE_Xpetra=ON
+        -D Xpetra_ENABLE_Experimental=ON
     -D Trilinos_ENABLE_Zoltan=ON
     -D Trilinos_ENABLE_Zoltan2=ON
         -D Zoltan2_ENABLE_Experimental=ON
-
-    -D Trilinos_ENABLE_Stratimikos=ON
-        -D Stratimikos_ENABLE_TEUCHOS_TIME_MONITOR=ON
-    -D Trilinos_ENABLE_Piro=ON
-        -D Piro_ENABLE_TESTS=ON
-    -D Trilinos_ENABLE_Shards=ON
-    -D Trilinos_ENABLE_Sacado=ON
-    -D Trilinos_ENABLE_Phalanx=ON
-        -D Phalanx_ENABLE_TEUCHOS_TIME_MONITOR=ON
-    -D Trilinos_ENABLE_Stokhos=ON
-        -D Stokhos_ENABLE_TEUCHOS_TIME_MONITOR=ON
-    -D Trilinos_ENABLE_NOX=ON
-    -D Trilinos_ENABLE_Thyra=ON
-    -D Trilinos_ENABLE_Rythmos=ON
-    -D Trilinos_ENABLE_MOOCHO=ON
-    -D Trilinos_ENABLE_OptiPack=ON
-    -D Trilinos_ENABLE_GlobiPack=ON
-    -D Trilinos_ENABLE_Isorropia=ON
-    -D Trilinos_ENABLE_STK=ON
-    -D Trilinos_ENABLE_Teko=ON
-    -D Trilinos_ENABLE_Mesquite=ON
-    -D Trilinos_ENABLE_FEI=ON
     )
+
 cmake "${ARGS[@]}" $EXTRA_ARGS ../../

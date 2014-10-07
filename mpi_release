@@ -29,7 +29,7 @@ ARGS=(
     -D Trilinos_ENABLE_EXPLICIT_INSTANTIATION=ON
 
     -D TPL_ENABLE_MPI=ON
-    -D MPI_BASE_DIR=/home/aprokop/local/opt/openmpi-1.8/
+    -D MPI_BASE_DIR=/home/aprokop/local/opt/openmpi-1.8.3/
 
     -D CMAKE_CXX_FLAGS="-g -Wall -Wextra -Wno-unused-parameter $CXX_FLAGS_COMPILER_SPECIFIC $SYSTEM_HEADERS"
 

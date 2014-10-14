@@ -3,6 +3,8 @@ EXTRA_ARGS=$@
 
 rm -f  CMakeCache.txt
 rm -rf CMakeFiles/
+rm -f  build.ninja
+rm -f  rules.ninja
 
 SYSTEM_HEADERS=""
 for header_dir in `env | grep CPATH | split_path | sed 's/CPATH=//'`;
@@ -84,5 +86,5 @@ ARGS=(
         -D Zoltan2_ENABLE_Experimental=ON
         -D Zoltan2_ENABLE_TESTS=ON
     )
-cmake "${ARGS[@]}" $EXTRA_ARGS ../../
-# cmake -GNinja "${ARGS[@]}" $EXTRA_ARGS ../../
+# cmake "${ARGS[@]}" $EXTRA_ARGS ../../
+cmake -GNinja "${ARGS[@]}" $EXTRA_ARGS ../../

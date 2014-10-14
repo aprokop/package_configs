@@ -1,0 +1,87 @@
+#!/bin/sh
+EXTRA_ARGS=$@
+
+rm -f  CMakeCache.txt
+rm -rf CMakeFiles/
+
+SYSTEM_HEADERS=""
+for header_dir in `env | grep CPATH | split_path | sed 's/CPATH=//'`;
+  do SYSTEM_HEADERS="$SYSTEM_HEADERS -isystem $header_dir"
+done
+
+CXX_COMPILER_SPECIFIC=""
+if [ "$OMPI_MPICXX" == "iccp" ]; then
+    CXX_FLAGS_COMPILER_SPECIFIC="-g -O2 -shared-libgcc -shared-intel -debug inline-debug-info"
+else
+    echo "Need ICC"
+    exit
+fi
+
+ARGS=(
+    -D BUILD_SHARED_LIBS=ON
+
+    -D Trilinos_ENABLE_INSTALL_CMAKE_CONFIG_FILES=OFF
+    -D Trilinos_DEPS_XML_OUTPUT_FILE=""
+    -D Trilinos_ENABLE_SHADOW_WARNINGS=ON
+
+    -D CMAKE_INSTALL_PREFIX=$HOME/local/opt/trilinos-clang/
+    -D CMAKE_BUILD_TYPE=RELEASE
+
+    -D Trilinos_ENABLE_EXPLICIT_INSTANTIATION=ON
+
+    -D TPL_ENABLE_MPI=ON
+    -D MPI_BASE_DIR=/home/aprokop/local/opt/openmpi-1.8.3/
+
+    -D CMAKE_CXX_FLAGS="-g $CXX_FLAGS_COMPILER_SPECIFIC $SYSTEM_HEADERS"
+
+    -D TPL_ENABLE_SuperLU=ON
+    -D TPL_SuperLU_INCLUDE_DIRS=/home/aprokop/local/opt/superlu-4.3/include/
+    -D TPL_SuperLU_LIBRARIES=/home/aprokop/local/opt/superlu-4.3/lib/libsuperlu_4.3.so
+
+    -D Trilinos_ENABLE_TESTS=OFF
+    -D Trilinos_ENABLE_OpenMP=OFF
+    -D Trilinos_ENABLE_Fortran=OFF
+
+    -D Trilinos_ENABLE_ALL_PACKAGES=OFF
+    -D Trilinos_ENABLE_ALL_OPTIONAL_PACKAGES=OFF
+    -D Trilinos_ASSERT_MISSING_PACKAGES=OFF
+
+    -D Trilinos_ENABLE_Amesos=ON
+    -D Trilinos_ENABLE_Amesos2=ON
+        -D Amesos2_ENABLE_SuperLU=ON
+    -D Trilinos_ENABLE_AztecOO=ON
+    -D Trilinos_ENABLE_Epetra=ON
+    -D Trilinos_ENABLE_EpetraExt=ON
+    -D Trilinos_ENABLE_Ifpack=ON
+    -D Trilinos_ENABLE_Ifpack2=ON
+        # -D Ifpack2_ETI_SCALARS="float;double;std::complex<float>;std::complex<double>"
+    -D Trilinos_ENABLE_Isorropia=ON
+    -D Trilinos_ENABLE_Kokkos=ON
+    -D Trilinos_ENABLE_ML=ON
+        -D ML_ENABLE_EXAMPLES=ON
+        -D ML_ENABLE_Timing=ON
+        -D ML_ENABLE_TESTS=ON
+    -D Trilinos_ENABLE_MueLu=ON
+        -D MueLu_ENABLE_Experimental=ON
+        -D MueLu_ENABLE_TESTS=ON
+        -D MueLu_ENABLE_EXAMPLES=ON
+        -D MueLu_ENABLE_DEBUG=ON
+        -D MueLu_ENABLE_Ifpack2=ON
+        -D MueLu_ENABLE_Amesos2=ON
+        # -D MueLu_INST_COMPLEX_INT_INT=ON
+    -D Trilinos_ENABLE_Stratimikos=ON
+    -D Trilinos_ENABLE_Teuchos=ON
+        -D Teuchos_ENABLE_COMPLEX=ON
+    -D Trilinos_ENABLE_Tpetra=ON
+        # -D Tpetra_INST_FLOAT=ON
+        # -D Tpetra_INST_COMPLEX_FLOAT=ON
+        # -D Tpetra_INST_COMPLEX_DOUBLE=ON
+    -D Trilinos_ENABLE_Xpetra=ON
+        -D Xpetra_ENABLE_Experimental=ON
+        -D Xpetra_ENABLE_TESTS=ON
+    -D Trilinos_ENABLE_Zoltan=ON
+    -D Trilinos_ENABLE_Zoltan2=ON
+        -D Zoltan2_ENABLE_Experimental=ON
+    )
+cmake "${ARGS[@]}" $EXTRA_ARGS ../../
+# cmake -GNinja "${ARGS[@]}" $EXTRA_ARGS ../../

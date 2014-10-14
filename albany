@@ -1,0 +1,29 @@
+#!/bin/sh
+EXTRA_ARGS=$@
+
+# Here is a script for configuring Trilinos using cmake
+# that includes the packages needed for Albany.
+# Any environment variables (e.g. $BOOST_DIR) are
+# set in the customization file, e.g. set_andy_env.in
+
+rm -f  CMakeCache.txt
+rm -rf CMakeFiles/
+rm -f  build.ninja
+rm -f  rules.ninja
+
+ARGS=(
+      -D ALBANY_TRILINOS_DIR="/home/aprokop/local/opt/trilinos_albany" \
+
+      -D CMAKE_VERBOSE_MAKEFILE=ON \
+
+      -D ENABLE_AERAS=OFF \
+      -D ENABLE_FELIX=OFF \
+      -D ENABLE_HYDRIDE=OFF \
+      -D ENABLE_LAME=OFF \
+      -D ENABLE_LCM=ON \
+      -D ENABLE_MOR=OFF \
+      -D ENABLE_QCAD=OFF \
+      -D ENABLE_SG_MP=OFF \
+     )
+
+cmake "${ARGS[@]}" $EXTRA_ARGS ../

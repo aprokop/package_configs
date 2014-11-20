@@ -1,0 +1,96 @@
+#!/bin/sh
+EXTRA_ARGS=$@
+
+rm -f  CMakeCache.txt
+rm -rf CMakeFiles/
+rm -f  build.ninja
+rm -f  rules.ninja
+
+if [ "$OMPI_MPICXX" == "clang++" ]; then
+    echo "This configuration requires using gcc"
+    exit 1
+fi
+
+BOOST_PATH="/home/aprokop/local/opt/boost-1.56.0/"
+GLM_PATH="/home/aprokop/local/include/glm/"
+HDF5_PATH="/home/aprokop/local/opt/hdf5-1.8.11/"
+MPI_PATH="/home/aprokop/local/opt/openmpi-1.8.3/"
+NETCDF_PATH="/home/aprokop/local/opt/netcdf-wo4-4.3.0/"
+SUPERLU_PATH="/home/aprokop/local/opt/superlu-4.3/"
+
+ARGS=(
+    -D CMAKE_INSTALL_PREFIX="$HOME/local/opt/trilinos-nalu"
+
+    -D CMAKE_BUILD_TYPE=RELEASE
+
+    # -D BUILD_SHARED_LIBS=ON
+    # -D Trilinos_ENABLE_EXPLICIT_INSTANTIATION=ON
+
+    -D CMAKE_VERBOSE_MAKEFILE=OFF
+    -D Trilinos_VERBOSE_CONFIGURE=OFF
+    -D Trilinos_ENABLE_INSTALL_CMAKE_CONFIG_FILES=ON
+    -D Trilinos_DEPS_XML_OUTPUT_FILE=""
+
+
+    -D CMAKE_CXX_FLAGS="-g"
+
+    -D TPL_ENABLE_MPI=ON
+        -D MPI_BASE_DIR="${MPI_PATH}"
+
+    -D TPL_ENABLE_Boost=ON
+        -D Boost_INCLUDE_DIRS="${BOOST_PATH}/include"
+        -D Boost_LIBRARY_DIRS="${BOOST_PATH}/lib/"
+    -D TPL_ENABLE_BoostLib=ON
+        -D BoostLib_INCLUDE_DIRS="${BOOST_PATH}/include"
+        -D BoostLib_LIBRARY_DIRS="${BOOST_PATH}/lib/"
+
+    -D TPL_ENABLE_GLM=ON
+        -D TPL_GLM_INCLUDE_DIRS="${GLM_PATH}"
+
+    -D TPL_ENABLE_HDF5=ON
+        -D TPL_HDF5_INCLUDE_DIRS="${HDF5_PATH}/include"
+        -D TPL_HDF5_LIBRARIES="${HDF5_PATH}/lib/libhdf5_hl.a;${HDF5_PATH}/lib/libhdf5.a"
+        # -D TPL_HDF5_LIBRARY_DIRS="${HDF5_PATH}/lib"
+
+    -D TPL_ENABLE_Netcdf=ON
+        -D TPL_Netcdf_INCLUDE_DIRS="${NETCDF_PATH}include"
+        -D TPL_Netcdf_LIBRARIES="${NETCDF_PATH}/lib/libnetcdf.so"
+
+    -D TPL_ENABLE_SuperLU=ON
+        -D TPL_SuperLU_INCLUDE_DIRS="${SUPERLU_PATH}/include/"
+        -D TPL_SuperLU_LIBRARIES=$"{SUPERLU_PATH}/lib/libsuperlu_4.3.so"
+
+    -D TPL_ENABLE_Zlib=ON
+
+    -D Trilinos_ENABLE_TESTS=OFF
+    -D Trilinos_ENABLE_EXAMPLES=OFF
+    -D Trilinos_ALLOW_NO_PACKAGES=OFF
+    -D Trilinos_ASSERT_MISSING_PACKAGES=OFF
+
+    -D Trilinos_ENABLE_Amesos2=ON
+    -D Trilinos_ENABLE_Amesos=ON
+    -D Trilinos_ENABLE_Belos=ON
+    -D Trilinos_ENABLE_Epetra=ON
+    -D Trilinos_ENABLE_Gtest=ON
+    -D Trilinos_ENABLE_Ifpack=ON
+    -D Trilinos_ENABLE_Ifpack2=ON
+    -D Trilinos_ENABLE_ML=ON
+    -D Trilinos_ENABLE_MueLu=ON
+    -D Trilinos_ENABLE_SEACASEpu=ON
+    -D Trilinos_ENABLE_SEACASExodus=ON
+    -D Trilinos_ENABLE_SEACASExodiff=ON
+    -D Trilinos_ENABLE_STK=ON
+        -D Trilinos_ENABLE_STKClassic=OFF
+        -D Trilinos_ENABLE_STKIO=ON
+        -D Trilinos_ENABLE_STKMesh=ON
+        -D Trilinos_ENABLE_STKSearch=ON
+        -D Trilinos_ENABLE_STKTopology=ON
+        -D Trilinos_ENABLE_STKTransfer=ON
+        -D Trilinos_ENABLE_STKUtil=ON
+    -D Trilinos_ENABLE_ThreadPool=ON
+    -D Trilinos_ENABLE_Tpetra=ON
+    -D Trilinos_ENABLE_Zoltan=ON
+    -D Trilinos_ENABLE_Zoltan2=ON
+    )
+# Cannot use ninja as some packages require Fortran
+cmake "${ARGS[@]}" $EXTRA_ARGS ../../

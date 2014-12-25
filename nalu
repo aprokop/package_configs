@@ -1,0 +1,23 @@
+#!/bin/sh
+EXTRA_ARGS=$@
+
+rm -f  CMakeCache.txt
+rm -rf CMakeFiles/
+rm -f  build.ninja
+rm -f  rules.ninja
+
+if [ "$OMPI_MPICXX" == "clang++" ]; then
+    echo "This configuration requires using gcc"
+    exit 1
+fi
+
+TRILINOS_PATH="$HOME/local/opt/trilinos-nalu"
+YAML_PATH="/usr"
+
+ARGS=(
+    -D Trilinos_DIR="${TRILINOS_PATH}"
+    -D YAML_DIR=${YAML_PATH}
+    -D YAML_LIBRARY="/usr/lib64/libyaml-cpp.so"
+    -D ENABLE_INSTALL=OFF
+    )
+cmake "${ARGS[@]}" $EXTRA_ARGS ../

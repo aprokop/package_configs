@@ -3,18 +3,29 @@ EXTRA_ARGS=$@
 
 rm -f  CMakeCache.txt
 rm -rf CMakeFiles/
+rm -f  build.ninja
+rm -f  rules.ninja
 
 SYSTEM_HEADERS=""
 for header_dir in `env | grep CPATH | split_path | sed 's/CPATH=//'`;
   do SYSTEM_HEADERS="$SYSTEM_HEADERS -isystem $header_dir"
 done
 
-CXX_COMPILER_SPECIFIC=""
+if [ "$OMPI_MPICXX" == "clang++" ]; then
+    echo "This configuration requires using gcc"
+    exit 1
+fi
+
+CXX_FLAGS_COMPILER_SPECIFIC=""
 if [ "$OMPI_MPICXX" == "g++" ]; then
     CXX_FLAGS_COMPILER_SPECIFIC="-Wno-unused-local-typedefs"
 elif [ "$OMPI_MPICXX" == "clang++" ]; then
     CXX_FLAGS_COMPILER_SPECIFIC=""
 fi
+
+BOOST_PATH="$HOME/local/opt/boost-1.57.0/"
+MPI_PATH="$HOME/local/opt/openmpi-1.8.3/"
+SUPERLU_PATH="$HOME/local/opt/superlu-4.3/"
 
 ARGS=(
     -D BUILD_SHARED_LIBS=ON
@@ -29,17 +40,20 @@ ARGS=(
     -D Trilinos_ENABLE_EXPLICIT_INSTANTIATION=ON
 
     -D TPL_ENABLE_MPI=ON
-    -D MPI_BASE_DIR=/home/aprokop/local/opt/openmpi-1.8.3/
+        -D MPI_BASE_DIR="${MPI_PATH}"
 
     -D CMAKE_CXX_FLAGS="-g -O2 -fno-omit-frame-pointer -fno-optimize-sibling-calls $CXX_FLAGS_COMPILER_SPECIFIC $SYSTEM_HEADERS"
 
     -D TPL_ENABLE_Boost=ON
-    -D TPL_Boost_INCLUDE_DIRS=/home/aprokop/local/opt/boost-1.53.0/include
-    -D TPL_Boost_LIBRARIES=/home/aprokop/local/opt/boost-1.53.0/lib/libboost_graph.so
+        -D Boost_INCLUDE_DIRS="${BOOST_PATH}/include"
+        -D Boost_LIBRARY_DIRS="${BOOST_PATH}/lib/"
+    -D TPL_ENABLE_BoostLib=ON
+        -D BoostLib_INCLUDE_DIRS="${BOOST_PATH}/include"
+        -D BoostLib_LIBRARY_DIRS="${BOOST_PATH}/lib/"
 
     -D TPL_ENABLE_SuperLU=ON
-    -D TPL_SuperLU_INCLUDE_DIRS=/home/aprokop/local/opt/superlu-4.3/include/
-    -D TPL_SuperLU_LIBRARIES=/home/aprokop/local/opt/superlu-4.3/lib/libsuperlu_4.3.so
+        -D TPL_SuperLU_INCLUDE_DIRS="${SUPERLU_PATH}/include/"
+        -D TPL_SuperLU_LIBRARIES="${SUPERLU_PATH}/lib/libsuperlu_4.3.so"
 
     -D Trilinos_ENABLE_TESTS=OFF
     -D Trilinos_ENABLE_OpenMP=OFF
@@ -83,4 +97,5 @@ ARGS=(
         -D Zoltan2_ENABLE_Experimental=ON
         -D Zoltan2_ENABLE_TESTS=ON
     )
-cmake "${ARGS[@]}" $EXTRA_ARGS ../../
+# cmake "${ARGS[@]}" $EXTRA_ARGS ../../
+cmake -GNinja "${ARGS[@]}" $EXTRA_ARGS ../../

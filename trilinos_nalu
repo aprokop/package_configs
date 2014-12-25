@@ -11,9 +11,9 @@ if [ "$OMPI_MPICXX" == "clang++" ]; then
     exit 1
 fi
 
-BOOST_PATH="/home/aprokop/local/opt/boost-1.56.0/"
-GLM_PATH="/home/aprokop/local/include/glm/"
-HDF5_PATH="/home/aprokop/local/opt/hdf5-1.8.11/"
+BOOST_PATH="/home/aprokop/local/opt/boost-1.57.0/"
+GLM_PATH="/home/aprokop/local/opt/glm-0.9.4.6/include/glm/"
+HDF5_PATH="/home/aprokop/local/opt/hdf5-parallel-1.8.14/"
 MPI_PATH="/home/aprokop/local/opt/openmpi-1.8.3/"
 NETCDF_PATH="/home/aprokop/local/opt/netcdf-wo4-4.3.0/"
 SUPERLU_PATH="/home/aprokop/local/opt/superlu-4.3/"
@@ -23,8 +23,8 @@ ARGS=(
 
     -D CMAKE_BUILD_TYPE=RELEASE
 
-    # -D BUILD_SHARED_LIBS=ON
-    # -D Trilinos_ENABLE_EXPLICIT_INSTANTIATION=ON
+    -D BUILD_SHARED_LIBS=ON
+    -D Trilinos_ENABLE_EXPLICIT_INSTANTIATION=ON
 
     -D CMAKE_VERBOSE_MAKEFILE=OFF
     -D Trilinos_VERBOSE_CONFIGURE=OFF
@@ -49,7 +49,7 @@ ARGS=(
 
     -D TPL_ENABLE_HDF5=ON
         -D TPL_HDF5_INCLUDE_DIRS="${HDF5_PATH}/include"
-        -D TPL_HDF5_LIBRARIES="${HDF5_PATH}/lib/libhdf5_hl.a;${HDF5_PATH}/lib/libhdf5.a"
+        -D TPL_HDF5_LIBRARIES="${HDF5_PATH}/lib/libhdf5_hl.a;${HDF5_PATH}/lib/libhdf5.a;/usr/lib64/libz.so"
         # -D TPL_HDF5_LIBRARY_DIRS="${HDF5_PATH}/lib"
 
     -D TPL_ENABLE_Netcdf=ON
@@ -58,7 +58,7 @@ ARGS=(
 
     -D TPL_ENABLE_SuperLU=ON
         -D TPL_SuperLU_INCLUDE_DIRS="${SUPERLU_PATH}/include/"
-        -D TPL_SuperLU_LIBRARIES=$"{SUPERLU_PATH}/lib/libsuperlu_4.3.so"
+        -D TPL_SuperLU_LIBRARIES="${SUPERLU_PATH}/lib/libsuperlu_4.3.so"
 
     -D TPL_ENABLE_Zlib=ON
 
@@ -74,8 +74,10 @@ ARGS=(
     -D Trilinos_ENABLE_Gtest=ON
     -D Trilinos_ENABLE_Ifpack=ON
     -D Trilinos_ENABLE_Ifpack2=ON
+        -D Ifpack2_ETI_GORDS="int;long"
     -D Trilinos_ENABLE_ML=ON
     -D Trilinos_ENABLE_MueLu=ON
+        -D MueLu_INST_DOUBLE_INT_LONGINT=ON
     -D Trilinos_ENABLE_SEACASEpu=ON
     -D Trilinos_ENABLE_SEACASExodus=ON
     -D Trilinos_ENABLE_SEACASExodiff=ON
@@ -87,8 +89,11 @@ ARGS=(
         -D Trilinos_ENABLE_STKTopology=ON
         -D Trilinos_ENABLE_STKTransfer=ON
         -D Trilinos_ENABLE_STKUtil=ON
+        -D Trilinos_ENABLE_STKDoc_tests=OFF
+        -D Trilinos_ENABLE_STKUnit_tests=OFF
     -D Trilinos_ENABLE_ThreadPool=ON
     -D Trilinos_ENABLE_Tpetra=ON
+        -D Tpetra_INST_INT_LONG=ON
     -D Trilinos_ENABLE_Zoltan=ON
     -D Trilinos_ENABLE_Zoltan2=ON
     )

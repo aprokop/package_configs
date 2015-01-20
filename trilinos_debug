@@ -11,8 +11,9 @@ for header_dir in `env | grep CPATH | split_path | sed 's/CPATH=//'`;
   do SYSTEM_HEADERS="$SYSTEM_HEADERS -isystem $header_dir"
 done
 
-if [ "$OMPI_MPICXX" == "clang++" ]; then
-    echo "This configuration requires using gcc"
+BOOST="false"
+if [ "$BOOST" == "true" ] && [ "$OMPI_MPICXX" == "clang++" ]; then
+    echo "This configuration (BOOST) requires using gcc"
     exit 1
 fi
 
@@ -23,45 +24,45 @@ elif [ "$OMPI_MPICXX" == "clang++" ]; then
     CXX_FLAGS_COMPILER_SPECIFIC=""
 fi
 
+
 BOOST_PATH="$HOME/local/opt/boost-1.57.0/"
-MPI_PATH="$HOME/local/opt/openmpi-1.8.3/"
+MPI_PATH="$HOME/local/opt/openmpi-1.8.4/"
 SUPERLU_PATH="$HOME/local/opt/superlu-4.3/"
 
 ARGS=(
-    -D BUILD_SHARED_LIBS=ON
-
-    -D Trilinos_ENABLE_INSTALL_CMAKE_CONFIG_FILES=OFF
-    -D Trilinos_DEPS_XML_OUTPUT_FILE=""
-    -D Trilinos_ENABLE_SHADOW_WARNINGS=ON
-
-    -D CMAKE_INSTALL_PREFIX=$HOME/local/opt/trilinos/
     -D CMAKE_BUILD_TYPE=DEBUG
 
-    -D Trilinos_ENABLE_EXPLICIT_INSTANTIATION=ON
+    -D CMAKE_INSTALL_PREFIX=$HOME/local/opt/trilinos/
 
+    -D BUILD_SHARED_LIBS=ON
+
+    ### COMPILERS AND FLAGS ###
+    -D Trilinos_ENABLE_Fortran=OFF
+    # -D CMAKE_CXX_FLAGS="-g -O2 -fno-omit-frame-pointer -fno-optimize-sibling-calls $CXX_FLAGS_COMPILER_SPECIFIC $SYSTEM_HEADERS"
+    -D CMAKE_CXX_FLAGS="-g $CXX_FLAGS_COMPILER_SPECIFIC $SYSTEM_HEADERS"
+    -D Trilinos_ENABLE_SHADOW_WARNINGS=ON
+
+    ### TPLS ###
     -D TPL_ENABLE_MPI=ON
         -D MPI_BASE_DIR="${MPI_PATH}"
-
-    -D CMAKE_CXX_FLAGS="-g -O2 -fno-omit-frame-pointer -fno-optimize-sibling-calls $CXX_FLAGS_COMPILER_SPECIFIC $SYSTEM_HEADERS"
-
-    -D TPL_ENABLE_Boost=ON
-        -D Boost_INCLUDE_DIRS="${BOOST_PATH}/include"
-        -D Boost_LIBRARY_DIRS="${BOOST_PATH}/lib/"
-    -D TPL_ENABLE_BoostLib=ON
-        -D BoostLib_INCLUDE_DIRS="${BOOST_PATH}/include"
-        -D BoostLib_LIBRARY_DIRS="${BOOST_PATH}/lib/"
-
     -D TPL_ENABLE_SuperLU=ON
         -D TPL_SuperLU_INCLUDE_DIRS="${SUPERLU_PATH}/include/"
         -D TPL_SuperLU_LIBRARIES="${SUPERLU_PATH}/lib/libsuperlu_4.3.so"
 
-    -D Trilinos_ENABLE_TESTS=OFF
-    -D Trilinos_ENABLE_OpenMP=OFF
-    -D Trilinos_ENABLE_Fortran=OFF
+    ### ETI ###
+    -D Trilinos_ENABLE_EXPLICIT_INSTANTIATION=ON
+        # -D Tpetra_INST_FLOAT=ON
+        # -D Tpetra_INST_COMPLEX_FLOAT=ON
+        # -D Tpetra_INST_COMPLEX_DOUBLE=ON
+        # -D MueLu_INST_COMPLEX_INT_INT=ON
 
+    ### PACKAGES CONFIGURATION ###
     -D Trilinos_ENABLE_ALL_PACKAGES=OFF
     -D Trilinos_ENABLE_ALL_OPTIONAL_PACKAGES=OFF
     -D Trilinos_ASSERT_MISSING_PACKAGES=OFF
+
+    -D Trilinos_ENABLE_TESTS=OFF
+    -D Trilinos_ENABLE_EXAMPLES=OFF
 
     -D Trilinos_ENABLE_Amesos=ON
     -D Trilinos_ENABLE_Amesos2=ON
@@ -81,21 +82,40 @@ ARGS=(
         -D MueLu_ENABLE_TESTS=ON
         -D MueLu_ENABLE_EXAMPLES=ON
         -D MueLu_ENABLE_DEBUG=ON
-        -D MueLu_ENABLE_Ifpack2=ON
         -D MueLu_ENABLE_Amesos2=ON
         -D MueLu_ENABLE_Ifpack2=ON
-        -D MueLu_ENABLE_Boost_for_real=ON
+        # -D MueLu_ENABLE_PROFILING=ON
     -D Trilinos_ENABLE_Stratimikos=ON
     -D Trilinos_ENABLE_Teuchos=ON
         -D Teuchos_ENABLE_COMPLEX=ON
     -D Trilinos_ENABLE_Tpetra=ON
     -D Trilinos_ENABLE_Xpetra=ON
         -D Xpetra_ENABLE_Experimental=ON
+        -D Xpetra_ENABLE_EXAMPLES=ON
         -D Xpetra_ENABLE_TESTS=ON
     -D Trilinos_ENABLE_Zoltan=ON
     -D Trilinos_ENABLE_Zoltan2=ON
         -D Zoltan2_ENABLE_Experimental=ON
         -D Zoltan2_ENABLE_TESTS=ON
+
+    ### MISC ###
+    -D Trilinos_ENABLE_INSTALL_CMAKE_CONFIG_FILES=OFF
+    -D Trilinos_DEPS_XML_OUTPUT_FILE=""
+
     )
+ARGS_BOOST=(
+    -D TPL_ENABLE_Boost=ON
+        -D Boost_INCLUDE_DIRS="${BOOST_PATH}/include"
+        -D Boost_LIBRARY_DIRS="${BOOST_PATH}/lib/"
+    -D TPL_ENABLE_BoostLib=ON
+        -D BoostLib_INCLUDE_DIRS="${BOOST_PATH}/include"
+        -D BoostLib_LIBRARY_DIRS="${BOOST_PATH}/lib/"
+
+        -D MueLu_ENABLE_Boost_for_real=ON
+    )
+if [ "$BOOST" == "true" ]; then
+    ARGS=( "${ARGS[@]}" "${ARGS_BOOST[@]}" )
+fi
+
 # cmake "${ARGS[@]}" $EXTRA_ARGS ../../
 cmake -GNinja "${ARGS[@]}" $EXTRA_ARGS ../../

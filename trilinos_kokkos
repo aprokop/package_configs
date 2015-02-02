@@ -1,0 +1,70 @@
+#!/bin/sh
+EXTRA_ARGS=$@
+
+rm -f  CMakeCache.txt
+rm -rf CMakeFiles/
+rm -f  build.ninja
+rm -f  rules.ninja
+
+OPENMP=ON
+CUDA_ARCH="35"
+
+CUDA_NVCC_FLAGS="-gencode;arch=compute_${CUDA_ARCH},code=sm_${CUDA_ARCH}"
+if [ "${OPENMP}" = "ON" ]; then
+  CUDA_NVCC_FLAGS="${CUDA_NVCC_FLAGS};-Xcompiler;-Wall,-ansi,-fopenmp"
+else
+  CUDA_NVCC_FLAGS="${CUDA_NVCC_FLAGS};-Xcompiler;-Wall,-ansi"
+fi
+
+if [ "${CMAKE_BUILD_TYPE}" = "DEBUG" ]; then
+  CUDA_NVCC_FLAGS="${CUDA_NVCC_FLAGS};-g"
+else
+  CUDA_NVCC_FLAGS="${CUDA_NVCC_FLAGS};-O3"
+fi
+
+ARGS=(
+    -D CMAKE_BUILD_TYPE=RELEASE
+
+    -D CMAKE_INSTALL_PREFIX=$HOME/local/opt/trilinos-kokkos/
+
+    -D BUILD_SHARED_LIBS=ON
+
+    ### COMPILERS AND FLAGS ###
+    -D Trilinos_ENABLE_Fortran=OFF
+
+    ### TPLS ###
+    -D TPL_ENABLE_MPI=OFF
+    -D Trilinos_ENABLE_OpenMP=${OPENMP}
+    -D TPL_ENABLE_CUDA=ON
+        -D CUDA_VERBOSE_BUILD=OFF
+        -D CUDA_NVCC_FLAGS=${CUDA_NVCC_FLAGS}
+    -D TPL_ENABLE_CUSPARSE=ON
+
+    ### ETI ###
+    -D Trilinos_ENABLE_EXPLICIT_INSTANTIATION=ON
+
+    ### PACKAGES CONFIGURATION ###
+    -D Trilinos_ENABLE_ALL_PACKAGES=OFF
+    -D Trilinos_ENABLE_ALL_OPTIONAL_PACKAGES=OFF
+    -D Trilinos_ASSERT_MISSING_PACKAGES=OFF
+
+    -D Trilinos_ENABLE_TESTS=OFF
+    -D Trilinos_ENABLE_EXAMPLES=OFF
+
+
+    -D Trilinos_ENABLE_Kokkos=ON
+      -D Trilinos_ENABLE_KokkosAlgorithms=ON
+      -D Trilinos_ENABLE_KokkosCore=ON
+      -D Trilinos_ENABLE_KokkosContainers=ON
+      -D Trilinos_ENABLE_KokkosExample=ON
+      -D Kokkos_ENABLE_EXAMPLES=ON
+      -D Kokkos_ENABLE_TESTS=ON
+
+    ### MISC ###
+    -D Trilinos_ENABLE_INSTALL_CMAKE_CONFIG_FILES=OFF
+    -D Trilinos_DEPS_XML_OUTPUT_FILE=""
+
+    )
+
+cmake "${ARGS[@]}" $EXTRA_ARGS ../../
+# cmake -GNinja "${ARGS[@]}" $EXTRA_ARGS ../../

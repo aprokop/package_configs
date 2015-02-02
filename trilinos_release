@@ -42,10 +42,10 @@ ARGS=(
 
     ### ETI ###
     -D Trilinos_ENABLE_EXPLICIT_INSTANTIATION=ON
+        # -D Teuchos_ENABLE_COMPLEX=ON
+        # -D Tpetra_INST_COMPLEX_DOUBLE=OFF
         # -D Tpetra_INST_FLOAT=ON
         # -D Tpetra_INST_COMPLEX_FLOAT=ON
-        # -D Tpetra_INST_COMPLEX_DOUBLE=ON
-        # -D MueLu_INST_COMPLEX_INT_INT=ON
 
     ### PACKAGES CONFIGURATION ###
     -D Trilinos_ENABLE_ALL_PACKAGES=OFF
@@ -57,6 +57,7 @@ ARGS=(
 
     -D Trilinos_ENABLE_Amesos=ON
     -D Trilinos_ENABLE_Amesos2=ON
+        -D Amesos2_ENABLE_KLU2=ON
         -D Amesos2_ENABLE_SuperLU=ON
     -D Trilinos_ENABLE_AztecOO=ON
     -D Trilinos_ENABLE_Epetra=ON
@@ -77,10 +78,9 @@ ARGS=(
         -D MueLu_ENABLE_Ifpack2=ON
         # -D MueLu_ENABLE_PROFILING=ON
         # -D MueLU_ENABLE_TIMER_SYNCHRONIZATION=ON
-    -D Trilinos_ENABLE_ShyLU=ON
+    -D Trilinos_ENABLE_ShyLU=OFF
     -D Trilinos_ENABLE_Stratimikos=ON
     -D Trilinos_ENABLE_Teuchos=ON
-        -D Teuchos_ENABLE_COMPLEX=ON
     -D Trilinos_ENABLE_Teko=OFF
     -D Trilinos_ENABLE_Thyra=ON
     -D Trilinos_ENABLE_Tpetra=ON

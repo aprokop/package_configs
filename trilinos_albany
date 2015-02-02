@@ -6,7 +6,17 @@ rm -rf CMakeFiles/
 rm -f  build.ninja
 rm -f  rules.ninja
 
-BOOST_PATH="/home/aprokop/local/opt/boost-1.56.0/"
+if [ "$OMPI_MPICXX" == "clang++" ]; then
+    echo "This configuration requires using gcc"
+    exit 1
+fi
+
+BOOST_PATH="/home/aprokop/local/opt/boost-1.57.0/"
+GLM_PATH="/home/aprokop/local/include/glm/"
+HDF5_PATH="/home/aprokop/local/opt/hdf5-1.8.11/"
+MPI_PATH="/home/aprokop/local/opt/openmpi-1.8.3/"
+NETCDF_PATH="/home/aprokop/local/opt/netcdf-wo4-4.3.0/"
+SUPERLU_PATH="/home/aprokop/local/opt/superlu-4.3/"
 
 ARGS=(
     # -D BUILD_SHARED_LIBS=ON
@@ -24,31 +34,34 @@ ARGS=(
     -D Trilinos_ENABLE_EXPLICIT_INSTANTIATION=ON
 
     -D TPL_ENABLE_MPI=ON
-    -D MPI_BASE_DIR=/home/aprokop/local/opt/openmpi-1.8.3/
+        -D MPI_BASE_DIR=${MPI_PATH}
 
-    -D CMAKE_CXX_FLAGS="-g -Wall -Wextra -Wno-unused-parameter"
+    -D CMAKE_CXX_FLAGS="-g"
 
     -D TPL_ENABLE_Boost=ON
-    -D Boost_INCLUDE_DIRS="$BOOST_PATH/include"
-    -D Boost_LIBRARY_DIRS="$BOOST_PATH/lib/"
+        -D Boost_INCLUDE_DIRS="$BOOST_PATH/include"
+        -D Boost_LIBRARY_DIRS="$BOOST_PATH/lib/"
     -D TPL_ENABLE_BoostLib=ON
-    -D BoostLib_INCLUDE_DIRS="$BOOST_PATH/include"
-    -D BoostLib_LIBRARY_DIRS="$BOOST_PATH/lib/"
+        -D BoostLib_INCLUDE_DIRS="$BOOST_PATH/include"
+        -D BoostLib_LIBRARY_DIRS="$BOOST_PATH/lib/"
     -D TPL_ENABLE_BoostAlbLib=ON
-    -D BoostAlbLib_INCLUDE_DIRS="$BOOST_PATH/include"
-    -D BoostAlbLib_LIBRARY_DIRS="$BOOST_PATH/lib"
+        -D BoostAlbLib_INCLUDE_DIRS="$BOOST_PATH/include"
+        -D BoostAlbLib_LIBRARY_DIRS="$BOOST_PATH/lib"
 
-    -D TPL_ENABLE_SuperLU=ON
-    -D TPL_SuperLU_INCLUDE_DIRS=/home/aprokop/local/opt/superlu-4.3/include/
-    -D TPL_SuperLU_LIBRARIES=/home/aprokop/local/opt/superlu-4.3/lib/libsuperlu_4.3.so
+    -D TPL_ENABLE_GLM=ON
+        -D TPL_GLM_INCLUDE_DIRS="${GLM_PATH}"
 
     -D TPL_ENABLE_HDF5=ON
-    -D TPL_HDF5_INCLUDE_DIRS=/home/aprokop/local/opt/hdf5-1.8.11/include
-    -D TPL_HDF5_LIBRARY_DIRS=/home/aprokop/local/opt/hdf5-1.8.11/lib
+        -D TPL_HDF5_INCLUDE_DIRS=${HDF5_PATH}/include
+        -D TPL_HDF5_LIBRARY_DIRS=${HDF5_PATH}/lib
 
     -D TPL_ENABLE_Netcdf=ON
-    -D TPL_Netcdf_INCLUDE_DIRS=/home/aprokop/local/opt/netcdf-wo4-4.3.0/include
-    -D TPL_Netcdf_LIBRARIES=/home/aprokop/local/opt/netcdf-wo4-4.3.0/lib/libnetcdf.so
+        -D TPL_Netcdf_INCLUDE_DIRS=${NETCDF_PATH}include
+        -D TPL_Netcdf_LIBRARIES=${NETCDF_PATH}/lib/libnetcdf.so
+
+    -D TPL_ENABLE_SuperLU=ON
+        -D TPL_SuperLU_INCLUDE_DIRS=${SUPERLU_PATH}/include/
+        -D TPL_SuperLU_LIBRARIES=${SUPERLU_PATH}/lib/libsuperlu_4.3.so
 
     -D Trilinos_ENABLE_TESTS=OFF
     -D Trilinos_ENABLE_EXAMPLES=OFF
@@ -118,5 +131,5 @@ ARGS=(
     -D Trilinos_ENABLE_Zoltan2=ON
         -D Zoltan2_ENABLE_Experimental=ON
     )
-
+# Cannot use ninja as some packages require Fortran
 cmake "${ARGS[@]}" $EXTRA_ARGS ../../

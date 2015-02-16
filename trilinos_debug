@@ -7,8 +7,8 @@ rm -f  build.ninja
 rm -f  rules.ninja
 
 SYSTEM_HEADERS=""
-for header_dir in `env | grep CPATH | split_path | sed 's/CPATH=//'`;
-  do SYSTEM_HEADERS="$SYSTEM_HEADERS -isystem $header_dir"
+for header_dir in `echo $CPATH | sed 's/:/\ /g'`; do
+  SYSTEM_HEADERS="$SYSTEM_HEADERS -isystem $header_dir"
 done
 
 BOOST="false"

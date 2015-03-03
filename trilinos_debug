@@ -38,8 +38,8 @@ ARGS=(
 
     ### COMPILERS AND FLAGS ###
     -D Trilinos_ENABLE_Fortran=OFF
-    -D CMAKE_CXX_FLAGS="-g -Wall -Wextra -Wno-unused-parameter $CXX_FLAGS_COMPILER_SPECIFIC $SYSTEM_HEADERS"
-    # -D CMAKE_CXX_FLAGS="-g -O2 -fno-omit-frame-pointer -fno-optimize-sibling-calls $CXX_FLAGS_COMPILER_SPECIFIC $SYSTEM_HEADERS"
+    -D CMAKE_C_FLAGS="-g -Wall -Wextra -std=c99 -pedantic -Wno-unused-parameter $CXX_FLAGS_COMPILER_SPECIFIC $SYSTEM_HEADERS"
+    -D CMAKE_CXX_FLAGS="-g -Wall -Wextra -pedantic -Wno-unused-parameter $CXX_FLAGS_COMPILER_SPECIFIC $SYSTEM_HEADERS"
     -D Trilinos_ENABLE_SHADOW_WARNINGS=ON
 
     ### TPLS ###
@@ -51,6 +51,7 @@ ARGS=(
 
     ### ETI ###
     -D Trilinos_ENABLE_EXPLICIT_INSTANTIATION=ON
+        -D Teuchos_ENABLE_COMPLEX=ON
         -D Tpetra_INST_COMPLEX_DOUBLE=ON
         # -D Tpetra_INST_FLOAT=ON
         # -D Tpetra_INST_COMPLEX_FLOAT=ON
@@ -89,7 +90,6 @@ ARGS=(
     -D Trilinos_ENABLE_Stratimikos=ON
     -D Trilinos_ENABLE_Teko=ON
     -D Trilinos_ENABLE_Teuchos=ON
-        # -D Teuchos_ENABLE_COMPLEX=ON
     -D Trilinos_ENABLE_Thyra=ON
     -D Trilinos_ENABLE_Tpetra=ON
     -D Trilinos_ENABLE_Xpetra=ON

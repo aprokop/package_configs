@@ -34,6 +34,7 @@ ARGS=(
     -D Trilinos_ENABLE_Fortran=ON
     -D CMAKE_CXX_FLAGS="-g $SYSTEM_HEADERS"
     -D Trilinos_ENABLE_SHADOW_WARNINGS=OFF
+    -D Trilinos_ENABLE_CXX11=OFF
 
     ### TPLS ###
     -D TPL_ENABLE_MPI=ON
@@ -54,17 +55,18 @@ ARGS=(
         -D TPL_Netcdf_INCLUDE_DIRS="${NETCDF_PATH}/include"
         -D TPL_Netcdf_LIBRARIES="${NETCDF_PATH}/lib/libnetcdf.so"
     -D TPL_ENABLE_Matio=OFF
+    -D TPL_ENABLE_X11=OFF
 
     ### ETI ###
     -D Trilinos_ENABLE_EXPLICIT_INSTANTIATION=ON
-        -D DrekarMHD_ENABLE_EXPLICIT_INSTANTIATION=ON
         -D Teuchos_ENABLE_LONG_LONG_INT=ON
         -D Tpetra_INST_INT_LONG_LONG=ON
         -D Tpetra_INST_COMPLEX_DOUBLE=OFF
+        -D Drekar_ENABLE_EXPLICIT_INSTANTIATION=ON
+        -D DrekarMHD_ENABLE_EXPLICIT_INSTANTIATION=ON
 
     ### PACKAGES CONFIGURATION ###
-    # -D Trilinos_EXTRA_REPOSITORIES="DrekarBase,DrekarResearch"
-    -D Trilinos_EXTRA_REPOSITORIES="DrekarBase"
+    -D Trilinos_EXTRA_REPOSITORIES="DrekarResearch,DrekarBase"
     -D Trilinos_ENABLE_ALL_PACKAGES=OFF
     -D Trilinos_ENABLE_ALL_OPTIONAL_PACKAGES=OFF
     -D Trilinos_ASSERT_MISSING_PACKAGES=OFF
@@ -76,14 +78,13 @@ ARGS=(
     -D Trilinos_ENABLE_Amesos2=ON
     -D Trilinos_ENABLE_Belos=ON
     -D Trilinos_ENABLE_Drekar=ON
+        -D Drekar_ENABLE_DrekarMHD=ON
         -D Drekar_ENABLE_TESTS=ON
         -D Drekar_ENABLE_EXAMPLES=ON
     -D Trilinos_ENABLE_DrekarMHD=ON
-        -D DrekarMHD_ENABLE_TESTS=ON
-        -D DrekarMHD_ENABLE_EXAMPLES=ON
     -D Trilinos_ENABLE_EpetraExt=ON
         -D EpetraExt_ENABLE_HDF5=OFF
-    -D Trilinos_ENABLE_FEI=ON
+    -D Trilinos_ENABLE_FEI=OFF
     -D Trilinos_ENABLE_Intrepid=ON
         -D Intrepid_ENABLE_DEBUG_INF_CHECK=OFF
     -D Trilinos_ENABLE_Ifpack2=ON

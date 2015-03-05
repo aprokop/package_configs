@@ -14,14 +14,11 @@ if [ "$OMPI_MPICXX" != "g++" ]; then
     exit 1
 fi
 
-module load netcdf
-module load hdf5
-
 BOOST_PATH="$HOME/local/opt/boost-1.57.0"
-MPI_PATH="$HOME/local/opt/openmpi-1.8.4"
-SUPERLU_PATH="$HOME/local/opt/superlu-4.3"
 HDF5_PATH="$HOME/local/opt/hdf5-1.8.11"
+MPI_PATH="$HOME/local/opt/openmpi-1.8.4"
 NETCDF_PATH="$HOME/local/opt/netcdf-wo4-4.3.0"
+SUPERLU_PATH="$HOME/local/opt/superlu-4.3"
 
 ARGS=(
     -D CMAKE_BUILD_TYPE=RELEASE
@@ -39,9 +36,6 @@ ARGS=(
     ### TPLS ###
     -D TPL_ENABLE_MPI=ON
         -D MPI_BASE_DIR="${MPI_PATH}"
-    -D TPL_ENABLE_SuperLU=ON
-        -D TPL_SuperLU_INCLUDE_DIRS="${SUPERLU_PATH}/include/"
-        -D TPL_SuperLU_LIBRARIES="${SUPERLU_PATH}/lib/libsuperlu_4.3.so"
     -D TPL_ENABLE_Boost=ON
         -D Boost_INCLUDE_DIRS="${BOOST_PATH}/include"
         -D Boost_LIBRARY_DIRS="${BOOST_PATH}/lib/"
@@ -54,6 +48,9 @@ ARGS=(
     -D TPL_ENABLE_Netcdf=ON
         -D TPL_Netcdf_INCLUDE_DIRS="${NETCDF_PATH}/include"
         -D TPL_Netcdf_LIBRARIES="${NETCDF_PATH}/lib/libnetcdf.so"
+    -D TPL_ENABLE_SuperLU=ON
+        -D TPL_SuperLU_INCLUDE_DIRS="${SUPERLU_PATH}/include/"
+        -D TPL_SuperLU_LIBRARIES="${SUPERLU_PATH}/lib/libsuperlu_4.3.so"
     -D TPL_ENABLE_Matio=OFF
     -D TPL_ENABLE_X11=OFF
 
@@ -90,6 +87,8 @@ ARGS=(
     -D Trilinos_ENABLE_Ifpack2=ON
     -D Trilinos_ENABLE_ML=ON
     -D Trilinos_ENABLE_MueLu=ON
+        -D MueLu_ENABLE_TESTS=ON
+        -D MueLu_ENABLE_EXAMPLES=ON
     -D Trilinos_ENABLE_Panzer=ON
     -D Trilinos_ENABLE_Shards=ON
     -D Trilinos_ENABLE_Teuchos=ON

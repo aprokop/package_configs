@@ -3,50 +3,55 @@ EXTRA_ARGS=$@
 
 rm -f  CMakeCache.txt
 rm -rf CMakeFiles/
+rm -f  build.ninja
+rm -f  rules.ninja
 
 SYSTEM_HEADERS=""
 for header_dir in `echo $CPATH | sed 's/:/\ /g'`; do
   SYSTEM_HEADERS="$SYSTEM_HEADERS -isystem $header_dir"
 done
 
-CXX_COMPILER_SPECIFIC=""
+CXX_FLAGS_COMPILER_SPECIFIC=""
 if [ "$OMPI_MPICXX" == "g++" ]; then
     CXX_FLAGS_COMPILER_SPECIFIC="-Wno-unused-local-typedefs"
 elif [ "$OMPI_MPICXX" == "clang++" ]; then
     CXX_FLAGS_COMPILER_SPECIFIC=""
 fi
 
+SUPERLU_PATH="$HOME/local/opt/superlu-4.3/"
 ARGS=(
-    -D BUILD_SHARED_LIBS=ON
-
-    -D Trilinos_ENABLE_INSTALL_CMAKE_CONFIG_FILES=OFF
-    -D Trilinos_DEPS_XML_OUTPUT_FILE=""
-    -D Trilinos_ENABLE_SHADOW_WARNINGS=OFF
-
-    -D CMAKE_INSTALL_PREFIX=$HOME/local/opt/trilinos/
     -D CMAKE_BUILD_TYPE=DEBUG
 
+    -D CMAKE_INSTALL_PREFIX=$HOME/local/opt/trilinos/
+    -D BUILD_SHARED_LIBS=ON
+
+
+
+    ### COMPILERS AND FLAGS ###
+    -D Trilinos_ENABLE_Fortran=OFF
+    -D CMAKE_CXX_FLAGS="-g $CXX_FLAGS_COMPILER_SPECIFIC $SYSTEM_HEADERS"
+    -D Trilinos_ENABLE_SHADOW_WARNINGS=OFF
+
+    ### TPLS ###
+    -D TPL_ENABLE_MPI=OFF
+    -D TPL_ENABLE_SuperLU=ON
+        -D TPL_SuperLU_INCLUDE_DIRS="${SUPERLU_PATH}/include/"
+        -D TPL_SuperLU_LIBRARIES="${SUPERLU_PATH}/lib/libsuperlu_4.3.so"
+    -D TPL_ENABLE_MATLAB=ON
+        -D MATLAB_ROOT="/opt/MATLAB/R2011b/"
+        -D MATLAB_ARCH="glnxa64"
+
+    ### ETI ###
     -D Trilinos_ENABLE_EXPLICIT_INSTANTIATION=ON
 
-    -D TPL_ENABLE_MPI=OFF
 
-    -D CMAKE_CXX_FLAGS="-g $CXX_FLAGS_COMPILER_SPECIFIC $SYSTEM_HEADERS"
-
-    -D TPL_ENABLE_Boost=OFF
-    -D TPL_Boost_INCLUDE_DIRS=/home/aprokop/local/opt/boost-1.53.0/include
-    -D TPL_Boost_LIBRARIES=/home/aprokop/local/opt/boost-1.53.0/lib/libboost_graph.so
-
-    -D TPL_ENABLE_SuperLU=ON
-    -D TPL_SuperLU_INCLUDE_DIRS=/home/aprokop/local/opt/superlu-4.3/include/
-    -D TPL_SuperLU_LIBRARIES=/home/aprokop/local/opt/superlu-4.3/lib/libsuperlu_4.3.so
-
-    -D Trilinos_ENABLE_TESTS=OFF
-    -D Trilinos_ENABLE_OpenMP=OFF
-    -D Trilinos_ENABLE_Fortran=OFF
-
+    ### PACKAGES CONFIGURATION ###
     -D Trilinos_ENABLE_ALL_PACKAGES=OFF
     -D Trilinos_ENABLE_ALL_OPTIONAL_PACKAGES=OFF
     -D Trilinos_ASSERT_MISSING_PACKAGES=OFF
+
+    -D Trilinos_ENABLE_TESTS=OFF
+    -D Trilinos_ENABLE_EXAMPLES=OFF
 
     -D Trilinos_ENABLE_Amesos=ON
     -D Trilinos_ENABLE_Amesos2=ON
@@ -55,11 +60,6 @@ ARGS=(
     -D Trilinos_ENABLE_AztecOO=ON
     -D Trilinos_ENABLE_Epetra=ON
         -D Epetra_ENABLE_TESTS=ON
-    -D Trilinos_ENABLE_Xpetra=ON
-        -D Xpetra_ENABLE_Experimental=ON
-        -D Xpetra_ENABLE_TESTS=ON
-    -D Trilinos_ENABLE_Tpetra=ON
-        -D Tpetra_ENABLE_TESTS=ON
     -D Trilinos_ENABLE_EpetraExt=ON
     -D Trilinos_ENABLE_Ifpack=ON
     -D Trilinos_ENABLE_Ifpack2=ON
@@ -74,10 +74,24 @@ ARGS=(
         -D MueLu_ENABLE_DEBUG=ON
         -D MueLu_ENABLE_Amesos2=ON
         -D MueLu_ENABLE_Ifpack2=ON
+        # -D MueLu_ENABLE_PROFILING=ON
+        # -D MueLU_ENABLE_TIMER_SYNCHRONIZATION=ON
     -D Trilinos_ENABLE_Stratimikos=ON
+    -D Trilinos_ENABLE_Teuchos=ON
+    -D Trilinos_ENABLE_Tpetra=ON
+        -D Tpetra_ENABLE_TESTS=ON
+    -D Trilinos_ENABLE_Xpetra=ON
+        -D Xpetra_ENABLE_Experimental=ON
+        -D Xpetra_ENABLE_TESTS=ON
     -D Trilinos_ENABLE_Zoltan=ON
     -D Trilinos_ENABLE_Zoltan2=ON
         -D Zoltan2_ENABLE_TESTS=ON
         -D Zoltan2_ENABLE_Experimental=ON
+
+    ### MISC ###
+    -D Trilinos_ENABLE_INSTALL_CMAKE_CONFIG_FILES=OFF
+    -D Trilinos_DEPS_XML_OUTPUT_FILE=""
+
     )
-cmake "${ARGS[@]}" $EXTRA_ARGS ../../
+# cmake "${ARGS[@]}" $EXTRA_ARGS ../../
+cmake -GNinja "${ARGS[@]}" $EXTRA_ARGS ../../

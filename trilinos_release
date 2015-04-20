@@ -18,15 +18,51 @@ elif [ "$OMPI_MPICXX" == "clang++" ]; then
     CXX_FLAGS_COMPILER_SPECIFIC=""
 fi
 
-MPI_PATH="$HOME/local/opt/openmpi-1.8.4/"
-SUPERLU_PATH="$HOME/local/opt/superlu-4.3/"
+HOST="localhost"
+SHARED="true"
+
+### TPLS ###
+if [ "$HOST" == "localhost" ]; then
+    BLAS_PATH="/usr/lib64"
+    LAPACK_PATH="/usr/lib64"
+    MPI_PATH="$HOME/local/opt/openmpi-1.8.4/"
+    SUPERLU_PATH="$HOME/local/opt/superlu-4.3/"
+
+    if [ "$SHARED" == "true" ]; then
+        BLAS_LIB="${BLAS_PATH}/libblas.so"
+        SUPERLU_LIB="${LAPACK_PATH}/liblapack.so"
+        SUPERLU_LIB="${SUPERLU_PATH}/lib/superlu_4.3.so"
+
+    else
+        BLAS_LIB="${BLAS_PATH}/libblas.a"
+        SUPERLU_LIB="${LAPACK_PATH}/liblapack.a"
+        SUPERLU_LIB="${SUPERLU_PATH}/lib/superlu_4.3.a"
+    fi
+
+elif [ "$HOST" == "volta" ]; then
+    BLAS_PATH="/opt/cray/libsci/13.0.0/gnu/49/ivybridge/lib/"
+    LAPACK_PATH="${BLAS_PATH}"
+    MPI_PATH="/opt/cray/mpt/7.0.1/gni/mpich2-intel/140"
+    SUPERLU_PATH="/home/projects/x86-64/superlu/4.3.0/gnu/4.9.0"
+
+    if [ "$SHARED" == "true" ]; then
+        echo "Use STATIC build on Volta"
+        exit 1
+
+    else
+        BLAS_LIB="${BLAS_PATH}/libsci_gnu_49_mpi.a"
+        LAPACK_LIB="${LAPACK_PATH}/libsci_gnu_49_mpi.a"
+        SUPERLU_LIB="${SUPERLU_PATH}/lib/libsuperlu_4.3.a"
+    fi
+fi
+
 
 ARGS=(
     -D CMAKE_BUILD_TYPE=RELEASE
 
     -D CMAKE_INSTALL_PREFIX=$HOME/local/opt/trilinos/
 
-    -D BUILD_SHARED_LIBS=ON
+    -D BUILD_SHARED_LIBS="$SHARED"
 
     ### COMPILERS AND FLAGS ###
     -D Trilinos_ENABLE_Fortran=OFF
@@ -38,7 +74,11 @@ ARGS=(
         -D MPI_BASE_DIR="${MPI_PATH}"
     -D TPL_ENABLE_SuperLU=ON
         -D TPL_SuperLU_INCLUDE_DIRS="${SUPERLU_PATH}/include/"
-        -D TPL_SuperLU_LIBRARIES="${SUPERLU_PATH}/lib/libsuperlu_4.3.so"
+        -D TPL_SuperLU_LIBRARIES="${SUPERLU_LIB}"
+    -D TPL_ENABLE_BLAS=ON
+        -D TPL_BLAS_LIBRARIES=${BLAS_LIB}
+    -D TPL_ENABLE_LAPACK=ON
+        -D TPL_LAPACK_LIBRARIES=${LAPACK_LIB}
 
     ### ETI ###
     -D Trilinos_ENABLE_EXPLICIT_INSTANTIATION=ON
@@ -98,5 +138,8 @@ ARGS=(
     -D Trilinos_DEPS_XML_OUTPUT_FILE=""
 
     )
-# cmake "${ARGS[@]}" $EXTRA_ARGS ../../
-cmake -GNinja "${ARGS[@]}" $EXTRA_ARGS ../../
+if [ "$HOST" == "volta" ]; then
+    cmake "${ARGS[@]}" $EXTRA_ARGS ../../
+else
+    cmake -GNinja "${ARGS[@]}" $EXTRA_ARGS ../../
+fi

@@ -25,7 +25,7 @@ SHARED="true"
 if [ "$HOST" == "localhost" ]; then
     BLAS_PATH="/usr/lib64"
     LAPACK_PATH="/usr/lib64"
-    MPI_PATH="$HOME/local/opt/openmpi-1.8.4/"
+    MPI_PATH="$HOME/local/opt/openmpi-1.8.5/"
     SUPERLU_PATH="$HOME/local/opt/superlu-4.3/"
 
     if [ "$SHARED" == "true" ]; then

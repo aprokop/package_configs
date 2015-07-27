@@ -1,19 +1,27 @@
 #!/bin/sh
 EXTRA_ARGS=$@
 
+# module load gcc/4.9.2
+# module load cuda/7.0-gcc
+# module load nvcc-wrapper/gcc
+
 rm -f  CMakeCache.txt
 rm -rf CMakeFiles/
 rm -f  build.ninja
 rm -f  rules.ninja
 
-OPENMP=ON
+MPI_PATH="$HOME/local/opt/openmpi-1.8.7/"
+CMAKE_BUILD_TYPE="RELEASE"
+
+OPENMP=OFF
 CUDA_ARCH="35"
 
-CUDA_NVCC_FLAGS="-gencode;arch=compute_${CUDA_ARCH},code=sm_${CUDA_ARCH}"
+CUDA_NVCC_FLAGS=""
+CUDA_NVCC_FLAGS="-gencode;arch=compute_${CUDA_ARCH},code=sm_${CUDA_ARCH};-DKOKKOS_USE_CUDA_UVM;-Xcompiler"
 if [ "${OPENMP}" = "ON" ]; then
-  CUDA_NVCC_FLAGS="${CUDA_NVCC_FLAGS};-Xcompiler;-Wall,-ansi,-fopenmp"
+  CUDA_NVCC_FLAGS="${CUDA_NVCC_FLAGS};-Wall,-ansi,-fopenmp"
 else
-  CUDA_NVCC_FLAGS="${CUDA_NVCC_FLAGS};-Xcompiler;-Wall,-ansi"
+  CUDA_NVCC_FLAGS="${CUDA_NVCC_FLAGS};-Wall,-ansi"
 fi
 
 if [ "${CMAKE_BUILD_TYPE}" = "DEBUG" ]; then
@@ -23,7 +31,7 @@ else
 fi
 
 ARGS=(
-    -D CMAKE_BUILD_TYPE=RELEASE
+    -D CMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
 
     -D CMAKE_INSTALL_PREFIX=$HOME/local/opt/trilinos-kokkos/
 
@@ -33,15 +41,30 @@ ARGS=(
     -D Trilinos_ENABLE_Fortran=OFF
 
     ### TPLS ###
-    -D TPL_ENABLE_MPI=OFF
+    -D TPL_ENABLE_MPI=ON
+        -D MPI_BASE_DIR="${MPI_PATH}"
     -D Trilinos_ENABLE_OpenMP=${OPENMP}
     -D TPL_ENABLE_CUDA=ON
         -D CUDA_VERBOSE_BUILD=OFF
         -D CUDA_NVCC_FLAGS=${CUDA_NVCC_FLAGS}
     -D TPL_ENABLE_CUSPARSE=ON
+    -D TPL_ENABLE_HWLOC=ON
 
     ### ETI ###
     -D Trilinos_ENABLE_EXPLICIT_INSTANTIATION=ON
+        -D Teuchos_ENABLE_COMPLEX=OFF
+        -D Teuchos_ENABLE_LONG_LONG_INT=OFF
+        -D Tpetra_INST_INT_INT=ON
+        -D Tpetra_INST_INT_UNSIGNED=OFF
+        -D Tpetra_INST_INT_LONG=OFF
+        -D Tpetra_INST_INT_LONG_LONG=OFF
+        -D Tpetra_INST_DOUBLE=ON
+        -D Tpetra_INST_FLOAT=OFF
+        -D Tpetra_INST_COMPLEX_DOUBLE=OFF
+        -D Tpetra_INST_COMPLEX_FLOAT=OFF
+        -D Tpetra_INST_SERIAL=ON
+        -D Kokkos_ENABLE_Serial=ON
+        -D Kokkos_ENABLE_Pthread=OFF
 
     ### PACKAGES CONFIGURATION ###
     -D Trilinos_ENABLE_ALL_PACKAGES=OFF
@@ -51,17 +74,50 @@ ARGS=(
     -D Trilinos_ENABLE_TESTS=OFF
     -D Trilinos_ENABLE_EXAMPLES=OFF
 
-
+    -D Trilinos_ENABLE_Amesos=ON
+    -D Trilinos_ENABLE_Amesos2=ON
+        -D Amesos2_ENABLE_KLU2=ON
+    -D Trilinos_ENABLE_AztecOO=ON
+    -D Trilinos_ENABLE_Epetra=ON
+        -D Epetra_ENABLE_Teuchos=ON
+    -D Trilinos_ENABLE_EpetraExt=ON
+    -D Trilinos_ENABLE_Ifpack=ON
+    -D Trilinos_ENABLE_Ifpack2=ON
+    -D Trilinos_ENABLE_Isorropia=ON
     -D Trilinos_ENABLE_Kokkos=ON
-      -D Trilinos_ENABLE_KokkosAlgorithms=ON
-      -D Trilinos_ENABLE_KokkosCore=ON
-      -D Trilinos_ENABLE_KokkosContainers=ON
-      -D Trilinos_ENABLE_KokkosExample=ON
-      -D Kokkos_ENABLE_EXAMPLES=ON
-      -D Kokkos_ENABLE_TESTS=ON
+        -D Kokkos_ENABLE_Cuda=ON
+        -D Kokkos_ENABLE_Cuda_UVM=ON
+        -D Kokkos_ENABLE_EXAMPLES=ON
+        -D Kokkos_ENABLE_TESTS=ON
+    -D Trilinos_ENABLE_ML=ON
+        -D ML_ENABLE_TESTS=ON
+    -D Trilinos_ENABLE_MueLu=ON
+        -D MueLu_ENABLE_Experimental=ON
+        -D MueLu_ENABLE_TESTS=ON
+        -D MueLu_ENABLE_EXAMPLES=ON
+        -D MueLu_ENABLE_DEBUG=ON
+    -D Trilinos_ENABLE_ShyLU=OFF
+    -D Trilinos_ENABLE_Stratimikos=ON
+    -D Trilinos_ENABLE_Teuchos=ON
+    -D Trilinos_ENABLE_Teko=OFF
+    -D Trilinos_ENABLE_Thyra=ON
+    -D Trilinos_ENABLE_Tpetra=ON
+        -D Tpetra_ENABLE_Kokkos_Refactor_Map=OFF
+        -D Tpetra_ENABLE_MPI_CUDA_RDMA=ON
+    -D Trilinos_ENABLE_TrilinosCouplings=ON
+        -D TrilinosCouplings_ENABLE_EXAMPLES=ON
+    -D Trilinos_ENABLE_Xpetra=ON
+        -D Xpetra_ENABLE_Experimental=ON
+        -D Xpetra_ENABLE_EXAMPLES=ON
+        -D Xpetra_ENABLE_TESTS=ON
+    -D Trilinos_ENABLE_Zoltan=ON
+    -D Trilinos_ENABLE_Zoltan2=ON
+        -D Zoltan2_ENABLE_Experimental=ON
+        -D Zoltan2_ENABLE_TESTS=ON
 
     ### MISC ###
-    -D Trilinos_ENABLE_INSTALL_CMAKE_CONFIG_FILES=OFF
+    -D CMAKE_EXPORT_COMPILE_COMMANDS=ON
+    -D Trilinos_ENABLE_INSTALL_CMAKE_CONFIG_FILES=ON
     -D Trilinos_DEPS_XML_OUTPUT_FILE=""
 
     )

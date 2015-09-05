@@ -1,29 +1,40 @@
 #!/bin/sh
 EXTRA_ARGS=$@
 
-# Here is a script for configuring Trilinos using cmake
-# that includes the packages needed for Albany.
-# Any environment variables (e.g. $BOOST_DIR) are
-# set in the customization file, e.g. set_andy_env.in
-
 rm -f  CMakeCache.txt
 rm -rf CMakeFiles/
 rm -f  build.ninja
 rm -f  rules.ninja
 
+# module load boost/1.57.0
+# module load gcc/5.2.0
+# module load hdf5/1.8.11
+# module load netcdf/4.3.0-wo4
+# module load openmpi/1.10.0
+
 ARGS=(
-      -D ALBANY_TRILINOS_DIR="/home/aprokop/local/opt/trilinos_albany" \
+    -D CMAKE_BUILD_TYPE=RELEASE
 
-      -D CMAKE_VERBOSE_MAKEFILE=ON \
+    -D ALBANY_TRILINOS_DIR="$HOME/local/opt/trilinos-albany"
 
-      -D ENABLE_AERAS=OFF \
-      -D ENABLE_FELIX=OFF \
-      -D ENABLE_HYDRIDE=OFF \
-      -D ENABLE_LAME=OFF \
-      -D ENABLE_LCM=ON \
-      -D ENABLE_MOR=OFF \
-      -D ENABLE_QCAD=OFF \
-      -D ENABLE_SG_MP=OFF \
-     )
+    -D BUILD_SHARED_LIBS=ON
+
+    ### COMPILERS AND FLAGS ###
+
+    ### PACKAGES CONFIGURATION ###
+    -D ENABLE_AERAS=OFF
+    -D ENABLE_DEMO_PDES=ON
+    -D ENABLE_FELIX=ON
+    -D ENABLE_HYDRIDE=OFF
+    -D ENABLE_LAME=OFF
+    -D ENABLE_LCM=OFF
+    -D ENABLE_MOR=OFF
+    -D ENABLE_QCAD=OFF
+    -D ENABLE_SG_MP=OFF
+
+    ### MISC ###
+    -D CMAKE_VERBOSE_MAKEFILE=ON
+
+    )
 
 cmake "${ARGS[@]}" $EXTRA_ARGS ../

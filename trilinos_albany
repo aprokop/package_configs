@@ -6,7 +6,7 @@ rm -rf CMakeFiles/
 rm -f  build.ninja
 rm -f  rules.ninja
 
-# module load boost/1.57.0
+# module load boost/1.58.0-cxx11
 # module load gcc/5.2.0
 # module load hdf5/1.8.11
 # module load netcdf/4.3.0-wo4
@@ -17,7 +17,7 @@ if [ "$OMPI_MPICXX" != "g++" ]; then
     exit 1
 fi
 
-BOOST_PATH="$HOME/local/opt/boost-1.57.0"
+BOOST_PATH="$HOME/local/opt/boost-1.58.0-cxx11"
 GLM_PATH="$HOME/local/include/glm"
 HDF5_PATH="$HOME/local/opt/hdf5-1.8.11"
 MPI_PATH="$HOME/local/opt/openmpi-1.10.0"

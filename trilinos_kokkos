@@ -15,20 +15,10 @@ MPI_PATH="$HOME/local/opt/openmpi-1.8.7/"
 CMAKE_BUILD_TYPE="RELEASE"
 
 OPENMP=OFF
-CUDA_ARCH="35"
 
-CUDA_NVCC_FLAGS=""
-CUDA_NVCC_FLAGS="-gencode;arch=compute_${CUDA_ARCH},code=sm_${CUDA_ARCH};-DKOKKOS_USE_CUDA_UVM;-Xcompiler"
+CC_FLAGS="-g -Wall -ansi -pedantic -Wno-unknown-pragmas -Wno-narrowing -Wno-pragmas -Wno-unused-but-set-variable -Wno-delete-non-virtual-dtor -Wno-inline -Wshadow"
 if [ "${OPENMP}" = "ON" ]; then
-  CUDA_NVCC_FLAGS="${CUDA_NVCC_FLAGS};-Wall,-ansi,-fopenmp"
-else
-  CUDA_NVCC_FLAGS="${CUDA_NVCC_FLAGS};-Wall,-ansi"
-fi
-
-if [ "${CMAKE_BUILD_TYPE}" = "DEBUG" ]; then
-  CUDA_NVCC_FLAGS="${CUDA_NVCC_FLAGS};-g"
-else
-  CUDA_NVCC_FLAGS="${CUDA_NVCC_FLAGS};-O3"
+  CC_FLAGS="${CC_FLAGS} -fopenmp"
 fi
 
 ARGS=(
@@ -39,15 +29,15 @@ ARGS=(
     -D BUILD_SHARED_LIBS=ON
 
     ### COMPILERS AND FLAGS ###
+    -D Trilinos_ENABLE_CXX11=ON
     -D Trilinos_ENABLE_Fortran=OFF
 
     ### TPLS ###
     -D TPL_ENABLE_MPI=ON
         -D MPI_BASE_DIR="${MPI_PATH}"
+        -D MPI_EXEC_POST_NUMPROCS_FLAGS="-bind-to;socket;-map-by;socket"
     -D Trilinos_ENABLE_OpenMP=${OPENMP}
     -D TPL_ENABLE_CUDA=ON
-        -D CUDA_VERBOSE_BUILD=OFF
-        -D CUDA_NVCC_FLAGS=${CUDA_NVCC_FLAGS}
     -D TPL_ENABLE_CUSPARSE=ON
     -D TPL_ENABLE_HWLOC=ON
 

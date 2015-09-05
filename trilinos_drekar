@@ -4,6 +4,12 @@ EXTRA_ARGS=$@
 rm -f  CMakeCache.txt
 rm -rf CMakeFiles/
 
+# module load boost/1.58.0-cxx11
+# module load gcc/5.2.0
+# module load hdf5/1.8.11
+# module load netcdf/4.3.0-wo4
+# module load openmpi/1.10.0
+
 SYSTEM_HEADERS=""
 for header_dir in `echo $CPATH | sed 's/:/\ /g'`; do
   SYSTEM_HEADERS="$SYSTEM_HEADERS -isystem $header_dir"
@@ -14,9 +20,9 @@ if [ "$OMPI_MPICXX" != "g++" ]; then
     exit 1
 fi
 
-BOOST_PATH="$HOME/local/opt/boost-1.57.0"
+BOOST_PATH="$HOME/local/opt/boost-1.58.0-cxx11"
 HDF5_PATH="$HOME/local/opt/hdf5-1.8.11"
-MPI_PATH="$HOME/local/opt/openmpi-1.8.4"
+MPI_PATH="$HOME/local/opt/openmpi-1.10.0"
 NETCDF_PATH="$HOME/local/opt/netcdf-wo4-4.3.0"
 SUPERLU_PATH="$HOME/local/opt/superlu-4.3"
 
@@ -31,7 +37,6 @@ ARGS=(
     -D Trilinos_ENABLE_Fortran=ON
     -D CMAKE_CXX_FLAGS="-g $SYSTEM_HEADERS"
     -D Trilinos_ENABLE_SHADOW_WARNINGS=OFF
-    -D Trilinos_ENABLE_CXX11=OFF
 
     ### TPLS ###
     -D TPL_ENABLE_MPI=ON
@@ -85,6 +90,8 @@ ARGS=(
     -D Trilinos_ENABLE_Intrepid=ON
         -D Intrepid_ENABLE_DEBUG_INF_CHECK=OFF
     -D Trilinos_ENABLE_Ifpack2=ON
+    -D Trilinos_ENABLE_Kokkos=ON
+        -D Trilinos_ENABLE_KokkosCore=ON
     -D Trilinos_ENABLE_ML=ON
     -D Trilinos_ENABLE_MueLu=ON
         -D MueLu_ENABLE_TESTS=ON
@@ -111,6 +118,7 @@ ARGS=(
         -D Zoltan2_ENABLE_Experimental=ON
 
     ### MISC ###
+    -D CMAKE_EXPORT_COMPILE_COMMANDS=ON
     -D Trilinos_ENABLE_INSTALL_CMAKE_CONFIG_FILES=OFF
     -D Trilinos_DEPS_XML_OUTPUT_FILE=""
 

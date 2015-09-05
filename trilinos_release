@@ -31,12 +31,12 @@ if [ "$HOST" == "localhost" ]; then
     if [ "$SHARED" == "true" ]; then
         BLAS_LIB="${BLAS_PATH}/libblas.so"
         SUPERLU_LIB="${LAPACK_PATH}/liblapack.so"
-        SUPERLU_LIB="${SUPERLU_PATH}/lib/superlu_4.3.so"
+        SUPERLU_LIB="${SUPERLU_PATH}/lib/libsuperlu_4.3.so"
 
     else
         BLAS_LIB="${BLAS_PATH}/libblas.a"
         SUPERLU_LIB="${LAPACK_PATH}/liblapack.a"
-        SUPERLU_LIB="${SUPERLU_PATH}/lib/superlu_4.3.a"
+        SUPERLU_LIB="${SUPERLU_PATH}/lib/libsuperlu_4.3.a"
     fi
 
 elif [ "$HOST" == "volta" ]; then

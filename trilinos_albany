@@ -160,3 +160,7 @@ ARGS=(
 
 # Cannot use ninja as some packages require Fortran
 cmake "${ARGS[@]}" $EXTRA_ARGS ../../
+
+# Record environment for future
+env         > build.env
+module list &> build.module

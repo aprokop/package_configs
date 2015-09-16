@@ -77,3 +77,7 @@ ARGS=(
         -D Zoltan2_ENABLE_Experimental=ON
     )
 cmake "${ARGS[@]}" $EXTRA_ARGS ../../
+
+# Record environment for future
+env         > build.env
+module list &> build.module

@@ -146,3 +146,7 @@ if [ "$HOST" == "volta" ]; then
 else
     cmake -GNinja "${ARGS[@]}" $EXTRA_ARGS ../../
 fi
+
+# Record environment for future
+env         > build.env
+module list &> build.module

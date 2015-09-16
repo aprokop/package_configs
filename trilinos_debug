@@ -122,3 +122,7 @@ fi
 
 # cmake "${ARGS[@]}" $EXTRA_ARGS ../../
 cmake -GNinja "${ARGS[@]}" $EXTRA_ARGS ../../
+
+# Record environment for future
+env         > build.env
+module list &> build.module

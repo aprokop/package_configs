@@ -55,7 +55,6 @@ ARGS=(
         -D Tpetra_INST_COMPLEX_FLOAT=OFF
         -D Tpetra_INST_SERIAL=ON
         -D Kokkos_ENABLE_Serial=ON
-        -D Kokkos_ENABLE_Pthread=OFF
 
     ### PACKAGES CONFIGURATION ###
     -D Trilinos_ENABLE_ALL_PACKAGES=OFF

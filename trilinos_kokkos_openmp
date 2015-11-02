@@ -19,18 +19,20 @@ ARGS=(
     ### COMPILERS AND FLAGS ###
     -D Trilinos_ENABLE_CXX11=ON
     -D Trilinos_ENABLE_Fortran=OFF
-    -D CMAKE_CXX_FLAGS="-g -Wall -ansi -pedantic -Wno-unknown-pragmas -Wno-narrowing -Wno-pragmas -Wno-unused-but-set-variable -Wno-delete-non-virtual-dtor -Wno-inline -Wshadow"
+    -D CMAKE_CXX_FLAGS="-g -rdynamic -Wall -ansi -pedantic -Wno-unknown-pragmas -Wno-narrowing -Wno-pragmas -Wno-unused-but-set-variable -Wno-delete-non-virtual-dtor -Wno-inline -Wshadow"
+    -D CMAKE_EXE_LINKER_FLAGS="-ldl"
 
     ### TPLS ###
     -D TPL_ENABLE_MPI=ON
         -D MPI_BASE_DIR="${MPI_PATH}"
         -D MPI_EXEC_POST_NUMPROCS_FLAGS="-bind-to;socket;-map-by;socket"
     -D Trilinos_ENABLE_OpenMP=ON
+    # -D TPL_ENABLE_Pthread=OFF
     -D TPL_ENABLE_HWLOC=ON
 
     ### ETI ###
     -D Trilinos_ENABLE_EXPLICIT_INSTANTIATION=ON
-        -D Teuchos_ENABLE_COMPLEX=OFF
+        -D Teuchos_ENABLE_COMPLEX=ON
         -D Teuchos_ENABLE_LONG_LONG_INT=OFF
         -D Tpetra_INST_INT_INT=ON
         -D Tpetra_INST_INT_UNSIGNED=OFF
@@ -38,7 +40,7 @@ ARGS=(
         -D Tpetra_INST_INT_LONG_LONG=OFF
         -D Tpetra_INST_DOUBLE=ON
         -D Tpetra_INST_FLOAT=OFF
-        -D Tpetra_INST_COMPLEX_DOUBLE=OFF
+        -D Tpetra_INST_COMPLEX_DOUBLE=ON
         -D Tpetra_INST_COMPLEX_FLOAT=OFF
         -D Tpetra_INST_SERIAL=ON
         -D Kokkos_ENABLE_Serial=ON
@@ -62,6 +64,7 @@ ARGS=(
     -D Trilinos_ENABLE_Ifpack2=ON
     -D Trilinos_ENABLE_Isorropia=ON
     -D Trilinos_ENABLE_Kokkos=ON
+        -D Kokkos_ENABLE_Debug_Bounds_Check=ON
         -D Kokkos_ENABLE_EXAMPLES=ON
         -D Kokkos_ENABLE_TESTS=ON
     -D Trilinos_ENABLE_ML=ON
@@ -86,7 +89,7 @@ ARGS=(
         -D Xpetra_ENABLE_Experimental=ON
         -D Xpetra_ENABLE_Kokkos_Refactor=ON
         # -D Xpetra_ENABLE_EXAMPLES=ON
-        # -D Xpetra_ENABLE_TESTS=ON
+        -D Xpetra_ENABLE_TESTS=ON
     -D Trilinos_ENABLE_Zoltan=ON
     -D Trilinos_ENABLE_Zoltan2=ON
         -D Zoltan2_ENABLE_Experimental=ON
@@ -99,8 +102,8 @@ ARGS=(
 
     )
 
-cmake "${ARGS[@]}" $EXTRA_ARGS ../../
-# cmake -GNinja "${ARGS[@]}" $EXTRA_ARGS ../../
+# cmake "${ARGS[@]}" $EXTRA_ARGS ../../
+cmake -GNinja "${ARGS[@]}" $EXTRA_ARGS ../../
 
 # Record environment for future
 env         > build.env

@@ -6,6 +6,9 @@ rm -rf CMakeFiles/
 rm -f  build.ninja
 rm -f  rules.ninja
 
+# module load openmpi/1.10.0
+# module load gcc/5.2.0
+
 SYSTEM_HEADERS=""
 for header_dir in `echo $CPATH | sed 's/:/\ /g'`; do
   SYSTEM_HEADERS="$SYSTEM_HEADERS -isystem $header_dir"
@@ -25,7 +28,7 @@ SHARED="true"
 if [ "$HOST" == "localhost" ]; then
     BLAS_PATH="/usr/lib64"
     LAPACK_PATH="/usr/lib64"
-    MPI_PATH="$HOME/local/opt/openmpi-1.8.5/"
+    MPI_PATH="$HOME/local/opt/openmpi-1.10.0/"
     SUPERLU_PATH="$HOME/local/opt/superlu-4.3/"
 
     if [ "$SHARED" == "true" ]; then
@@ -117,7 +120,7 @@ ARGS=(
         -D MueLu_ENABLE_Amesos2=ON
         -D MueLu_ENABLE_Ifpack2=ON
         # -D MueLu_ENABLE_PROFILING=ON
-        # -D MueLU_ENABLE_TIMER_SYNCHRONIZATION=ON
+        # -D MueLu_ENABLE_TIMER_SYNCHRONIZATION=ON
     -D Trilinos_ENABLE_ShyLU=OFF
     -D Trilinos_ENABLE_Stratimikos=ON
     -D Trilinos_ENABLE_Teuchos=ON
@@ -148,5 +151,5 @@ else
 fi
 
 # Record environment for future
-env         > build.env
+env          > build.env
 module list &> build.module

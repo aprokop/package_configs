@@ -6,6 +6,8 @@ rm -rf CMakeFiles/
 rm -f  build.ninja
 rm -f  rules.ninja
 
+MATLAB="true"
+
 SYSTEM_HEADERS=""
 for header_dir in `echo $CPATH | sed 's/:/\ /g'`; do
   SYSTEM_HEADERS="$SYSTEM_HEADERS -isystem $header_dir"
@@ -18,18 +20,24 @@ elif [ "$OMPI_MPICXX" == "clang++" ]; then
     CXX_FLAGS_COMPILER_SPECIFIC=""
 fi
 
-SUPERLU_PATH="$HOME/local/opt/superlu-4.3/"
+if [ "$MATLAB" == "true" ]; then
+    C_FLAGS_EXTRA="-fPIC $C_FLAGS_EXTRA"
+    CXX_FLAGS_EXTRA="-fPIC $CXX_FLAGS_EXTRA"
+fi
+
+MATLAB_PATH="/opt/MATLAB/R2011b"
+SUPERLU_PATH="$HOME/local/opt/superlu-4.3"
+
 ARGS=(
     -D CMAKE_BUILD_TYPE=DEBUG
 
     -D CMAKE_INSTALL_PREFIX=$HOME/local/opt/trilinos/
     -D BUILD_SHARED_LIBS=ON
 
-
-
     ### COMPILERS AND FLAGS ###
     -D Trilinos_ENABLE_Fortran=OFF
-    -D CMAKE_CXX_FLAGS="-g $CXX_FLAGS_COMPILER_SPECIFIC $SYSTEM_HEADERS"
+    -D CMAKE_C_FLAGS="-g $C_FLAGS_EXTRA"
+    -D CMAKE_CXX_FLAGS="-g $CXX_FLAGS_EXTRA $CXX_FLAGS_COMPILER_SPECIFIC $SYSTEM_HEADERS"
     -D Trilinos_ENABLE_SHADOW_WARNINGS=OFF
 
     ### TPLS ###
@@ -37,9 +45,6 @@ ARGS=(
     -D TPL_ENABLE_SuperLU=ON
         -D TPL_SuperLU_INCLUDE_DIRS="${SUPERLU_PATH}/include/"
         -D TPL_SuperLU_LIBRARIES="${SUPERLU_PATH}/lib/libsuperlu_4.3.so"
-    -D TPL_ENABLE_MATLAB=ON
-        -D MATLAB_ROOT="/opt/MATLAB/R2011b/"
-        -D MATLAB_ARCH="glnxa64"
 
     ### ETI ###
     -D Trilinos_ENABLE_EXPLICIT_INSTANTIATION=ON
@@ -75,7 +80,7 @@ ARGS=(
         -D MueLu_ENABLE_Amesos2=ON
         -D MueLu_ENABLE_Ifpack2=ON
         # -D MueLu_ENABLE_PROFILING=ON
-        # -D MueLU_ENABLE_TIMER_SYNCHRONIZATION=ON
+        # -D MueLu_ENABLE_TIMER_SYNCHRONIZATION=ON
     -D Trilinos_ENABLE_Stratimikos=ON
     -D Trilinos_ENABLE_Teuchos=ON
     -D Trilinos_ENABLE_Tpetra=ON
@@ -91,8 +96,19 @@ ARGS=(
     ### MISC ###
     -D Trilinos_ENABLE_INSTALL_CMAKE_CONFIG_FILES=OFF
     -D Trilinos_DEPS_XML_OUTPUT_FILE=""
+    -D CMAKE_EXPORT_COMPILE_COMMANDS=ON
 
     )
+ARGS_MATLAB=(
+    -D TPL_ENABLE_MATLAB=ON
+        -D MATLAB_ROOT="${MATLAB_PATH}"
+        -D MATLAB_ARCH="glnxa64"
+    -D Trilinos_EXTRA_LINK_FLAGS="-lrt -lm -lgfortran"
+    )
+if [ "$MATLAB" == "true" ]; then
+    ARGS=( "${ARGS[@]}" "${ARGS_MATLAB[@]}" )
+fi
+
 # cmake "${ARGS[@]}" $EXTRA_ARGS ../../
 cmake -GNinja "${ARGS[@]}" $EXTRA_ARGS ../../
 

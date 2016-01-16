@@ -28,7 +28,7 @@ ARGS=(
         -D MPI_EXEC_POST_NUMPROCS_FLAGS="-bind-to;socket;-map-by;socket"
     -D Trilinos_ENABLE_OpenMP=ON
     # -D TPL_ENABLE_Pthread=OFF
-    -D TPL_ENABLE_HWLOC=ON
+    -D TPL_ENABLE_HWLOC=OFF
 
     ### ETI ###
     -D Trilinos_ENABLE_EXPLICIT_INSTANTIATION=ON

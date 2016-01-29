@@ -9,6 +9,8 @@ rm -rf CMakeFiles/
 rm -f  build.ninja
 rm -f  rules.ninja
 
+CMAKE_BUILD_TYPE=RELEASE
+
 ARGS=(
     -D CMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
 

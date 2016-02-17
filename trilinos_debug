@@ -48,6 +48,7 @@ ARGS=(
     -D TPL_ENABLE_SuperLU=ON
         -D TPL_SuperLU_INCLUDE_DIRS="${SUPERLU_PATH}/include/"
         -D TPL_SuperLU_LIBRARIES="${SUPERLU_PATH}/lib/libsuperlu_4.3.so"
+    -D TPL_ENABLE_BinUtils=ON
 
     ### ETI ###
     -D Trilinos_ENABLE_EXPLICIT_INSTANTIATION=ON
@@ -90,6 +91,8 @@ ARGS=(
     -D Trilinos_ENABLE_Stratimikos=ON
     -D Trilinos_ENABLE_Teko=ON
     -D Trilinos_ENABLE_Teuchos=ON
+        -D Teuchos_ENABLE_DEBUG=ON
+        -D Teuchos_ENABLE_STACKTRACE=ON
     -D Trilinos_ENABLE_Thyra=ON
     -D Trilinos_ENABLE_Tpetra=ON
     -D Trilinos_ENABLE_Xpetra=ON

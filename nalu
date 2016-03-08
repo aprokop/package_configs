@@ -12,12 +12,12 @@ if [ "$OMPI_MPICXX" == "clang++" ]; then
 fi
 
 TRILINOS_PATH="$HOME/local/opt/trilinos-nalu"
-YAML_PATH="/usr"
+YAML_PATH="$HOME/local/opt/yaml-cxx11-upstream"
 
 ARGS=(
     -D Trilinos_DIR="${TRILINOS_PATH}"
     -D YAML_DIR=${YAML_PATH}
-    -D YAML_LIBRARY="/usr/lib64/libyaml-cpp.so"
+        -D YAML_LIBRARY="${YAML_PATH}/lib/libyaml-cpp.so"
     -D ENABLE_INSTALL=OFF
     )
 cmake "${ARGS[@]}" $EXTRA_ARGS ../

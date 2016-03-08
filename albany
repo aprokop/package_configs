@@ -40,5 +40,6 @@ ARGS=(
 cmake "${ARGS[@]}" $EXTRA_ARGS ../
 
 # Record environment for future
-env         > build.env
+[[ -f build.module ]] && mv build.module build.module.old
+env          > build.env
 module list &> build.module

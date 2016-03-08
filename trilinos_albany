@@ -27,7 +27,7 @@ SUPERLU_PATH="$HOME/local/opt/superlu-4.3"
 ARGS=(
     -D CMAKE_BUILD_TYPE=RELEASE
 
-    -D CMAKE_INSTALL_PREFIX=$HOME/local/opt/trilinos-albany
+    -D CMAKE_INSTALL_PREFIX=$HOME/local/opt/trilinos-albany-reuse
 
     -D BUILD_SHARED_LIBS=ON
 
@@ -87,7 +87,6 @@ ARGS=(
         -D Amesos2_ENABLE_SuperLU=ON
     -D Trilinos_ENABLE_Anasazi=ON
     -D Trilinos_ENABLE_AztecOO=ON
-    -D Trilinos_ENABLE_Didasko=ON
     -D Trilinos_ENABLE_Epetra=ON
     -D Trilinos_ENABLE_EpetraExt=ON
         -D EpetraExt_ENABLE_HDF5=OFF
@@ -97,6 +96,7 @@ ARGS=(
     -D Trilinos_ENABLE_Ifpack2=ON
     -D Trilinos_ENABLE_Intrepid=ON
         -D HAVE_INTREPID_KOKKOSCORE=ON
+    -D Trilinos_ENABLE_Intrepid2=ON
     -D Trilinos_ENABLE_Isorropia=ON
     -D Trilinos_ENABLE_Kokkos=ON
         -D Trilinos_ENABLE_KokkosCore=ON
@@ -104,9 +104,7 @@ ARGS=(
         -D Kokkos_ENABLE_OpenMP=OFF
         -D Kokkos_ENABLE_Pthread=OFF
     -D Trilinos_ENABLE_KokkosCore=ON
-    -D Trilinos_ENABLE_Mesquite=ON
     -D Trilinos_ENABLE_ML=ON
-    -D Trilinos_ENABLE_MOOCHO=ON
     -D Trilinos_ENABLE_MueLu=ON
         -D MueLu_ENABLE_Experimental=OFF
         -D MueLu_ENABLE_Ifpack2=ON

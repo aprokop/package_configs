@@ -6,12 +6,16 @@ rm -rf CMakeFiles/
 rm -f  build.ninja
 rm -f  rules.ninja
 
+# module load openmpi/1.10.0
+# module load gcc/5.2.0
+# module load boost/1.58.0-cxx11
+
 SYSTEM_HEADERS=""
 for header_dir in `echo $CPATH | sed 's/:/\ /g'`; do
   SYSTEM_HEADERS="$SYSTEM_HEADERS -isystem $header_dir"
 done
 
-BOOST="false"
+BOOST="true"
 if [ "$BOOST" == "true" ] && [ "$OMPI_MPICXX" == "clang++" ]; then
     echo "This configuration (BOOST) requires using gcc"
     exit 1
@@ -25,8 +29,9 @@ elif [ "$OMPI_MPICXX" == "clang++" ]; then
 fi
 
 
-BOOST_PATH="$HOME/local/opt/boost-1.57.0/"
-MPI_PATH="$HOME/local/opt/openmpi-1.8.4/"
+BOOST_PATH="$HOME/local/opt/boost-1.58.0-cxx11/"
+MPI_PATH="$HOME/local/opt/openmpi-1.10.0/"
+# MPI_PATH="$HOME/local/opt/mpich-3.1.3/"
 SUPERLU_PATH="$HOME/local/opt/superlu-4.3/"
 
 ARGS=(
@@ -105,7 +110,8 @@ ARGS=(
         -D Zoltan2_ENABLE_TESTS=ON
 
     ### MISC ###
-    -D Trilinos_ENABLE_INSTALL_CMAKE_CONFIG_FILES=OFF
+    -D CMAKE_EXPORT_COMPILE_COMMANDS=ON
+    -D Trilinos_ENABLE_INSTALL_CMAKE_CONFIG_FILES=ON
     -D Trilinos_DEPS_XML_OUTPUT_FILE=""
 
     )
@@ -127,5 +133,6 @@ fi
 cmake -GNinja "${ARGS[@]}" $EXTRA_ARGS ../../
 
 # Record environment for future
-env         > build.env
+[[ -f build.module ]] && mv build.module build.module.old
+env          > build.env
 module list &> build.module

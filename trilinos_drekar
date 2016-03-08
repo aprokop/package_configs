@@ -61,11 +61,12 @@ ARGS=(
 
     ### ETI ###
     -D Trilinos_ENABLE_EXPLICIT_INSTANTIATION=ON
-        -D Teuchos_ENABLE_LONG_LONG_INT=ON
-        -D Tpetra_INST_INT_LONG_LONG=ON
+        -D Teuchos_ENABLE_LONG_LONG_INT=OFF
+        -D Tpetra_INST_INT_LONG_LONG=OFF
         -D Tpetra_INST_COMPLEX_DOUBLE=OFF
         -D Drekar_ENABLE_EXPLICIT_INSTANTIATION=ON
         -D DrekarMHD_ENABLE_EXPLICIT_INSTANTIATION=ON
+        -D Kokkos_ENABLE_Pthread=OFF
 
     ### PACKAGES CONFIGURATION ###
     -D Trilinos_EXTRA_REPOSITORIES="DrekarResearch,DrekarBase"
@@ -86,7 +87,7 @@ ARGS=(
     -D Trilinos_ENABLE_DrekarMHD=ON
     -D Trilinos_ENABLE_EpetraExt=ON
         -D EpetraExt_ENABLE_HDF5=OFF
-    -D Trilinos_ENABLE_FEI=OFF
+    -D Trilinos_ENABLE_FEI=ON
     -D Trilinos_ENABLE_Intrepid=ON
         -D Intrepid_ENABLE_DEBUG_INF_CHECK=OFF
     -D Trilinos_ENABLE_Ifpack2=ON
@@ -96,7 +97,9 @@ ARGS=(
     -D Trilinos_ENABLE_MueLu=ON
         -D MueLu_ENABLE_TESTS=ON
         -D MueLu_ENABLE_EXAMPLES=ON
+    -D Trilinos_ENABLE_NOX=ON
     -D Trilinos_ENABLE_Panzer=ON
+    -D Trilinos_ENABLE_Piro=ON
     -D Trilinos_ENABLE_Shards=ON
     -D Trilinos_ENABLE_Teuchos=ON
     -D Trilinos_ENABLE_SEACAS=ON
@@ -113,13 +116,15 @@ ARGS=(
     -D Trilinos_ENABLE_Stokhos=OFF
     -D Trilinos_ENABLE_Stratimikos=ON
     -D Trilinos_ENABLE_Teko=ON
+    -D Trilinos_ENABLE_Tpetra=ON
+    -D Trilinos_ENABLE_Xpetra=ON
     -D Trilinos_ENABLE_Zoltan=ON
     -D Trilinos_ENABLE_Zoltan2=ON
         -D Zoltan2_ENABLE_Experimental=ON
 
     ### MISC ###
     -D CMAKE_EXPORT_COMPILE_COMMANDS=ON
-    -D Trilinos_ENABLE_INSTALL_CMAKE_CONFIG_FILES=OFF
+    -D Trilinos_ENABLE_INSTALL_CMAKE_CONFIG_FILES=ON
     -D Trilinos_DEPS_XML_OUTPUT_FILE=""
 
     )

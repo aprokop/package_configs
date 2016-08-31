@@ -20,9 +20,9 @@ ARGS=(
 
     ### COMPILERS AND FLAGS ###
     -D Trilinos_ENABLE_CXX11=ON
-    -D Trilinos_ENABLE_Fortran=OFF
     -D CMAKE_CXX_FLAGS="-g -rdynamic -DKOKKOSP_ENABLE_PROFILING -Wall -ansi -pedantic -Wno-unknown-pragmas -Wno-narrowing -Wno-pragmas -Wno-unused-but-set-variable -Wno-inline -Wshadow"
     -D CMAKE_EXE_LINKER_FLAGS="-ldl"
+    -D Trilinos_ENABLE_Fortran=OFF
 
     ### TPLS ###
     -D TPL_ENABLE_MPI=ON
@@ -68,8 +68,8 @@ ARGS=(
     -D Trilinos_ENABLE_Isorropia=ON
     -D Trilinos_ENABLE_Kokkos=ON
         -D Kokkos_ENABLE_Debug_Bounds_Check=ON
-        -D Kokkos_ENABLE_EXAMPLES=ON
-        -D Kokkos_ENABLE_TESTS=ON
+        -D Kokkos_ENABLE_EXAMPLES=OFF
+        -D Kokkos_ENABLE_TESTS=OFF
     -D Trilinos_ENABLE_ML=ON
         -D ML_ENABLE_TESTS=ON
     -D Trilinos_ENABLE_MueLu=ON
@@ -85,14 +85,13 @@ ARGS=(
     -D Trilinos_ENABLE_Thyra=ON
     -D Trilinos_ENABLE_Tpetra=ON
         -D Tpetra_ENABLE_Kokkos_Refactor_Map=OFF
-        -D Tpetra_ENABLE_MPI_CUDA_RDMA=ON
-    -D Trilinos_ENABLE_TrilinosCouplings=ON
+    -D Trilinos_ENABLE_TrilinosCouplings=OFF
         -D TrilinosCouplings_ENABLE_EXAMPLES=ON
     -D Trilinos_ENABLE_Xpetra=ON
         -D Xpetra_ENABLE_Experimental=ON
         -D Xpetra_ENABLE_Kokkos_Refactor=ON
         # -D Xpetra_ENABLE_EXAMPLES=ON
-        -D Xpetra_ENABLE_TESTS=ON
+        # -D Xpetra_ENABLE_TESTS=ON
     -D Trilinos_ENABLE_Zoltan=ON
     -D Trilinos_ENABLE_Zoltan2=ON
         -D Zoltan2_ENABLE_Experimental=ON

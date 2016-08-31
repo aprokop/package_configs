@@ -27,8 +27,10 @@ ARGS=(
 
     -D CMAKE_INSTALL_PREFIX=$HOME/local/opt/trilinos/
     -D CMAKE_BUILD_TYPE=RELEASE
+    -D CMAKE_EXPORT_COMPILE_COMMANDS=ON
 
-    -D Trilinos_ENABLE_EXPLICIT_INSTANTIATION=ON
+    # Disable explicit instantiation, as it requires Tpetra
+    # -D Trilinos_ENABLE_EXPLICIT_INSTANTIATION=ON
 
     -D TPL_ENABLE_MPI=ON
     -D MPI_BASE_DIR=/home/aprokop/local/opt/openmpi-1.8.3/
@@ -47,7 +49,7 @@ ARGS=(
     -D Trilinos_ENABLE_ALL_OPTIONAL_PACKAGES=OFF
     -D Trilinos_ASSERT_MISSING_PACKAGES=OFF
 
-    -D Trilinos_NO_32BIT_GLOBAL_INDICES=ON
+    -D Trilinos_NO_32BIT_GLOBAL_INDICES=OFF
     -D Trilinos_NO_64BIT_GLOBAL_INDICES=OFF
 
     -D Trilinos_ENABLE_Amesos=ON
@@ -56,6 +58,7 @@ ARGS=(
     -D Trilinos_ENABLE_Epetra=ON
         -D Epetra_ENABLE_Teuchos=ON
     -D Trilinos_ENABLE_EpetraExt=ON
+    -D Trilinos_ENABLE_Galeri=ON
     -D Trilinos_ENABLE_Ifpack=ON
     -D Trilinos_ENABLE_Ifpack2=OFF
     -D Trilinos_ENABLE_Isorropia=OFF

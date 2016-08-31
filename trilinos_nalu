@@ -11,10 +11,10 @@ if [ "$OMPI_MPICXX" == "clang++" ]; then
     exit 1
 fi
 
-BOOST_PATH="/home/aprokop/local/opt/boost-1.57.0/"
+BOOST_PATH="/home/aprokop/local/opt/boost-cxx11-1.58.0/"
 GLM_PATH="/home/aprokop/local/opt/glm-0.9.4.6/include/glm/"
 HDF5_PATH="/home/aprokop/local/opt/hdf5-parallel-1.8.14/"
-MPI_PATH="/home/aprokop/local/opt/openmpi-1.8.4/"
+MPI_PATH="/home/aprokop/local/opt/openmpi-1.8.5/"
 NETCDF_PATH="/home/aprokop/local/opt/netcdf-wo4-4.3.0/"
 SUPERLU_PATH="/home/aprokop/local/opt/superlu-4.3/"
 
@@ -73,8 +73,8 @@ ARGS=(
     -D Trilinos_ENABLE_Ifpack2=ON
     -D Trilinos_ENABLE_ML=ON
     -D Trilinos_ENABLE_MueLu=ON
-        # -D MueLu_ENABLE_EXAMPLES=ON
-        # -D MueLu_ENABLE_TESTS=ON
+        -D MueLu_ENABLE_EXAMPLES=ON
+        -D MueLu_ENABLE_TESTS=ON
     -D Trilinos_ENABLE_SEACASEpu=ON
     -D Trilinos_ENABLE_SEACASExodus=ON
     -D Trilinos_ENABLE_SEACASExodiff=ON
@@ -95,6 +95,7 @@ ARGS=(
 
     ### MISC ###
     -D CMAKE_VERBOSE_MAKEFILE=OFF
+    -D CMAKE_EXPORT_COMPILE_COMMANDS=ON
     -D Trilinos_VERBOSE_CONFIGURE=OFF
     -D Trilinos_ENABLE_INSTALL_CMAKE_CONFIG_FILES=ON
     -D Trilinos_DEPS_XML_OUTPUT_FILE=""

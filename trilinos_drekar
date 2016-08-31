@@ -29,7 +29,7 @@ SUPERLU_PATH="$HOME/local/opt/superlu-4.3"
 ARGS=(
     -D CMAKE_BUILD_TYPE=RELEASE
 
-    -D CMAKE_INSTALL_PREFIX=$HOME/local/opt/trilinos-drekar
+    -D CMAKE_INSTALL_PREFIX=$HOME/local/opt/trilinos-drekar-reuse
 
     -D BUILD_SHARED_LIBS=ON
 
@@ -98,6 +98,7 @@ ARGS=(
         -D MueLu_ENABLE_TESTS=ON
         -D MueLu_ENABLE_EXAMPLES=ON
     -D Trilinos_ENABLE_NOX=ON
+        -D NOX_ENABLE_TESTS=ON
     -D Trilinos_ENABLE_Panzer=ON
     -D Trilinos_ENABLE_Piro=ON
     -D Trilinos_ENABLE_Shards=ON
@@ -117,7 +118,10 @@ ARGS=(
     -D Trilinos_ENABLE_Stratimikos=ON
     -D Trilinos_ENABLE_Teko=ON
     -D Trilinos_ENABLE_Tpetra=ON
+        -D Tpetra_ENABLE_TESTS=ON
+        -D Tpetra_ENABLE_MMM_Timings=ON
     -D Trilinos_ENABLE_Xpetra=ON
+        -D Xpetra_ENABLE_TESTS=ON
     -D Trilinos_ENABLE_Zoltan=ON
     -D Trilinos_ENABLE_Zoltan2=ON
         -D Zoltan2_ENABLE_Experimental=ON

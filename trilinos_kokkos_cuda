@@ -12,7 +12,8 @@ rm -f  build.ninja
 rm -f  rules.ninja
 
 MPI_PATH="$HOME/local/opt/openmpi-1.10.0/"
-CMAKE_BUILD_TYPE="RELEASE"
+# CMAKE_BUILD_TYPE="RELEASE"
+CMAKE_BUILD_TYPE="DEBUG"
 
 ARGS=(
     -D CMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
@@ -24,7 +25,8 @@ ARGS=(
     ### COMPILERS AND FLAGS ###
     -D Trilinos_ENABLE_CXX11=ON
         -D Trilinos_CXX11_FLAGS="-std=c++11 -expt-extended-lambda"
-    -D CMAKE_CXX_FLAGS="-g -G -Wall -DKOKKOS_CUDA_USE_LAMBDA=1 -Wno-unknown-pragmas -Wno-unused-but-set-variable -Wno-delete-non-virtual-dtor -Wno-inline -Wshadow"
+    -D CMAKE_CXX_FLAGS="-g -G -Wall -DENABLE_TRACEBACK -DKOKKOS_CUDA_USE_LAMBDA=1 -DKOKKOSP_ENABLE_PROFILING -Xcudafe --diag_suppress=initialization_not_reachable -Xcudafe --diag_suppress=code_is_unreachable -rdynamic"
+    -D CMAKE_EXE_LINKER_FLAGS="-ldl"
     -D Trilinos_ENABLE_Fortran=OFF
 
     ### TPLS ###
@@ -40,11 +42,11 @@ ARGS=(
     ### ETI ###
     -D Trilinos_ENABLE_EXPLICIT_INSTANTIATION=ON
         -D Teuchos_ENABLE_COMPLEX=OFF
-        -D Teuchos_ENABLE_LONG_LONG_INT=OFF
+        # -D Teuchos_ENABLE_LONG_LONG_INT=OFF
         -D Tpetra_INST_INT_INT=ON
         -D Tpetra_INST_INT_UNSIGNED=OFF
         -D Tpetra_INST_INT_LONG=OFF
-        -D Tpetra_INST_INT_LONG_LONG=OFF
+        # -D Tpetra_INST_INT_LONG_LONG=OFF
         -D Tpetra_INST_DOUBLE=ON
         -D Tpetra_INST_FLOAT=OFF
         -D Tpetra_INST_COMPLEX_DOUBLE=OFF
@@ -74,7 +76,7 @@ ARGS=(
         -D Kokkos_ENABLE_Debug_Bounds_Check=ON
         -D Kokkos_ENABLE_Cuda=ON
         -D Kokkos_ENABLE_Cuda_UVM=ON
-        -D Kokkos_ENABLE_EXAMPLES=ON
+        -D Kokkos_ENABLE_EXAMPLES=OFF
         -D Kokkos_ENABLE_TESTS=OFF
     -D Trilinos_ENABLE_ML=ON
         -D ML_ENABLE_TESTS=ON
@@ -91,9 +93,8 @@ ARGS=(
     -D Trilinos_ENABLE_Thyra=ON
     -D Trilinos_ENABLE_Tpetra=ON
         -D Tpetra_ENABLE_Kokkos_Refactor_Map=OFF
-        -D Tpetra_ENABLE_MPI_CUDA_RDMA=ON
-    -D Trilinos_ENABLE_TrilinosCouplings=ON
-        -D TrilinosCouplings_ENABLE_EXAMPLES=ON
+    -D Trilinos_ENABLE_TrilinosCouplings=OFF
+        # -D TrilinosCouplings_ENABLE_EXAMPLES=ON
     -D Trilinos_ENABLE_Xpetra=ON
         -D Xpetra_ENABLE_Experimental=ON
         -D Xpetra_ENABLE_Kokkos_Refactor=ON

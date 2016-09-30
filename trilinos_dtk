@@ -1,0 +1,76 @@
+#!/bin/sh
+EXTRA_ARGS=$@
+
+rm -f  CMakeCache.txt
+rm -rf CMakeFiles/
+rm -f  build.ninja
+rm -f  rules.ninja
+
+SYSTEM_HEADERS=""
+for header_dir in `echo $CPATH | sed 's/:/\ /g'`; do
+  SYSTEM_HEADERS="$SYSTEM_HEADERS -isystem $header_dir"
+done
+
+CXX_FLAGS_COMPILER_SPECIFIC=""
+if [ "$OMPI_MPICXX" == "g++" ]; then
+    CXX_FLAGS_COMPILER_SPECIFIC="-Wno-unused-local-typedefs"
+elif [ "$OMPI_MPICXX" == "clang++" ]; then
+    CXX_FLAGS_COMPILER_SPECIFIC=""
+fi
+
+ARGS=(
+    -D CMAKE_BUILD_TYPE=RELEASE
+
+    -D CMAKE_INSTALL_PREFIX=$HOME/local/opt/trilinos-dtk/
+
+    -D BUILD_SHARED_LIBS="$SHARED"
+
+    ### COMPILERS AND FLAGS ###
+    -D Trilinos_ENABLE_Fortran=OFF
+    -D CMAKE_CXX_FLAGS="-g -Wall -Wextra -Wno-unused-parameter $CXX_FLAGS_COMPILER_SPECIFIC $SYSTEM_HEADERS"
+    -D Trilinos_ENABLE_SHADOW_WARNINGS=ON
+
+    ### TPLS ###
+    -D TPL_ENABLE_MPI=ON
+    -D TPL_ENABLE_BLAS=ON
+    -D TPL_ENABLE_LAPACK=ON
+
+    -D TPL_ENABLE_Boost=OFF
+    -D TPL_ENABLE_BoostLib=OFF
+    -D TPL_ENABLE_Libmesh=OFF
+    -D TPL_ENABLE_MOAB=OFF
+
+    ### ETI ###
+    -D Trilinos_ENABLE_EXPLICIT_INSTANTIATION=ON
+        -D Tpetra_INST_INT_LONG=OFF
+        -D Tpetra_INST_INT_LONG_LONG=OFF
+
+    ### PACKAGES CONFIGURATION ###
+    -D Trilinos_ENABLE_ALL_PACKAGES=OFF
+    -D Trilinos_ENABLE_ALL_OPTIONAL_PACKAGES=OFF
+    -D Trilinos_ASSERT_MISSING_PACKAGES=OFF
+
+    -D Trilinos_ENABLE_TESTS=OFF
+    -D Trilinos_ENABLE_EXAMPLES=OFF
+
+    -D Trilinos_EXTRA_REPOSITORIES="DataTransferKit"
+
+    -D Trilinos_ENABLE_DataTransferKit=ON
+        -D DataTransferKit_ENABLE_DBC=ON
+        -D DataTransferKit_ENABLE_TESTS=ON
+        -D DataTransferKit_ENABLE_EXAMPLES=ON
+
+    ### MISC ###
+    -D CMAKE_EXPORT_COMPILE_COMMANDS=OFF
+    -D Trilinos_ENABLE_INSTALL_CMAKE_CONFIG_FILES=OFF
+    -D Trilinos_DEPS_XML_OUTPUT_FILE=""
+
+    )
+
+cmake -GNinja "${ARGS[@]}" $EXTRA_ARGS ../../
+
+# Record environment for future
+[[ -f build.env    ]] && mv build.env    build.env.old
+[[ -f build.module ]] && mv build.module build.module.old
+env          > build.env
+module list &> build.module

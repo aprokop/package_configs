@@ -42,8 +42,6 @@ ARGS=(
 
     ### ETI ###
     -D Trilinos_ENABLE_EXPLICIT_INSTANTIATION=ON
-        -D Tpetra_INST_INT_LONG=OFF
-        -D Tpetra_INST_INT_LONG_LONG=OFF
 
     ### PACKAGES CONFIGURATION ###
     -D Trilinos_ENABLE_ALL_PACKAGES=OFF
@@ -55,13 +53,17 @@ ARGS=(
 
     -D Trilinos_EXTRA_REPOSITORIES="DataTransferKit"
 
+    -D Trilinos_ENABLE_Tpetra=ON
+        -D Tpetra_INST_INT_UNSIGNED_LONG=ON
+        -D Tpetra_INST_INT_LONG_LONG=OFF
     -D Trilinos_ENABLE_DataTransferKit=ON
+        -D DataTransferKit_ENABLE_YouCompleteMe=ON
         -D DataTransferKit_ENABLE_DBC=ON
         -D DataTransferKit_ENABLE_TESTS=ON
         -D DataTransferKit_ENABLE_EXAMPLES=ON
 
     ### MISC ###
-    -D CMAKE_EXPORT_COMPILE_COMMANDS=OFF
+    -D CMAKE_EXPORT_COMPILE_COMMANDS=ON
     -D Trilinos_ENABLE_INSTALL_CMAKE_CONFIG_FILES=OFF
     -D Trilinos_DEPS_XML_OUTPUT_FILE=""
 

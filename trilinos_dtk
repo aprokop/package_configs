@@ -36,7 +36,7 @@ ARGS=(
     -D TPL_ENABLE_LAPACK=ON
 
     -D TPL_ENABLE_Boost=OFF
-    -D TPL_ENABLE_BoostLib=OFF
+    -D TPL_ENABLE_BoostLib=ON
     -D TPL_ENABLE_Libmesh=OFF
     -D TPL_ENABLE_MOAB=OFF
 
@@ -58,9 +58,13 @@ ARGS=(
         -D Tpetra_INST_INT_LONG_LONG=OFF
     -D Trilinos_ENABLE_DataTransferKit=ON
         -D DataTransferKit_ENABLE_YouCompleteMe=ON
+        -D DataTransferKit_ENABLE_ClangFormat=ON
         -D DataTransferKit_ENABLE_DBC=ON
         -D DataTransferKit_ENABLE_TESTS=ON
         -D DataTransferKit_ENABLE_EXAMPLES=ON
+    -D Trilinos_ENABLE_DataTransferKitSTKMeshAdapters=ON
+    -D Trilinos_ENABLE_STK=ON
+        -D Trilinos_ENABLE_STKTopology=ON
 
     ### MISC ###
     -D CMAKE_EXPORT_COMPILE_COMMANDS=ON

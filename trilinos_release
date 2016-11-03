@@ -29,24 +29,18 @@ if [ "$HOST" == "localhost" ]; then
     BLAS_PATH="/usr/lib64"
     LAPACK_PATH="/usr/lib64"
     MPI_PATH="$HOME/local/opt/openmpi-1.10.0/"
-    SUPERLU_PATH="$HOME/local/opt/superlu-4.3/"
 
     if [ "$SHARED" == "true" ]; then
         BLAS_LIB="${BLAS_PATH}/libblas.so"
-        SUPERLU_LIB="${LAPACK_PATH}/liblapack.so"
-        SUPERLU_LIB="${SUPERLU_PATH}/lib/libsuperlu_4.3.so"
 
     else
         BLAS_LIB="${BLAS_PATH}/libblas.a"
-        SUPERLU_LIB="${LAPACK_PATH}/liblapack.a"
-        SUPERLU_LIB="${SUPERLU_PATH}/lib/libsuperlu_4.3.a"
     fi
 
 elif [ "$HOST" == "volta" ]; then
     BLAS_PATH="/opt/cray/libsci/13.0.0/gnu/49/ivybridge/lib/"
     LAPACK_PATH="${BLAS_PATH}"
     MPI_PATH="/opt/cray/mpt/7.0.1/gni/mpich2-intel/140"
-    SUPERLU_PATH="/home/projects/x86-64/superlu/4.3.0/gnu/4.9.0"
 
     if [ "$SHARED" == "true" ]; then
         echo "Use STATIC build on Volta"
@@ -55,7 +49,6 @@ elif [ "$HOST" == "volta" ]; then
     else
         BLAS_LIB="${BLAS_PATH}/libsci_gnu_49_mpi.a"
         LAPACK_LIB="${LAPACK_PATH}/libsci_gnu_49_mpi.a"
-        SUPERLU_LIB="${SUPERLU_PATH}/lib/libsuperlu_4.3.a"
     fi
 fi
 
@@ -101,7 +94,6 @@ ARGS=(
     -D Trilinos_ENABLE_Amesos=ON
     -D Trilinos_ENABLE_Amesos2=ON
         -D Amesos2_ENABLE_KLU2=ON
-        -D Amesos2_ENABLE_SuperLU=ON
     -D Trilinos_ENABLE_AztecOO=ON
     -D Trilinos_ENABLE_Epetra=ON
         -D Epetra_ENABLE_Teuchos=ON

@@ -1,0 +1,12 @@
+#!/bin/bash
+for i in `ls -d */`; do
+  rm -f  $i/CMakeCache.txt
+  rm -rf $i/CMakeFiles
+done
+
+# Add --no-enable-fwd-packages if necessary
+nice -n 19 \
+  ../checkin-test.py -j 35 \
+  --ctest-timeout=1200 \
+  --send-email-to=xap@ornl.gov \
+  --do-all --push "$@"

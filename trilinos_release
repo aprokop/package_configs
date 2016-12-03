@@ -54,7 +54,7 @@ fi
 
 
 ARGS=(
-    -D CMAKE_BUILD_TYPE=RELEASE
+    -D CMAKE_BUILD_TYPE=RELWITHDEBINFO
 
     -D CMAKE_INSTALL_PREFIX=$HOME/local/opt/trilinos/
 
@@ -62,7 +62,7 @@ ARGS=(
 
     ### COMPILERS AND FLAGS ###
     -D Trilinos_ENABLE_Fortran=OFF
-    -D CMAKE_CXX_FLAGS="-g -Wall -Wextra -Wno-unused-parameter $CXX_FLAGS_COMPILER_SPECIFIC $SYSTEM_HEADERS"
+    -D CMAKE_CXX_FLAGS="-Wall -Wextra -Wno-unused-parameter $CXX_FLAGS_COMPILER_SPECIFIC $SYSTEM_HEADERS"
     -D Trilinos_ENABLE_SHADOW_WARNINGS=ON
 
     ### TPLS ###

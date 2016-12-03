@@ -13,7 +13,7 @@ rm -f  rules.ninja
 # module load openmpi/1.10.0
 
 ARGS=(
-    -D CMAKE_BUILD_TYPE=RELEASE
+    -D CMAKE_BUILD_TYPE=RELWITHDEBINFO
 
     -D ALBANY_TRILINOS_DIR="$HOME/local/opt/trilinos-albany"
 

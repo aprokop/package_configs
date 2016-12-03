@@ -27,7 +27,7 @@ NETCDF_PATH="$HOME/local/opt/netcdf-wo4-4.3.0"
 SUPERLU_PATH="$HOME/local/opt/superlu-4.3"
 
 ARGS=(
-    -D CMAKE_BUILD_TYPE=RELEASE
+    -D CMAKE_BUILD_TYPE=RELWITHDEBINFO
 
     -D CMAKE_INSTALL_PREFIX=$HOME/local/opt/trilinos-drekar-reuse
 
@@ -35,7 +35,7 @@ ARGS=(
 
     ### COMPILERS AND FLAGS ###
     -D Trilinos_ENABLE_Fortran=ON
-    -D CMAKE_CXX_FLAGS="-g $SYSTEM_HEADERS"
+    -D CMAKE_CXX_FLAGS="$SYSTEM_HEADERS"
     -D Trilinos_ENABLE_SHADOW_WARNINGS=OFF
 
     ### TPLS ###

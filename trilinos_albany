@@ -25,14 +25,13 @@ NETCDF_PATH="$HOME/local/opt/netcdf-wo4-4.3.0"
 SUPERLU_PATH="$HOME/local/opt/superlu-4.3"
 
 ARGS=(
-    -D CMAKE_BUILD_TYPE=RELEASE
+    -D CMAKE_BUILD_TYPE=RELWITHDEBINFO
 
     -D CMAKE_INSTALL_PREFIX=$HOME/local/opt/trilinos-albany-reuse
 
     -D BUILD_SHARED_LIBS=ON
 
     ### COMPILERS AND FLAGS ###
-    -D CMAKE_CXX_FLAGS="-g"
     -D Trilinos_ENABLE_SHADOW_WARNINGS=OFF
     -D Phalanx_SHOW_DEPRECATED_WARNINGS=OFF
 

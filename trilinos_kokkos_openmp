@@ -9,10 +9,8 @@ rm -rf CMakeFiles/
 rm -f  build.ninja
 rm -f  rules.ninja
 
-CMAKE_BUILD_TYPE=RELEASE
-
 ARGS=(
-    -D CMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
+    -D CMAKE_BUILD_TYPE=RELWITHDEBINFO
 
     -D CMAKE_INSTALL_PREFIX=$HOME/local/opt/trilinos-kokkos/
 
@@ -20,7 +18,7 @@ ARGS=(
 
     ### COMPILERS AND FLAGS ###
     -D Trilinos_ENABLE_CXX11=ON
-    -D CMAKE_CXX_FLAGS="-g -rdynamic -DKOKKOSP_ENABLE_PROFILING -Wall -ansi -pedantic -Wno-unknown-pragmas -Wno-narrowing -Wno-pragmas -Wno-unused-but-set-variable -Wno-inline -Wshadow"
+    -D CMAKE_CXX_FLAGS="-rdynamic -DKOKKOSP_ENABLE_PROFILING -Wall -ansi -pedantic -Wno-unknown-pragmas -Wno-narrowing -Wno-pragmas -Wno-unused-but-set-variable -Wno-inline -Wshadow"
     -D CMAKE_EXE_LINKER_FLAGS="-ldl"
     -D Trilinos_ENABLE_Fortran=OFF
 

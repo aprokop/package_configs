@@ -1,0 +1,134 @@
+set ts=8
+
+" DTK
+syn keyword cDefine
+    \ DTK_CHECK
+    \ DTK_CHECK_ERROR_CODE
+    \ DTK_ENSURE
+    \ DTK_INSIST
+    \ DTK_REMEMBER
+    \ DTK_REQUIRE
+syn keyword cType
+    \ BasicEntitySet
+    \ BasicEntitySetIterator
+    \ BasicGeometryEntity
+    \ BasicGeometryEntityImpl
+    \ BasicGeometryExtraData
+    \ BasicGeometryLocalMap
+    \ BasicGeometryManager
+    \ BoxGeometry
+    \ BoxGeometryImpl
+    \ BuhmannBasis
+    \ CenterDistributor
+    \ ClientManager
+    \ CloudDomain
+    \ CoarseGlobalSearch
+    \ CoarseLocalSearch
+    \ ConsistentInterpolationOperator
+    \ CylinderGeometry
+    \ CylinderGeometryImpl
+    \ DataTransferKitException
+    \ Entity
+    \ EntityId
+    \ EntityCenteredField
+    \ EntityCenteredShapeFunction
+    \ EntityExtraData
+    \ EntityImpl
+    \ EntityIntegrationRule
+    \ EntityIterator
+    \ EntityLocalMap
+    \ EntitySet
+    \ EntityShapeFunction
+    \ EuclideanDistance
+    \ Field
+    \ FineLocalSearch
+    \ FunctionSpace
+    \ IntrepidBasisFactory
+    \ IntrepidCell
+    \ IntrepidIntegrationRule
+    \ IntrepidShapeFunction
+    \ IntrepidSideCell
+    \ L2ProjectionOperator
+    \ LocalEntityPredicate
+    \ LocalMLSProblem
+    \ MapOperator
+    \ MapOperatorFactory
+    \ MovingLeastSquareReconstructionOperator
+    \ NanoflannTree
+    \ NewtonSolver
+    \ NodeToNodeOperator
+    \ NonlinearProblemTraits
+    \ ParallelSearch
+    \ Point
+    \ PointCloudOperatorFactory
+    \ PointInFaceVolumeOfInfluenceNonlinearProblem
+    \ PolynomialMatrix
+    \ PredicateFunction
+    \ ProjectionPrimitives
+    \ ProjectPointFeatureToEdgeFeatureNonlinearProblem
+    \ ProjectPointToFaceNonlinearProblem
+    \ RadialBasisPolicy
+    \ SearchTreeFactory
+    \ SplineCoefficientMatrix
+    \ SplineEvaluationMatrix
+    \ SplineInterpolationOperator
+    \ SplineInterpolationPairing
+    \ SplineProlongationOperator
+    \ SupportId
+    \ TpetraMap
+    \ TpetraVector
+    \ TpetraMultiVector
+    \ UndefinedNonlinearProblemTraits
+    \ UndefinedRadialBasisPolicy
+    \ WendlandBasis
+    \ WuBasis
+
+" Trilinos Types
+syn keyword cType
+    \ GO GlobalOrdinal
+    \ LO LocalOrdinal
+    \ NO Node
+    \ SC Scalar
+
+" Teuchos
+syn keyword cDefine
+    \ TEUCHOS_UNIT_TEST
+    \ TEST_EQUALITY
+    \ TEST_FLOATING_EQUALITY
+syn keyword cType
+    \ Array
+    \ ArrayRCP
+    \ ArrayView
+    \ ParameterList
+
+" Tpetra
+syn keyword cType
+    \ CrsMatrix
+    \ Distributor
+    \ Import
+    \ Map
+    \ MultiVector
+    \ Vector
+
+" Intrepid
+syn keyword cType
+    \ IntrepidcellLocalMap
+
+" STK
+syn keyword cType
+    \ STKMeshEntity
+    \ STKMeshEntityExtraData
+    \ STKMeshEntityImpl
+    \ STKMeshEntityIntegrationRule
+    \ STKMeshEntityIterator
+    \ STKMeshEntityIteratorRange
+    \ STKMeshEntityLocalMap
+    \ STKMeshEntitySet
+    \ STKMeshField
+    \ STKMeshHelpers
+    \ STKMeshManager
+    \ STKMeshNodalShapeFunction
+    \ STKPartNamePredicate
+    \ STKPartPredicate
+    \ STKPartVectorPredicate
+    \ STKSelectorPredicate

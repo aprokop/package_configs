@@ -1,22 +1,8 @@
-#!/bin/sh
+#!/usr/bin/env bash
 EXTRA_ARGS=$@
 
 rm -f  CMakeCache.txt
 rm -rf CMakeFiles/
-rm -f  build.ninja
-rm -f  rules.ninja
-
-if [ "$OMPI_MPICXX" == "clang++" ]; then
-    echo "This configuration requires using gcc"
-    exit 1
-fi
-
-BOOST_PATH="/home/aprokop/local/opt/boost-cxx11-1.58.0/"
-GLM_PATH="/home/aprokop/local/opt/glm-0.9.4.6/include/glm/"
-HDF5_PATH="/home/aprokop/local/opt/hdf5-parallel-1.8.14/"
-MPI_PATH="/home/aprokop/local/opt/openmpi-1.8.5/"
-NETCDF_PATH="/home/aprokop/local/opt/netcdf-wo4-4.3.0/"
-SUPERLU_PATH="/home/aprokop/local/opt/superlu-4.3/"
 
 ARGS=(
     -D CMAKE_BUILD_TYPE=RELWITHDEBINFO
@@ -26,33 +12,28 @@ ARGS=(
     -D BUILD_SHARED_LIBS=ON
 
     ### COMPILERS AND FLAGS ###
-    -D CMAKE_CXX_FLAGS="-g"
 
     ### TPLS ###
     -D TPL_ENABLE_MPI=ON
-        -D MPI_BASE_DIR="${MPI_PATH}"
-    -D TPL_ENABLE_Boost=ON
-        -D Boost_INCLUDE_DIRS="${BOOST_PATH}/include"
-        -D Boost_LIBRARY_DIRS="${BOOST_PATH}/lib/"
+    -D TPL_ENABLE_BLAS=ON
+        -D BLAS_LIBRARY_NAMES="openblas"
+    -D TPL_ENABLE_LAPACK=ON
+        -D LAPACK_LIBRARY_NAMES="openblas"
     -D TPL_ENABLE_BoostLib=ON
-        -D BoostLib_INCLUDE_DIRS="${BOOST_PATH}/include"
-        -D BoostLib_LIBRARY_DIRS="${BOOST_PATH}/lib/"
-    -D TPL_ENABLE_GLM=ON
-        -D TPL_GLM_INCLUDE_DIRS="${GLM_PATH}"
     -D TPL_ENABLE_HDF5=ON
-        -D TPL_HDF5_INCLUDE_DIRS="${HDF5_PATH}/include"
-        -D TPL_HDF5_LIBRARIES="${HDF5_PATH}/lib/libhdf5_hl.a;${HDF5_PATH}/lib/libhdf5.a;/usr/lib64/libz.so"
-        # -D TPL_HDF5_LIBRARY_DIRS="${HDF5_PATH}/lib"
+        # -D TPL_HDF5_LIBRARIES="libhdf5_hl.a;libhdf5.a;libz.a"
+        -D TPL_HDF5_LIBRARIES="-lhdf5_hl;-lhdf5;-lz"
     -D TPL_ENABLE_Netcdf=ON
-        -D TPL_Netcdf_INCLUDE_DIRS="${NETCDF_PATH}include"
-        -D TPL_Netcdf_LIBRARIES="${NETCDF_PATH}/lib/libnetcdf.so"
-    -D TPL_ENABLE_SuperLU=ON
-        -D TPL_SuperLU_INCLUDE_DIRS="${SUPERLU_PATH}/include/"
-        -D TPL_SuperLU_LIBRARIES="${SUPERLU_PATH}/lib/libsuperlu_4.3.so"
+        # -D TPL_Netcdf_LIBRARIES="libnetcdf.a;libpnetcdf.a;libhdf5_hl.a;libhdf5.a;libz.a"
+        -D TPL_Netcdf_LIBRARIES="-lnetcdf;-lpnetcdf;-lhdf5_hl;-lhdf5;-lz"
+        -D TPL_Netcdf_Enables_Netcdf4=ON
+        -D TPL_Netcdf_PARALLEL=ON
+    -D TPL_ENABLE_X11=OFF
     -D TPL_ENABLE_Zlib=ON
 
     ### ETI ###
     -D Trilinos_ENABLE_EXPLICIT_INSTANTIATION=ON
+        -D Tpetra_INST_DOUBLE=ON
         -D Tpetra_INST_INT_LONG=ON
         -D Tpetra_INST_COMPLEX_DOUBLE=OFF
 
@@ -62,12 +43,14 @@ ARGS=(
 
     -D Trilinos_ENABLE_TESTS=OFF
     -D Trilinos_ENABLE_EXAMPLES=OFF
-    -D Trilinos_ASSERT_MISSING_PACKAGES=OFF
+    -D Trilinos_ENABLE_ALL_OPTIONAL_PACKAGES=OFF
 
     -D Trilinos_ENABLE_Amesos=ON
     -D Trilinos_ENABLE_Amesos2=ON
+    -D Trilinos_ENABLE_AztecOO=ON
     -D Trilinos_ENABLE_Belos=ON
     -D Trilinos_ENABLE_Epetra=ON
+    -D Trilinos_ENABLE_EpetraExt=ON
     -D Trilinos_ENABLE_Gtest=ON
     -D Trilinos_ENABLE_Ifpack=ON
     -D Trilinos_ENABLE_Ifpack2=ON
@@ -75,9 +58,12 @@ ARGS=(
     -D Trilinos_ENABLE_MueLu=ON
         -D MueLu_ENABLE_EXAMPLES=ON
         -D MueLu_ENABLE_TESTS=ON
-    -D Trilinos_ENABLE_SEACASEpu=ON
-    -D Trilinos_ENABLE_SEACASExodus=ON
-    -D Trilinos_ENABLE_SEACASExodiff=ON
+    -D Trilinos_ENABLE_SEACAS=ON
+        -D Trilinos_ENABLE_SEACASEpu=ON
+        -D Trilinos_ENABLE_SEACASExodiff=ON
+        -D Trilinos_ENABLE_SEACASExodus=ON
+        -D Trilinos_ENABLE_SEACASNemslice=ON
+        -D Trilinos_ENABLE_SEACASNemspread=ON
     -D Trilinos_ENABLE_STK=ON
         -D Trilinos_ENABLE_STKClassic=OFF
         -D Trilinos_ENABLE_STKIO=ON
@@ -88,7 +74,7 @@ ARGS=(
         -D Trilinos_ENABLE_STKUtil=ON
         -D Trilinos_ENABLE_STKDoc_tests=OFF
         -D Trilinos_ENABLE_STKUnit_tests=OFF
-    -D Trilinos_ENABLE_ThreadPool=ON
+        -D Trilinos_ENABLE_STKUnit_test_utils=OFF
     -D Trilinos_ENABLE_Tpetra=ON
     -D Trilinos_ENABLE_Zoltan=ON
     -D Trilinos_ENABLE_Zoltan2=ON

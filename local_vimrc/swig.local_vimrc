@@ -1,0 +1,15 @@
+set ts=8
+
+" DTK
+" syn keyword cDefine
+
+syn keyword cType
+    \ File
+    \ Language
+    \ List
+    \ Node
+    \ Parm
+    \ ParmList
+    \ String
+    \ SwigType
+    \ Wrapper

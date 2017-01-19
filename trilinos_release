@@ -6,9 +6,6 @@ rm -rf CMakeFiles/
 rm -f  build.ninja
 rm -f  rules.ninja
 
-# module load openmpi/1.10.0
-# module load gcc/5.2.0
-
 SYSTEM_HEADERS=""
 for header_dir in `echo $CPATH | sed 's/:/\ /g'`; do
   SYSTEM_HEADERS="$SYSTEM_HEADERS -isystem $header_dir"
@@ -110,6 +107,7 @@ ARGS=(
         -D MueLu_ENABLE_TESTS=ON
         -D MueLu_ENABLE_EXAMPLES=ON
         -D MueLu_ENABLE_DEBUG=ON
+        -D MueLu_ENABLE_BROKEN_TESTS=ON
         -D MueLu_ENABLE_Amesos2=ON
         -D MueLu_ENABLE_Ifpack2=ON
         # -D MueLu_ENABLE_PROFILING=ON

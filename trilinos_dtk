@@ -11,13 +11,6 @@ for header_dir in `echo $CPATH | sed 's/:/\ /g'`; do
   SYSTEM_HEADERS="$SYSTEM_HEADERS -isystem $header_dir"
 done
 
-CXX_FLAGS_COMPILER_SPECIFIC=""
-if [ "$OMPI_MPICXX" == "g++" ]; then
-    CXX_FLAGS_COMPILER_SPECIFIC="-Wno-unused-local-typedefs"
-elif [ "$OMPI_MPICXX" == "clang++" ]; then
-    CXX_FLAGS_COMPILER_SPECIFIC=""
-fi
-
 ARGS=(
     -D CMAKE_BUILD_TYPE=RELWITHDEBINFO
 
@@ -27,7 +20,8 @@ ARGS=(
 
     ### COMPILERS AND FLAGS ###
     -D Trilinos_ENABLE_Fortran=OFF
-    -D CMAKE_CXX_FLAGS="-Wall -Wextra -Wno-unused-parameter $CXX_FLAGS_COMPILER_SPECIFIC $SYSTEM_HEADERS"
+    -D CMAKE_CXX_FLAGS="-Wall $SYSTEM_HEADERS"
+        -D DataTransferKit_CXX_FLAGS="-Wall -Wno-shadow -Werror $SYSTEM_HEADERS"
     -D Trilinos_ENABLE_SHADOW_WARNINGS=ON
 
     ### TPLS ###

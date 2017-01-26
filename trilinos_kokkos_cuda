@@ -1,9 +1,9 @@
 #!/bin/sh
 EXTRA_ARGS=$@
 
-# module load openmpi/1.10.0
-# module load gcc/4.9.2
-# module load cuda/7.5-gcc
+# spack  load openmpi@1.8.8
+# spack  load gcc@5.4.0
+# module load cuda/8.0-gcc
 # module load nvcc-wrapper/gcc
 
 rm -f  CMakeCache.txt

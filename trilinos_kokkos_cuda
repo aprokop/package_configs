@@ -11,12 +11,8 @@ rm -rf CMakeFiles/
 rm -f  build.ninja
 rm -f  rules.ninja
 
-MPI_PATH="$HOME/local/opt/openmpi-1.10.0/"
-# CMAKE_BUILD_TYPE="RELWITHDEBINFO"
-CMAKE_BUILD_TYPE="DEBUG"
-
 ARGS=(
-    -D CMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
+    -D CMAKE_BUILD_TYPE=RELWITHDEBINFO
 
     -D CMAKE_INSTALL_PREFIX=$HOME/local/opt/trilinos-kokkos/
 
@@ -79,7 +75,6 @@ ARGS=(
         -D Kokkos_ENABLE_EXAMPLES=OFF
         -D Kokkos_ENABLE_TESTS=OFF
     -D Trilinos_ENABLE_ML=ON
-        -D ML_ENABLE_TESTS=ON
     -D Trilinos_ENABLE_MueLu=ON
         -D MueLu_ENABLE_Experimental=ON
         -D MueLu_ENABLE_Kokkos_Refactor=ON
@@ -103,7 +98,6 @@ ARGS=(
     -D Trilinos_ENABLE_Zoltan=ON
     -D Trilinos_ENABLE_Zoltan2=ON
         -D Zoltan2_ENABLE_Experimental=ON
-        -D Zoltan2_ENABLE_TESTS=ON
 
     ### MISC ###
     -D CMAKE_EXPORT_COMPILE_COMMANDS=ON

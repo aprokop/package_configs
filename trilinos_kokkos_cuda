@@ -20,9 +20,7 @@ ARGS=(
 
     ### COMPILERS AND FLAGS ###
     -D Trilinos_ENABLE_CXX11=ON
-        -D Trilinos_CXX11_FLAGS="-std=c++11 -expt-extended-lambda"
-    -D CMAKE_CXX_FLAGS="-G -Wall -DENABLE_TRACEBACK -DKOKKOS_CUDA_USE_LAMBDA=1 -DKOKKOSP_ENABLE_PROFILING -Xcudafe --diag_suppress=initialization_not_reachable -Xcudafe --diag_suppress=code_is_unreachable -rdynamic"
-    -D CMAKE_EXE_LINKER_FLAGS="-ldl"
+    -D CMAKE_CXX_FLAGS="-lineinfo -Wall -arch=sm_61 -DKOKKOSP_ENABLE_PROFILING -Xcudafe --diag_suppress=initialization_not_reachable -Xcudafe --diag_suppress=code_is_unreachable"
     -D Trilinos_ENABLE_Fortran=OFF
 
     ### TPLS ###

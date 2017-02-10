@@ -1,14 +1,26 @@
 set ts=8
 
+au! BufEnter *.C let b:fswitchdst = 'h' | let b:fswitchlocs = 'reg:/src/include/'
+au! BufEnter *.h let b:fswitchdst = 'C' | let b:fswitchlocs = 'reg:/include/src/'
+
+
 " Nalu
 syn keyword cDefine
     \ ThrowRequire
 syn keyword cType
+    \ AssembleOversetSolverConstraintAlgorithm
+    \ EquationSystem
     \ LinearProblem
     \ LinearSolver
     \ LinearSolvers
+    \ LinearSystem
+    \ MasterElement
     \ OneDVector
+    \ OversetInfo
+    \ OversetManager
+    \ Realm
     \ Simulation
+    \ SolverAlgorithm
     \ SolverFactory
     \ TpetraLinearSolver
     \ TpetraLinearSolverConfig
@@ -36,6 +48,7 @@ syn keyword cType
 syn keyword cType
     \ CrsMatrix
     \ Distributor
+    \ Export
     \ Import
     \ Map
     \ MultiVector
@@ -67,3 +80,12 @@ syn keyword cType
     \ STKPartPredicate
     \ STKPartVectorPredicate
     \ STKSelectorPredicate
+
+" STK::mesh
+syn keyword cType
+    \ BulkData
+    \ Entity
+    \ EntityId
+    \ FieldBase
+    \ Part
+    \ PartVector

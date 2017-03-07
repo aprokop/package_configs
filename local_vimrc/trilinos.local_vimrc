@@ -1,4 +1,5 @@
 set ts=8
+set sw=2
 
 " Trilinos Types
 syn keyword cType

@@ -4,9 +4,17 @@ for i in `ls -d */`; do
   rm -rf $i/CMakeFiles
 done
 
+# module load mpi
+# spack load boost
+# spack load openblas
+
 # Add --no-enable-fwd-packages if necessary
-nice -n 19 \
-  ../checkin-test.py -j 16 \
-  --ctest-timeout=1200 \
-  --send-email-to=xap@ornl.gov \
-  --do-all --push "$@"
+ARGS=(
+  ../checkin-test.py -j 16
+  --ctest-timeout=1200
+  # --send-email-to=xap@ornl.gov
+  --do-all
+  --push
+  )
+
+nice -n 19 "${ARGS[@]}" "$@"

@@ -16,6 +16,7 @@ syn keyword cType
     \ BasicGeometryExtraData
     \ BasicGeometryLocalMap
     \ BasicGeometryManager
+    \ BBox
     \ BoxGeometry
     \ BoxGeometryImpl
     \ BuhmannBasis
@@ -78,10 +79,15 @@ syn keyword cType
     \ TpetraMap
     \ TpetraVector
     \ TpetraMultiVector
+    \ TreeConstruction
     \ UndefinedNonlinearProblemTraits
     \ UndefinedRadialBasisPolicy
     \ WendlandBasis
     \ WuBasis
+
+syn keyword cType
+    \ DeviceType
+    \ ExecutionSpace
 
 " Trilinos Types
 syn keyword cType
@@ -100,6 +106,11 @@ syn keyword cType
     \ ArrayRCP
     \ ArrayView
     \ ParameterList
+
+" Kokkos
+syn keyword cType
+    \ DualView
+    \ View
 
 " Tpetra
 syn keyword cType

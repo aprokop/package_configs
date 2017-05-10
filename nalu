@@ -6,6 +6,7 @@ rm -rf CMakeFiles/
 
 TRILINOS_INSTALL=$HOME/local/opt/trilinos-nalu
 
+YAML_PATH=`spack find -p yaml-cpp | tail -n 1 | awk '{print $2}'`
 ARGS=(
     -D CMAKE_BUILD_TYPE=RELWITHDEBINFO
 
@@ -18,9 +19,17 @@ ARGS=(
     ### COMPILERS AND FLAGS ###
 
     ### TPLS ###
+    -D YAML_DIR=${YAML_PATH}
+        -D YAML_LIBRARY="${YAML_PATH}/lib/libyaml-cpp.so"
+
+
+    ### PACKAGES CONFIGURATION ###
+    -D ENABLE_TESTS=ON
  )
 cmake "${ARGS[@]}" $EXTRA_ARGS ../
 
 # Record environment for future
-env         > build.env
+[[ -f build.env    ]] && mv build.env    build.env.old
+[[ -f build.module ]] && mv build.module build.module.old
+env          > build.env
 module list &> build.module

@@ -49,8 +49,8 @@ ARGS=(
         -D QSIZE_D=$NTRACERS
     -D BUILD_HOMME_SWIM=ON
         -D SWIM_NP=$NP
-    -D BUILD_HOMME_SWEQX=OFF
-    -D BUILD_HOMME_PREQX=OFF
+    -D BUILD_HOMME_SWEQX=ON
+    -D BUILD_HOMME_PREQX=ON
     -D BUILD_HOMME_PREQX_ACC=OFF
 
     # The way baseline works is like this:

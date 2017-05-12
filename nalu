@@ -25,6 +25,8 @@ ARGS=(
 
     ### PACKAGES CONFIGURATION ###
     -D ENABLE_TESTS=ON
+
+    # -D TEST_TOLERANCE=".0001"
  )
 cmake "${ARGS[@]}" $EXTRA_ARGS ../
 

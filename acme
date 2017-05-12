@@ -10,6 +10,9 @@ export ACME_ROOT=$HOME/code/acme
 export HOMME_ROOT=$ACME_ROOT/components/homme
 export Trilinos_DIR=$HOME/local/opt/trilinos-acme
 
+NETCDF_DIR=`spack find -p netcdf | tail -n 1 | awk '{print $2}'`
+NETCDFF_DIR=`spack find -p netcdf-fortran | tail -n 1 | awk '{print $2}'`
+
 NP=4
 NLEVELS=26
 NTRACERS=0
@@ -31,19 +34,27 @@ ARGS=(
     ### TPLS ###
     -D HOMME_FIND_BLASLAPACK=ON
     -D WITH_PNETCDF=OFF
+        -D Netcdf_INCLUDE_DIR="${NETCDF_DIR}/include;${NETCDFF_DIR}/include"
+        -D NETCDF_C_INCLUDE_DIR="${NETCDFF_DIR}/include"
+        -D NETCDF_C_LIBRARY="${NETCDF_DIR}/lib/libnetcdf.so"
+        -D Netcdf_LIBRARY="${NETCDF_DIR}/lib/libnetcdf.so"
+        -D NETCDF_Fortran_INCLUDE_DIR="${NETCDFF_DIR}/include"
+        -D NETCDF_Fortran_LIBRARY="${NETCDFF_DIR}/lib/libnetcdff.so"
+        -D NetcdfF_LIBRARY="${NETCDFF_DIR}/lib/libnetcdff.so"
 
     ### PACKAGES CONFIGURATION ###
-    -D BUILD_HOMME_PRIM=ON
+    -D BUILD_HOMME_PRIM=OFF
         -D PRIM_NP=$NP
         -D PRIM_PLEV=$NLEVELS
         -D QSIZE_D=$NTRACERS
-    -D BUILD_HOMME_SWIM=OFF
+    -D BUILD_HOMME_SWIM=ON
+        -D SWIM_NP=$NP
     -D BUILD_HOMME_SWEQX=OFF
     -D BUILD_HOMME_PREQX=OFF
     -D BUILD_HOMME_PREQX_ACC=OFF
 )
 
-cmake "${ARGS[@]}" $HOMME_ROOT
+cmake "${ARGS[@]}" "$EXTRA_ARGS" $HOMME_ROOT
 
 # Record environment for future
 [[ -f build.env    ]] && mv build.env    build.env.old

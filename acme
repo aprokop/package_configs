@@ -43,7 +43,7 @@ ARGS=(
         -D NetcdfF_LIBRARY="${NETCDFF_DIR}/lib/libnetcdff.so"
 
     ### PACKAGES CONFIGURATION ###
-    -D BUILD_HOMME_PRIM=OFF
+    -D BUILD_HOMME_PRIM=ON
         -D PRIM_NP=$NP
         -D PRIM_PLEV=$NLEVELS
         -D QSIZE_D=$NTRACERS
@@ -52,6 +52,17 @@ ARGS=(
     -D BUILD_HOMME_SWEQX=OFF
     -D BUILD_HOMME_PREQX=OFF
     -D BUILD_HOMME_PREQX_ACC=OFF
+
+    # The way baseline works is like this:
+    # 1. Pull a fresh unmodified copy of ACME
+    # 2. Build
+    # 3. Run `make baseline` to produce gold baseline
+    # 4. Modify soures and use a second build for development
+    # 5. Compare builds against the baseline in the gold
+    # More info here:
+    #   wiki.ucar.edu/display/homme/How+to+run+the+regression+tests
+    # This CMake var points to the gold baseline
+    -D HOMME_BASELINE_DIR="`pwd`/tests/baseline"
 )
 
 cmake "${ARGS[@]}" "$EXTRA_ARGS" $HOMME_ROOT

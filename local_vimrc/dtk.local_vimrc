@@ -1,4 +1,5 @@
 set ts=8
+set sw=4
 
 " DTK
 syn keyword cDefine

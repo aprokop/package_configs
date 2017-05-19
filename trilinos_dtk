@@ -56,9 +56,7 @@ ARGS=(
         -D DataTransferKit_ENABLE_DBC=ON
         -D DataTransferKit_ENABLE_TESTS=ON
         -D DataTransferKit_ENABLE_EXAMPLES=ON
-    -D Trilinos_ENABLE_DataTransferKitSTKMeshAdapters=ON
-    -D Trilinos_ENABLE_STK=ON
-        -D Trilinos_ENABLE_STKTopology=ON
+        -D DataTransferKit_ENABLE_ReadTheDocs=ON
 
     ### MISC ###
     -D CMAKE_EXPORT_COMPILE_COMMANDS=ON

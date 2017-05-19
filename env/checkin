@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+source $HOME/local/opt/spack/share/spack/setup-env.sh
+
+spack load mpi
+spack load boost
+spack load openblas
+spack load yaml-cpp
+spack load hdf5
+spack load netcdf

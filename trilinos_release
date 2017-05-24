@@ -104,6 +104,7 @@ ARGS=(
         -D ML_ENABLE_TESTS=ON
     -D Trilinos_ENABLE_MueLu=ON
         -D MueLu_ENABLE_Experimental=ON
+        -D MueLu_ENABLE_BROKEN_TESTS=ON
         -D MueLu_ENABLE_TESTS=ON
         -D MueLu_ENABLE_EXAMPLES=ON
         -D MueLu_ENABLE_DEBUG=ON

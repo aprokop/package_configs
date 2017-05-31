@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+# Module loads for ACME
+source $HOME/local/opt/spack/share/spack/setup-env.sh
+
+module load mpi
+spack load boost
+spack load llvm@4.0.0

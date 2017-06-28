@@ -5,6 +5,7 @@ set sw=4
 syn keyword cDefine
     \ DTK_CHECK
     \ DTK_CHECK_ERROR_CODE
+    \ DTK_CHECK_USER_FUNCTION
     \ DTK_ENSURE
     \ DTK_INSIST
     \ DTK_REMEMBER
@@ -83,6 +84,8 @@ syn keyword cType
     \ TreeConstruction
     \ UndefinedNonlinearProblemTraits
     \ UndefinedRadialBasisPolicy
+    \ UserApplication
+    \ UserFunctionRegistry
     \ WendlandBasis
     \ WuBasis
 
@@ -100,8 +103,10 @@ syn keyword cType
 " Teuchos
 syn keyword cDefine
     \ TEUCHOS_UNIT_TEST
+    \ TEST_ASSERT
     \ TEST_EQUALITY
     \ TEST_FLOATING_EQUALITY
+    \ TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL
 syn keyword cType
     \ Array
     \ ArrayRCP

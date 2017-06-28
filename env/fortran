@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+source $HOME/local/opt/spack/share/spack/setup-env.sh
+
+# Need it to use Ninja with Fortran builds
+spack load ninja-fortran

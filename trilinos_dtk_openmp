@@ -15,7 +15,7 @@ ARGS=(
 
     ### COMPILERS AND FLAGS ###
     -D CMAKE_CXX_FLAGS="-Wall -DKOKKOSP_ENABLE_PROFILING"
-    -D Trilinos_ENABLE_Fortran=OFF
+    -D Trilinos_ENABLE_Fortran=ON
     -D Trilinos_ENABLE_SHADOW_WARNINGS=ON
 
     ### TPLS ###
@@ -71,7 +71,6 @@ ARGS=(
     )
 
 cmake -GNinja "${ARGS[@]}" $EXTRA_ARGS ../../
-# cmake "${ARGS[@]}" $EXTRA_ARGS ../../
 
 # Record environment for future
 [[ -f build.env    ]] && mv build.env    build.env.old

@@ -1,13 +1,18 @@
 set ts=8
 
+" Nalu separates sources and headers in two directories
 au! BufEnter *.C let b:fswitchdst = 'h' | let b:fswitchlocs = 'reg:/src/include/'
 au! BufEnter *.h let b:fswitchdst = 'C' | let b:fswitchlocs = 'reg:/include/src/'
 
+" In Nalu, .i files correspond to YAML config files
+au! BufEnter *.i set ft=yaml
 
 " Nalu
 syn keyword cDefine
+    \ ThrowAssert
     \ ThrowRequire
 syn keyword cType
+    \ Algorithm
     \ AssembleOversetSolverConstraintAlgorithm
     \ EquationSystem
     \ LinearProblem
@@ -19,6 +24,7 @@ syn keyword cType
     \ OversetInfo
     \ OversetManager
     \ Realm
+    \ Realms
     \ Simulation
     \ SolverAlgorithm
     \ SolverFactory
@@ -83,9 +89,13 @@ syn keyword cType
 
 " STK::mesh
 syn keyword cType
+    \ Bucket
+    \ BucketVector
     \ BulkData
     \ Entity
     \ EntityId
     \ FieldBase
+    \ MetaData
     \ Part
     \ PartVector
+    \ Selector

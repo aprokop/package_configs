@@ -43,9 +43,10 @@ ARGS=(
 
     ### COMPILERS AND FLAGS ###
     -D Trilinos_ENABLE_Fortran=OFF
+    -D Trilinos_TPL_SYSTEM_INCLUDE_DIRS=ON
+    -D Trilinos_ENABLE_SHADOW_WARNINGS=ON
     -D CMAKE_C_FLAGS="-Wall -Wextra -std=c99 -pedantic -Wno-unused-parameter $CXX_FLAGS_COMPILER_SPECIFIC $SYSTEM_HEADERS"
     -D CMAKE_CXX_FLAGS="-Wall -Wextra -pedantic -Wno-unused-parameter $CXX_FLAGS_COMPILER_SPECIFIC $SYSTEM_HEADERS"
-    -D Trilinos_ENABLE_SHADOW_WARNINGS=ON
 
     ### TPLS ###
     -D TPL_ENABLE_MPI=ON

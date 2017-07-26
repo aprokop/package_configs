@@ -12,6 +12,7 @@ ARGS=(
     -D BUILD_SHARED_LIBS=ON
 
     ### COMPILERS AND FLAGS ###
+    -D Trilinos_TPL_SYSTEM_INCLUDE_DIRS=ON
 
     ### TPLS ###
     -D TPL_ENABLE_MPI=ON

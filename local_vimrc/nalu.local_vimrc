@@ -12,24 +12,53 @@ syn keyword cDefine
     \ ThrowAssert
     \ ThrowRequire
 syn keyword cType
+    \ ABLForcingAlgorithm
+    \ ActuatorLine
+    \ Adapter
     \ Algorithm
+    \ AlgorithmDriver
     \ AssembleOversetSolverConstraintAlgorithm
+    \ AuxFunctionAlgorithm
+    \ ComputeGeometryAlgorithmDriver
+    \ DataProbePostProcessing
+    \ ElementDescription
     \ EquationSystem
+    \ EquationSystems
+    \ ErrorIndicatorAlgorithmDriver
+    \ HDF5FilePtr
+    \ InitialCondition
+    \ LagrangeBasis
     \ LinearProblem
     \ LinearSolver
     \ LinearSolvers
     \ LinearSystem
     \ MasterElement
+    \ NonConformalManager
     \ OneDVector
+    \ OutputInfo
     \ OversetInfo
     \ OversetManager
+    \ PecletFunction
+    \ PeriodicManager
+    \ PostProcessingData
+    \ PostProcessingInfo
+    \ PromotedElementIO
+    \ PropertyEvaluator
     \ Realm
     \ Realms
     \ Simulation
+    \ SolutionNormPostProcessing
+    \ SolutionOptions
     \ SolverAlgorithm
+    \ SolverAlgorithmDriver
     \ SolverFactory
+    \ TensorProductQuadratureRule
+    \ TimeIntegrator
     \ TpetraLinearSolver
     \ TpetraLinearSolverConfig
+    \ Transfer
+    \ TurbulenceAveragingPostProcessing
+
 
 " Trilinos Types
 syn keyword cType

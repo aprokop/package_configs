@@ -37,7 +37,7 @@ ARGS=(
 
     )
 
-cmake "${ARGS[@]}" $EXTRA_ARGS ../
+cmake "${ARGS[@]}" $EXTRA_ARGS ../ | tee configure.log
 
 # Record environment for future
 [[ -f build.module ]] && mv build.module build.module.old

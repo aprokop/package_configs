@@ -65,7 +65,7 @@ ARGS=(
     -D HOMME_BASELINE_DIR="`pwd`/tests/baseline"
 )
 
-cmake "${ARGS[@]}" "$EXTRA_ARGS" $HOMME_ROOT
+cmake "${ARGS[@]}" "$EXTRA_ARGS" $HOMME_ROOT | tee configure.log
 
 # Record environment for future
 [[ -f build.env    ]] && mv build.env    build.env.old

@@ -52,7 +52,8 @@ ARGS=(
         # -D ForTrilinos_ENABLE_ReadTheDocs=ON
     )
 
-cmake "${ARGS[@]}" $EXTRA_ARGS ../../
+# cmake -GNinja "${ARGS[@]}" $EXTRA_ARGS ../../ | tee configure.log
+cmake "${ARGS[@]}" $EXTRA_ARGS ../../ | tee configure.log
 
 # Record environment for future
 [[ -f build.env    ]] && mv build.env    build.env.old

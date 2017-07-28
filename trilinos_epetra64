@@ -81,8 +81,8 @@ ARGS=(
     -D Trilinos_ENABLE_Zoltan=ON
     -D Trilinos_ENABLE_Zoltan2=OFF
     )
-# cmake "${ARGS[@]}" $EXTRA_ARGS ../../
-cmake -GNinja "${ARGS[@]}" $EXTRA_ARGS ../../
+# cmake "${ARGS[@]}" $EXTRA_ARGS ../../ | tee configure.log
+cmake -GNinja "${ARGS[@]}" $EXTRA_ARGS ../../ | tee configure.log
 
 # Record environment for future
 [[ -f build.env    ]] && mv build.env    build.env.old

@@ -109,8 +109,8 @@ if [ "$MATLAB" == "true" ]; then
     ARGS=( "${ARGS[@]}" "${ARGS_MATLAB[@]}" )
 fi
 
-# cmake "${ARGS[@]}" $EXTRA_ARGS ../../
-cmake -GNinja "${ARGS[@]}" $EXTRA_ARGS ../../
+# cmake "${ARGS[@]}" $EXTRA_ARGS ../../ | tee configure.log
+cmake -GNinja "${ARGS[@]}" $EXTRA_ARGS ../../ | tee configure.log
 
 # Record environment for future
 env         > build.env

@@ -132,7 +132,7 @@ ARGS=(
     -D Trilinos_DEPS_XML_OUTPUT_FILE=""
 
     )
-cmake "${ARGS[@]}" $EXTRA_ARGS ../../
+cmake "${ARGS[@]}" $EXTRA_ARGS ../../ | tee configure.log
 
 # Record environment for future
 [[ -f build.env    ]] && mv build.env    build.env.old

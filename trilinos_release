@@ -137,11 +137,8 @@ ARGS=(
     -D Trilinos_DEPS_XML_OUTPUT_FILE=""
 
     )
-if [ "$HOST" == "volta" ]; then
-    cmake "${ARGS[@]}" $EXTRA_ARGS ../../
-else
-    cmake -GNinja "${ARGS[@]}" $EXTRA_ARGS ../../
-fi
+
+cmake -GNinja "${ARGS[@]}" $EXTRA_ARGS ../../ | tee configure.log
 
 # Record environment for future
 [[ -f build.env    ]] && mv build.env    build.env.old

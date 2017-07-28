@@ -3,10 +3,14 @@ EXTRA_ARGS=$@
 
 rm -f  CMakeCache.txt
 rm -rf CMakeFiles/
+rm -f  build.ninja
+rm -f  rules.ninja
 
 SWIG_DIR="$HOME/code/swig"
 ARGS=(
     -D CMAKE_BUILD_TYPE=RelWithDebInfo
+
+    -D CMAKE_INSTALL_PREFIX=$HOME/local/opt/trilinos-fortrilinos
 
     -D BUILD_SHARED_LIBS=ON
 
@@ -34,6 +38,7 @@ ARGS=(
     -D Trilinos_ENABLE_EXAMPLES=OFF
 
     -D Trilinos_ENABLE_Amesos=ON
+    -D Trilinos_ENABLE_Anasazi=ON
     -D Trilinos_ENABLE_AztecOO=ON
     -D Trilinos_ENABLE_Belos=ON
     -D Trilinos_ENABLE_Epetra=ON

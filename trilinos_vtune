@@ -3,6 +3,8 @@ EXTRA_ARGS=$@
 
 rm -f  CMakeCache.txt
 rm -rf CMakeFiles/
+rm -f  build.ninja
+rm -f  rules.ninja
 
 SYSTEM_HEADERS=""
 for header_dir in `echo $CPATH | sed 's/:/\ /g'`; do

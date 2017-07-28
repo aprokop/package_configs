@@ -4,13 +4,15 @@ for i in `ls -d */`; do
   rm -rf $i/CMakeFiles
 done
 
-# module load mpi
-# spack load boost
-# spack load openblas
+# Record environment for future
+[[ -f build.env    ]] && mv build.env    build.env.old
+[[ -f build.module ]] && mv build.module build.module.old
+env          > build.env
+module list &> build.module
 
 # Add --no-enable-fwd-packages if necessary
 ARGS=(
-  ../checkin-test.py -j 16
+  ../checkin-test.py -j 12
   --ctest-timeout=1200
   # --send-email-to=xap@ornl.gov
   --do-all

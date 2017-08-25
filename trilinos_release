@@ -112,7 +112,6 @@ ARGS=(
         -D MueLu_ENABLE_Amesos2=ON
         -D MueLu_ENABLE_Ifpack2=ON
         # -D MueLu_ENABLE_PROFILING=ON
-        # -D MueLu_ENABLE_TIMER_SYNCHRONIZATION=ON
     -D Trilinos_ENABLE_Pamgen=ON
     -D Trilinos_ENABLE_ShyLU=OFF
     -D Trilinos_ENABLE_Stratimikos=ON

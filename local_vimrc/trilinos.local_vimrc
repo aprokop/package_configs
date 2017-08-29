@@ -11,11 +11,13 @@ syn keyword cType
 
 " Teuchos
 syn keyword cDefine
+    \ TEST_ASSERT
     \ TEST_EQUALITY
     \ TEST_FLOATING_EQUALITY
     \ TEUCHOS_ASSERT
-    \ TEUCHOS_TEST_FOR_EXCEPT
+    \ TEUCHOS_TEST_FOR_EXCEPTION
     \ TEUCHOS_UNIT_TEST
+    \ TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL
 syn keyword cType
     \ Array
     \ ArrayRCP
@@ -24,6 +26,15 @@ syn keyword cType
     \ FancyOStream
     \ ParameterList
     \ Ptr
+    \ TimeMonitor
+
+" Kokkos
+syn keyword cDefine
+    \ KOKKOS_INLINE_FUNCTION
+    \ KOKKOS_LAMBDA
+syn keyword cType
+    \ DualView
+    \ View
 
 " Tpetra
 syn keyword cType
@@ -209,6 +220,19 @@ syn keyword cType
     \ STKPartPredicate
     \ STKPartVectorPredicate
     \ STKSelectorPredicate
+
+" STK::mesh
+syn keyword cType
+    \ Bucket
+    \ BucketVector
+    \ BulkData
+    \ Entity
+    \ EntityId
+    \ FieldBase
+    \ MetaData
+    \ Part
+    \ PartVector
+    \ Selector
 
 " Thyra
 syn keyword cType

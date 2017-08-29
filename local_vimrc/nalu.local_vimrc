@@ -1,3 +1,5 @@
+source $HOME/.personal/trilinos_configs/local_vimrc/trilinos.local_vimrc
+
 set ts=8
 
 " Nalu separates sources and headers in two directories
@@ -58,73 +60,3 @@ syn keyword cType
     \ TpetraLinearSolverConfig
     \ Transfer
     \ TurbulenceAveragingPostProcessing
-
-
-" Trilinos Types
-syn keyword cType
-    \ GO GlobalOrdinal
-    \ LO LocalOrdinal
-    \ NO Node
-    \ SC Scalar
-
-" Teuchos
-syn keyword cDefine
-    \ TEUCHOS_UNIT_TEST
-    \ TEST_EQUALITY
-    \ TEST_FLOATING_EQUALITY
-syn keyword cType
-    \ Array
-    \ ArrayRCP
-    \ ArrayView
-    \ ParameterList
-    \ TimeMonitor
-
-" Tpetra
-syn keyword cType
-    \ CrsMatrix
-    \ Distributor
-    \ Export
-    \ Import
-    \ Map
-    \ MultiVector
-    \ Vector
-
-" MueLu
-syn keyword cType
-    \ Matrix
-
-" Intrepid
-syn keyword cType
-    \ IntrepidcellLocalMap
-
-" STK
-syn keyword cType
-    \ STKMeshEntity
-    \ STKMeshEntityExtraData
-    \ STKMeshEntityImpl
-    \ STKMeshEntityIntegrationRule
-    \ STKMeshEntityIterator
-    \ STKMeshEntityIteratorRange
-    \ STKMeshEntityLocalMap
-    \ STKMeshEntitySet
-    \ STKMeshField
-    \ STKMeshHelpers
-    \ STKMeshManager
-    \ STKMeshNodalShapeFunction
-    \ STKPartNamePredicate
-    \ STKPartPredicate
-    \ STKPartVectorPredicate
-    \ STKSelectorPredicate
-
-" STK::mesh
-syn keyword cType
-    \ Bucket
-    \ BucketVector
-    \ BulkData
-    \ Entity
-    \ EntityId
-    \ FieldBase
-    \ MetaData
-    \ Part
-    \ PartVector
-    \ Selector

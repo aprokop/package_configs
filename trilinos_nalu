@@ -6,7 +6,7 @@ rm -rf CMakeFiles/
 rm -f  build.ninja
 rm -f  rules.ninja
 
-ARGS=(
+ARGS_BASE=(
     -D CMAKE_BUILD_TYPE=RELWITHDEBINFO
 
     -D CMAKE_INSTALL_PREFIX="$HOME/local/opt/trilinos-nalu"
@@ -18,27 +18,25 @@ ARGS=(
 
     ### TPLS ###
     -D TPL_ENABLE_MPI=ON
-    -D TPL_ENABLE_BLAS=ON
-        -D BLAS_LIBRARY_NAMES="openblas"
-    -D TPL_ENABLE_LAPACK=ON
-        -D LAPACK_LIBRARY_NAMES="openblas"
-    -D TPL_ENABLE_BoostLib=ON
-    -D TPL_ENABLE_HDF5=ON
-        # -D TPL_HDF5_LIBRARIES="libhdf5_hl.a;libhdf5.a;libz.a"
-        -D TPL_HDF5_LIBRARIES="-lhdf5_hl;-lhdf5;-lz"
-    -D TPL_ENABLE_Netcdf=ON
-        # -D TPL_Netcdf_LIBRARIES="libnetcdf.a;libpnetcdf.a;libhdf5_hl.a;libhdf5.a;libz.a"
-        -D TPL_Netcdf_LIBRARIES="-lnetcdf;-lpnetcdf;-lhdf5_hl;-lhdf5;-lz"
-        # -D TPL_Netcdf_Enables_Netcdf4=ON
-        -D TPL_Netcdf_PARALLEL=ON
-    -D TPL_ENABLE_X11=OFF
-    -D TPL_ENABLE_Zlib=ON
+    -D Trilinos_ENABLE_OpenMP=ON
 
     ### ETI ###
     -D Trilinos_ENABLE_EXPLICIT_INSTANTIATION=ON
+        -D Teuchos_ENABLE_COMPLEX=OFF
+        -D Teuchos_ENABLE_LONG_LONG_INT=OFF
+        -D Tpetra_INST_INT_INT=ON
+        -D Tpetra_INST_INT_UNSIGNED=OFF
+        -D Tpetra_INST_INT_LONG=OFF
+        -D Tpetra_INST_INT_LONG_LONG=OFF
         -D Tpetra_INST_DOUBLE=ON
-        -D Tpetra_INST_INT_LONG=ON
+        -D Tpetra_INST_FLOAT=OFF
         -D Tpetra_INST_COMPLEX_DOUBLE=OFF
+        -D Tpetra_INST_COMPLEX_FLOAT=OFF
+        -D Tpetra_INST_SERIAL=ON
+        -D Kokkos_ENABLE_Serial=ON
+        -D Kokkos_ENABLE_OpenMP=ON
+        -D Kokkos_ENABLE_Pthread=OFF
+
 
     ### PACKAGES CONFIGURATION ###
     -D Trilinos_ALLOW_NO_PACKAGES=OFF
@@ -48,17 +46,18 @@ ARGS=(
     -D Trilinos_ENABLE_EXAMPLES=OFF
     -D Trilinos_ENABLE_ALL_OPTIONAL_PACKAGES=OFF
 
-    -D Trilinos_ENABLE_Amesos=ON
+    -D Trilinos_ENABLE_Amesos=OFF
     -D Trilinos_ENABLE_Amesos2=ON
-    -D Trilinos_ENABLE_AztecOO=ON
+    -D Trilinos_ENABLE_AztecOO=OFF
     -D Trilinos_ENABLE_Belos=ON
-    -D Trilinos_ENABLE_Epetra=ON
-    -D Trilinos_ENABLE_EpetraExt=ON
+    -D Trilinos_ENABLE_Epetra=OFF
+    -D Trilinos_ENABLE_EpetraExt=OFF
     -D Trilinos_ENABLE_Gtest=ON
-    -D Trilinos_ENABLE_Ifpack=ON
+    -D Trilinos_ENABLE_Ifpack=OFF
     -D Trilinos_ENABLE_Ifpack2=ON
-    -D Trilinos_ENABLE_ML=ON
+    -D Trilinos_ENABLE_ML=OFF
     -D Trilinos_ENABLE_MueLu=ON
+        -D MueLu_ENABLE_KokkosRefactor=ON
         -D MueLu_ENABLE_EXAMPLES=ON
         -D MueLu_ENABLE_TESTS=ON
     -D Trilinos_ENABLE_SEACAS=ON
@@ -79,6 +78,8 @@ ARGS=(
         -D Trilinos_ENABLE_STKUnit_tests=ON
         -D Trilinos_ENABLE_STKUnit_test_utils=ON
     -D Trilinos_ENABLE_Tpetra=ON
+    -D Trilinos_ENABLE_Xpetra=ON
+        -D XpetraENABLE_KokkosRefactor=ON
     -D Trilinos_ENABLE_Zoltan=ON
     -D Trilinos_ENABLE_Zoltan2=ON
 
@@ -90,8 +91,63 @@ ARGS=(
     -D Trilinos_DEPS_XML_OUTPUT_FILE=""
 
     )
+
+# Machine specific
+host=`hostname`
+if [[ "$host" == "scramjet" ]]; then
+    # Workstation
+    TPLS=(
+        -D TPL_ENABLE_BLAS=ON
+            -D BLAS_LIBRARY_NAMES="openblas"
+        -D TPL_ENABLE_LAPACK=ON
+            -D LAPACK_LIBRARY_NAMES="openblas"
+        -D TPL_ENABLE_BoostLib=ON
+        -D TPL_ENABLE_HDF5=ON
+            # -D TPL_HDF5_LIBRARIES="libhdf5_hl.a;libhdf5.a;libz.a"
+            -D TPL_HDF5_LIBRARIES="-lhdf5_hl;-lhdf5;-lz"
+        -D TPL_ENABLE_Netcdf=ON
+            # -D TPL_Netcdf_LIBRARIES="libnetcdf.a;libpnetcdf.a;libhdf5_hl.a;libhdf5.a;libz.a"
+            -D TPL_Netcdf_LIBRARIES="-lnetcdf;-lpnetcdf;-lhdf5_hl;-lhdf5;-lz"
+            # -D TPL_Netcdf_Enables_Netcdf4=ON
+            -D TPL_Netcdf_PARALLEL=ON
+        -D TPL_ENABLE_X11=OFF
+        -D TPL_ENABLE_Zlib=ON
+        )
+else
+    # For now, default to Peregrine
+    COMPILER=gcc
+    spack load binutils         %${COMPILER}
+    spack load cmake            %${COMPILER}
+    spack load openmpi          %${COMPILER}
+    spack load hdf5             %${COMPILER}
+    spack load netcdf           %${COMPILER}
+    spack load parallel-netcdf  %${COMPILER}
+    spack load zlib             %${COMPILER}
+    spack load superlu          %${COMPILER}
+    spack load boost            %${COMPILER}
+
+    TPLS=(
+      -D TPL_ENABLE_MPI=ON
+          -D MPI_BASE_DIR=`spack location -i openmpi %${COMPILER}`
+      -D TPL_ENABLE_Boost=ON
+          -D Boost_ROOT=`spack location -i boost %${COMPILER}`
+      -D TPL_ENABLE_SuperLU=ON
+          -D SuperLU_ROOT=`spack location -i superlu %${COMPILER}`
+      -D TPL_ENABLE_Netcdf=ON
+          -D NetCDF_ROOT=`spack location -i netcdf %${COMPILER}`
+          -D TPL_Netcdf_Enables_Netcdf4=ON
+          -D TPL_Netcdf_PARALLEL=ON
+      -D TPL_ENABLE_Pnetcdf=ON
+          -D PNetCDF_ROOT=`spack location -i parallel-netcdf %${COMPILER}`
+      -D TPL_ENABLE_HDF5=ON
+          -D HDF5_ROOT=`spack location -i hdf5 %${COMPILER}`
+      -D TPL_ENABLE_Zlib=ON
+          -D Zlib_ROOT=`spack location -i zlib %${COMPILER}`
+      )
+fi
+
 # Cannot use ninja as some packages require Fortran
-cmake "${ARGS[@]}" $EXTRA_ARGS ../../ | tee configure.log
+cmake "${ARGS_BASE[@]}" "${TPLS[@]}" $EXTRA_ARGS ../../ | tee configure.log
 
 # Record environment for future
 [[ -f build.env    ]] && mv build.env    build.env.old

@@ -17,6 +17,7 @@ ARGS=(
   # --send-email-to=xap@ornl.gov
   --do-all
   --push
+  # --append-test-results
   )
 
 nice -n 19 "${ARGS[@]}" "$@"

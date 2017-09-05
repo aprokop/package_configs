@@ -3,6 +3,6 @@
 # Module loads for ACME
 source $HOME/local/opt/spack/share/spack/setup-env.sh
 
-module load mpi
+spack load openmpi
 spack load boost
 spack load llvm@4.0.0

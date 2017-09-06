@@ -1,9 +1,6 @@
 #!/bin/sh
 EXTRA_ARGS=$@
 
-# module load openmpi/1.10.0
-# module load icc/15.0.090
-
 rm -f  CMakeCache.txt
 rm -rf CMakeFiles/
 rm -f  build.ninja
@@ -12,21 +9,21 @@ rm -f  rules.ninja
 ARGS=(
     -D CMAKE_BUILD_TYPE=RELWITHDEBINFO
 
-    -D CMAKE_INSTALL_PREFIX=$HOME/local/opt/trilinos-kokkos/
+    -D CMAKE_INSTALL_PREFIX=$HOME/local/opt/trilinos-kokkos-openmp/
 
     -D BUILD_SHARED_LIBS=ON
 
     ### COMPILERS AND FLAGS ###
     -D Trilinos_ENABLE_Fortran=OFF
     -D Trilinos_TPL_SYSTEM_INCLUDE_DIRS=ON
-    -D CMAKE_CXX_FLAGS="-DKOKKOSP_ENABLE_PROFILING -Wall -ansi -pedantic -Wno-unknown-pragmas -Wno-narrowing -Wno-pragmas -Wno-unused-but-set-variable -Wno-inline -Wshadow"
+    -D CMAKE_CXX_FLAGS="-Wall -ansi -pedantic -Wno-unknown-pragmas -Wno-narrowing -Wno-pragmas -Wno-unused-but-set-variable -Wno-inline -Wshadow"
 
     ### TPLS ###
     -D TPL_ENABLE_MPI=ON
-        -D MPI_BASE_DIR="${MPI_PATH}"
         -D MPI_EXEC_POST_NUMPROCS_FLAGS="-bind-to;socket;-map-by;socket"
+    -D TPL_ENABLE_BLAS=ON
+    -D TPL_ENABLE_LAPACK=ON
     -D Trilinos_ENABLE_OpenMP=ON
-    # -D TPL_ENABLE_Pthread=OFF
     -D TPL_ENABLE_HWLOC=OFF
 
     ### ETI ###
@@ -43,6 +40,7 @@ ARGS=(
         -D Tpetra_INST_COMPLEX_FLOAT=OFF
         -D Tpetra_INST_SERIAL=ON
         -D Kokkos_ENABLE_Serial=ON
+        -D Kokkos_ENABLE_OpenMP=ON
         -D Kokkos_ENABLE_Pthread=OFF
 
     ### PACKAGES CONFIGURATION ###
@@ -64,38 +62,40 @@ ARGS=(
     -D Trilinos_ENABLE_Ifpack2=ON
     -D Trilinos_ENABLE_Isorropia=ON
     -D Trilinos_ENABLE_Kokkos=ON
+        # -D Kokkos_ENABLE_Profiling=OFF
         -D Kokkos_ENABLE_Debug_Bounds_Check=ON
         -D Kokkos_ENABLE_EXAMPLES=OFF
         -D Kokkos_ENABLE_TESTS=OFF
     -D Trilinos_ENABLE_ML=ON
-        -D ML_ENABLE_TESTS=ON
     -D Trilinos_ENABLE_MueLu=ON
         -D MueLu_ENABLE_Experimental=ON
         -D MueLu_ENABLE_Kokkos_Refactor=ON
         -D MueLu_ENABLE_TESTS=ON
         -D MueLu_ENABLE_EXAMPLES=ON
         -D MueLu_ENABLE_DEBUG=ON
+        -D MueLu_ENABLE_BROKEN_TESTS=ON
+        # -D MueLu_ENABLE_PROFILING=ON
     -D Trilinos_ENABLE_ShyLU=OFF
     -D Trilinos_ENABLE_Stratimikos=ON
     -D Trilinos_ENABLE_Teuchos=ON
     -D Trilinos_ENABLE_Teko=OFF
     -D Trilinos_ENABLE_Thyra=ON
     -D Trilinos_ENABLE_Tpetra=ON
-        -D Tpetra_ENABLE_Kokkos_Refactor_Map=OFF
+        -D Tpetra_ENABLE_MMM_Timings=ON
     -D Trilinos_ENABLE_TrilinosCouplings=OFF
         -D TrilinosCouplings_ENABLE_EXAMPLES=ON
     -D Trilinos_ENABLE_Xpetra=ON
         -D Xpetra_ENABLE_Experimental=ON
         -D Xpetra_ENABLE_Kokkos_Refactor=ON
-        # -D Xpetra_ENABLE_EXAMPLES=ON
-        # -D Xpetra_ENABLE_TESTS=ON
+        -D Xpetra_ENABLE_EXAMPLES=ON
+        -D Xpetra_ENABLE_TESTS=ON
     -D Trilinos_ENABLE_Zoltan=ON
     -D Trilinos_ENABLE_Zoltan2=ON
         -D Zoltan2_ENABLE_Experimental=ON
-        -D Zoltan2_ENABLE_TESTS=ON
 
     ### MISC ###
     -D CMAKE_EXPORT_COMPILE_COMMANDS=ON
+    -D Trilinos_ENABLE_YouCompleteMe=ON
     -D Trilinos_ENABLE_INSTALL_CMAKE_CONFIG_FILES=ON
     -D Trilinos_DEPS_XML_OUTPUT_FILE=""
 

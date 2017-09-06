@@ -24,7 +24,6 @@ ARGS=(
         -Xcudafe --diag_suppress=cc_clobber_ignored \
         -Xcudafe --diag_suppress=conversion_function_not_usable \
         -Xcudafe --diag_suppress=code_is_unreachable"
-
     -D Trilinos_ENABLE_Fortran=OFF
     -D Trilinos_ENABLE_SHADOW_WARNINGS=ON
 

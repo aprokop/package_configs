@@ -1,7 +1,7 @@
 #!/bin/sh
 EXTRA_ARGS=$@
 
-# spack  load openmpi@1.8.8
+# spack  load openmpi
 # spack  load gcc@5.4.0
 # module load cuda/8.0-gcc
 # module load nvcc-wrapper/gcc
@@ -14,15 +14,21 @@ rm -f  rules.ninja
 ARGS=(
     -D CMAKE_BUILD_TYPE=RELWITHDEBINFO
 
-    -D CMAKE_INSTALL_PREFIX=$HOME/local/opt/trilinos-kokkos/
+    -D CMAKE_INSTALL_PREFIX=$HOME/local/opt/trilinos-kokkos-cuda/
 
     -D BUILD_SHARED_LIBS=ON
 
     ### COMPILERS AND FLAGS ###
-    -D Trilinos_ENABLE_CXX11=ON
-    -D Trilinos_ENABLE_Fortran=OFF
     -D Trilinos_TPL_SYSTEM_INCLUDE_DIRS=ON
-    -D CMAKE_CXX_FLAGS="-lineinfo -Wall -arch=sm_61 -DKOKKOSP_ENABLE_PROFILING -Xcudafe --diag_suppress=initialization_not_reachable -Xcudafe --diag_suppress=code_is_unreachable"
+    -D Trilinos_ENABLE_CXX11=ON
+        -D Trilinos_CXX11_FLAGS="-std=c++11 -expt-extended-lambda"
+    -D CMAKE_CXX_FLAGS="-Wall \
+        -lineinfo -arch=sm_61 \
+        -Xcudafe --diag_suppress=initialization_not_reachable \
+        -Xcudafe --diag_suppress=cc_clobber_ignored \
+        -Xcudafe --diag_suppress=conversion_function_not_usable \
+        -Xcudafe --diag_suppress=code_is_unreachable"
+    -D Trilinos_ENABLE_Fortran=OFF
 
     ### TPLS ###
     -D TPL_ENABLE_MPI=ON
@@ -68,9 +74,11 @@ ARGS=(
     -D Trilinos_ENABLE_Ifpack2=ON
     -D Trilinos_ENABLE_Isorropia=ON
     -D Trilinos_ENABLE_Kokkos=ON
+        # -D Kokkos_ENABLE_Profiling=OFF
         -D Kokkos_ENABLE_Debug_Bounds_Check=ON
         -D Kokkos_ENABLE_Cuda=ON
         -D Kokkos_ENABLE_Cuda_UVM=ON
+        -D Kokkos_ENABLE_Cuda_Lambda=ON
         -D Kokkos_ENABLE_EXAMPLES=OFF
         -D Kokkos_ENABLE_TESTS=OFF
     -D Trilinos_ENABLE_ML=ON
@@ -80,20 +88,20 @@ ARGS=(
         -D MueLu_ENABLE_TESTS=ON
         -D MueLu_ENABLE_EXAMPLES=ON
         -D MueLu_ENABLE_DEBUG=ON
+        -D MueLu_ENABLE_BROKEN_TESTS=ON
     -D Trilinos_ENABLE_ShyLU=OFF
     -D Trilinos_ENABLE_Stratimikos=ON
     -D Trilinos_ENABLE_Teuchos=ON
     -D Trilinos_ENABLE_Teko=OFF
     -D Trilinos_ENABLE_Thyra=ON
     -D Trilinos_ENABLE_Tpetra=ON
-        -D Tpetra_ENABLE_Kokkos_Refactor_Map=OFF
+        -D Tpetra_ENABLE_MMM_Timings=ON
     -D Trilinos_ENABLE_TrilinosCouplings=OFF
-        # -D TrilinosCouplings_ENABLE_EXAMPLES=ON
     -D Trilinos_ENABLE_Xpetra=ON
         -D Xpetra_ENABLE_Experimental=ON
         -D Xpetra_ENABLE_Kokkos_Refactor=ON
-        # -D Xpetra_ENABLE_EXAMPLES=ON
-        # -D Xpetra_ENABLE_TESTS=ON
+        -D Xpetra_ENABLE_EXAMPLES=ON
+        -D Xpetra_ENABLE_TESTS=ON
     -D Trilinos_ENABLE_Zoltan=ON
     -D Trilinos_ENABLE_Zoltan2=ON
         -D Zoltan2_ENABLE_Experimental=ON
@@ -105,8 +113,7 @@ ARGS=(
 
     )
 
-cmake "${ARGS[@]}" $EXTRA_ARGS ../../ | tee configure.log
-# cmake -GNinja "${ARGS[@]}" $EXTRA_ARGS ../../ | tee configure.log
+cmake "${ARGS[@]}" $EXTRA_ARGS ../../ 2>&1 | tee configure.log
 
 # Record environment for future
 [[ -f build.env    ]] && mv build.env    build.env.old

@@ -16,6 +16,8 @@ ARGS=(
 
     -D Trilinos_DIR=${TRILINOS_INSTALL}
 
+    -D ENABLE_YouCompleteMe=ON
+
     ### COMPILERS AND FLAGS ###
 
     ### TPLS ###

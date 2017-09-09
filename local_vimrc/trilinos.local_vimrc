@@ -1,6 +1,9 @@
 set ts=8
 set sw=2
 
+au! BufEnter *_decl.hpp let b:fswitchdst = 'hpp' | let b:fswitchfnames = '/_decl/_def/'
+au! BufEnter *_def.hpp  let b:fswitchdst = 'hpp' | let b:fswitchfnames = '/_def/_decl/'
+
 " Trilinos Types
 syn keyword cType
     \ GO GlobalOrdinal

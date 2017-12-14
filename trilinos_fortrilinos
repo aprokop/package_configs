@@ -29,6 +29,9 @@ ARGS=(
 
     ### ETI ###
     -D Trilinos_ENABLE_EXPLICIT_INSTANTIATION=ON
+        -D Tpetra_INST_INT_INT=OFF
+        -D Tpetra_INST_INT_LONG=OFF
+        -D Tpetra_INST_INT_LONG_LONG=ON
 
     ### PACKAGES CONFIGURATION ###
     -D Trilinos_ENABLE_ALL_PACKAGES=OFF
@@ -37,14 +40,13 @@ ARGS=(
     -D Trilinos_ENABLE_TESTS=OFF
     -D Trilinos_ENABLE_EXAMPLES=OFF
 
-    -D Trilinos_ENABLE_Amesos=ON
+    -D Trilinos_ENABLE_Amesos2=ON
     -D Trilinos_ENABLE_Anasazi=ON
-    -D Trilinos_ENABLE_AztecOO=ON
     -D Trilinos_ENABLE_Belos=ON
-    -D Trilinos_ENABLE_Epetra=ON
-    -D Trilinos_ENABLE_EpetraExt=ON
-    -D Trilinos_ENABLE_Ifpack=ON
+    -D Trilinos_ENABLE_Epetra=OFF
+    -D Trilinos_ENABLE_Galeri=OFF
     -D Trilinos_ENABLE_Ifpack2=ON
+    -D Trilinos_ENABLE_MueLu=ON
     -D Trilinos_ENABLE_Stratimikos=ON
     -D Trilinos_ENABLE_Tpetra=ON
     -D Trilinos_ENABLE_Thyra=ON
@@ -54,7 +56,7 @@ ARGS=(
         -D ForTrilinos_ENABLE_DeveloperMode=ON
         -D ForTrilinos_ENABLE_EXAMPLES=ON
         -D ForTrilinos_ENABLE_TESTS=ON
-        # -D ForTrilinos_ENABLE_ReadTheDocs=ON
+        -D ForTrilinos_ENABLE_ReadTheDocs=ON
     )
 
 # cmake -GNinja "${ARGS[@]}" $EXTRA_ARGS ../../ | tee configure.log

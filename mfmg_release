@@ -1,0 +1,31 @@
+#!/bin/bash
+
+rm -f  CMakeCache.txt
+rm -rf CMakeFiles/
+rm -f  build.ninja
+rm -f  rules.ninja
+
+
+ARGS=(
+    -D CMAKE_BUILD_TYPE=RelWithDebInfo
+
+    -D CMAKE_INSTALL_PREFIX=$HOME/local/opt/mfmg
+
+    -D BUILD_SHARED_LIBS=ON
+
+    ### TPLS ###
+
+    ### ETI ###
+
+    ### PACKAGES CONFIGURATION ###
+    -D MFMG_ENABLE_TESTS=ON
+    # -D MFMG_ENABLE_ClangFormat=ON
+  )
+
+cmake -GNinja "${ARGS[@]}" $EXTRA_ARGS ../../ | tee configure.log
+
+# Record environment for future
+[[ -f build.env    ]] && mv build.env    build.env.old
+[[ -f build.module ]] && mv build.module build.module.old
+env          > build.env
+module list &> build.module

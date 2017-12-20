@@ -38,6 +38,9 @@ syn keyword cDefine
     \ KOKKOS_FORCEINLINE_FUNCTION
     \ KOKKOS_INLINE_FUNCTION
     \ KOKKOS_LAMBDA
+    \ parallel_for
+    \ parallel_reduce
+    \ parallel_scan
 syn keyword cType
     \ DualView
     \ View
@@ -46,6 +49,7 @@ syn keyword cType
 syn keyword cType
     \ CrsMatrix
     \ Distributor
+    \ Export
     \ Import
     \ Map
     \ MultiVector
@@ -119,6 +123,7 @@ syn keyword cType
     \ FactoryFactory
     \ FactoryManager
     \ FactoryManagerBase
+    \ FactoryMonitor
     \ FakeSmootherPrototype
     \ FilteredAFactory
     \ FilteredAFactory_kokkos
@@ -204,6 +209,7 @@ syn keyword cType
     \ SteepestDescentSolver
     \ StructuredLineDetectionFactory
     \ SubBlockAFactory
+    \ SubFactoryMonitor
     \ TekoSmoother
     \ TentativePFactory
     \ TentativePFactory_kokkos
@@ -273,9 +279,18 @@ syn keyword cType
 syn keyword cType
     \ BlockedCrsMatrix
     \ CrsMatrixWrap
+    \ GOVector
+    \ GOVectorFactory
+    \ IO
+    \ ImportFactory
+    \ IteratorOps
+    \ LOVector
+    \ LOVectorFactory
     \ MapExtractorFactory
     \ MapExtractor
     \ MapFactory
     \ Matrix
     \ MatrixFactory
+    \ MultiVectorFactory
     \ StridedMapFactory
+    \ VectorFactory

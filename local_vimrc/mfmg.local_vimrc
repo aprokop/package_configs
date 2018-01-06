@@ -1,0 +1,10 @@
+source $HOME/.personal/trilinos_configs/local_vimrc/dealii.local_vimrc
+
+set ts=8
+set sw=2
+
+" MFMG
+syn keyword cDefine
+    \ INSTANTIATE_DIM
+syn keyword cType
+    \ AMGe

@@ -1,0 +1,6 @@
+syn keyword cType
+    \ DataOut
+    \ DoFHandler
+    \ Triangulation
+    \ Vector
+    \ WorkStream

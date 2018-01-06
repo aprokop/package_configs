@@ -10,6 +10,7 @@ syn keyword cDefine
     \ DTK_CHECK_USER_FUNCTION
     \ DTK_ENSURE
     \ DTK_INSIST
+    \ DTK_MARK_REGION
     \ DTK_REMEMBER
     \ DTK_REQUIRE
 syn keyword cType
@@ -59,6 +60,7 @@ syn keyword cType
     \ MapOperator
     \ MapOperatorFactory
     \ MovingLeastSquareReconstructionOperator
+    \ MultivariablePolynomialBasis
     \ NanoflannTree
     \ NewtonSolver
     \ NodeToNodeOperator
@@ -72,6 +74,7 @@ syn keyword cType
     \ ProjectionPrimitives
     \ ProjectPointFeatureToEdgeFeatureNonlinearProblem
     \ ProjectPointToFaceNonlinearProblem
+    \ RadialBasisFunction
     \ RadialBasisPolicy
     \ SearchTreeFactory
     \ SplineCoefficientMatrix

@@ -1,0 +1,7 @@
+syn keyword cType
+    \ cudaError_t
+
+syn keyword cType
+    \ cusolverDnHandle_t
+    \ cusparseHandle_t
+    \ cusparseMatDescr_t

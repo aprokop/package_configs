@@ -3,6 +3,11 @@ source $HOME/.personal/trilinos_configs/local_vimrc/trilinos.local_vimrc
 set ts=8
 set sw=4
 
+" Configure clang-format
+let g:clang_format#command = "clang-format"
+let g:clang_format#detect_style_file = 1
+let g:clang_format#auto_format = 1
+
 " DTK
 syn keyword cDefine
     \ DTK_CHECK
@@ -31,9 +36,11 @@ syn keyword cType
     \ CoarseGlobalSearch
     \ CoarseLocalSearch
     \ ConsistentInterpolationOperator
+    \ ConstraintMatrix
     \ CylinderGeometry
     \ CylinderGeometryImpl
     \ DataTransferKitException
+    \ DofTools
     \ Entity
     \ EntityId
     \ EntityCenteredField
@@ -46,9 +53,14 @@ syn keyword cType
     \ EntitySet
     \ EntityShapeFunction
     \ EuclideanDistance
+    \ FE_Q
+    \ FEValues
     \ Field
     \ FineLocalSearch
+    \ FullMatrix
     \ FunctionSpace
+    \ GridGenerator
+    \ IndexSet
     \ IntrepidBasisFactory
     \ IntrepidCell
     \ IntrepidIntegrationRule
@@ -70,6 +82,7 @@ syn keyword cType
     \ PointCloudOperatorFactory
     \ PointInFaceVolumeOfInfluenceNonlinearProblem
     \ PolynomialMatrix
+    \ QGauss
     \ PredicateFunction
     \ ProjectionPrimitives
     \ ProjectPointFeatureToEdgeFeatureNonlinearProblem
@@ -77,12 +90,14 @@ syn keyword cType
     \ RadialBasisFunction
     \ RadialBasisPolicy
     \ SearchTreeFactory
+    \ SolverControl
     \ SplineCoefficientMatrix
     \ SplineEvaluationMatrix
     \ SplineInterpolationOperator
     \ SplineInterpolationPairing
     \ SplineProlongationOperator
     \ SupportId
+    \ TrilinosWrappers
     \ TpetraMap
     \ TpetraVector
     \ TpetraMultiVector
@@ -91,6 +106,7 @@ syn keyword cType
     \ UndefinedRadialBasisPolicy
     \ UserApplication
     \ UserFunctionRegistry
+    \ VectorTools
     \ WendlandBasis
     \ WuBasis
 

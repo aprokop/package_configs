@@ -9,10 +9,6 @@ let g:clang_format#command = "clang-format"
 let g:clang_format#detect_style_file = 1
 let g:clang_format#auto_format = 1
 
-" Quick switch
-au! BufEnter [^.]*.hpp let b:fswitchdst = 'hpp' | let b:fswitchfnames = '/\([^.]*\)/\1.templates/'
-au! BufEnter *.templates.hpp  let b:fswitchdst = 'hpp' | let b:fswitchfnames = '/.templates//'
-
 " Set NVidia files filetype
 autocmd BufNewFile,BufRead *.cuh set syntax=cpp
 

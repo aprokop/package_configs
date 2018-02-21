@@ -1,3 +1,9 @@
+" Quick switch
+au! BufEnter [^.]*.hpp let b:fswitchdst = 'hpp' | let b:fswitchfnames = '/\([^.]*\)/\1.templates/'
+au! BufEnter *.templates.hpp  let b:fswitchdst = 'hpp' | let b:fswitchfnames = '/.templates//'
+au! BufEnter [^.]*.cuh let b:fswitchdst = 'cuh' | let b:fswitchfnames = '/\([^.]*\)/\1.templates/'
+au! BufEnter *.templates.cuh  let b:fswitchdst = 'cuh' | let b:fswitchfnames = '/.templates//'
+
 syn keyword cType
     \ DataOut
     \ DoFHandler

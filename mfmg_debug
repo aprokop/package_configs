@@ -7,11 +7,15 @@ rm -f  rules.ninja
 
 
 ARGS=(
-    -D CMAKE_BUILD_TYPE=RelWithDebInfo
+    -D CMAKE_BUILD_TYPE=Debug
 
     -D CMAKE_INSTALL_PREFIX=$HOME/local/opt/mfmg
 
     -D BUILD_SHARED_LIBS=ON
+
+    # According to https://github.com/ninja-build/ninja/wiki/FAQ, one is
+    # required to force colored output
+    -D CMAKE_CXX_FLAGS="-fdiagnostics-color=always ${CMAKE_CXX_FLAGS}"
 
     ### TPLS ###
 

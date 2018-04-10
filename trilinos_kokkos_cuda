@@ -88,7 +88,6 @@ ARGS=(
         -D MueLu_ENABLE_TESTS=ON
         -D MueLu_ENABLE_EXAMPLES=ON
         -D MueLu_ENABLE_DEBUG=ON
-        -D MueLu_ENABLE_BROKEN_TESTS=ON
     -D Trilinos_ENABLE_ShyLU=OFF
     -D Trilinos_ENABLE_Stratimikos=ON
     -D Trilinos_ENABLE_Teuchos=ON

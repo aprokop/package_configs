@@ -32,8 +32,6 @@ ARGS=(
 
     -D TPL_ENABLE_Boost=ON
     -D TPL_ENABLE_BoostLib=ON
-    -D TPL_ENABLE_Libmesh=OFF
-    -D TPL_ENABLE_MOAB=OFF
 
     ### ETI ###
     -D Trilinos_ENABLE_EXPLICIT_INSTANTIATION=ON

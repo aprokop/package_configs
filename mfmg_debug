@@ -15,7 +15,9 @@ ARGS=(
 
     # According to https://github.com/ninja-build/ninja/wiki/FAQ, one is
     # required to force colored output
-    -D CMAKE_CXX_FLAGS="-fdiagnostics-color=always ${CMAKE_CXX_FLAGS}"
+    -D CMAKE_CXX_FLAGS="-fdiagnostics-color=always -Wall -Wpedantic -Wextra -Wshadow ${CMAKE_CXX_FLAGS}"
+
+    -D CMAKE_CXX_COMPILER="g++"
 
     ### TPLS ###
 

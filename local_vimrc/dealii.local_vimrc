@@ -5,8 +5,11 @@ au! BufEnter [^.]*.cuh let b:fswitchdst = 'cuh' | let b:fswitchfnames = '/\([^.]
 au! BufEnter *.templates.cuh  let b:fswitchdst = 'cuh' | let b:fswitchfnames = '/.templates//'
 
 syn keyword cType
+    \ ConstraintMatrix
     \ DataOut
     \ DoFHandler
+    \ SparseMatrix
+    \ SparsityPattern
     \ Triangulation
     \ Vector
     \ WorkStream

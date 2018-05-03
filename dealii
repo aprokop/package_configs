@@ -1,0 +1,37 @@
+#!/bin/bash
+EXTRA_ARGS=$@
+
+rm -f  CMakeCache.txt
+rm -rf CMakeFiles/
+rm -f  build.ninja
+rm -f  rules.ninja
+
+ARGS=(
+
+    -D CMAKE_BUILD_TYPE=DebugRelease
+
+    -D CMAKE_INSTALL_PREFIX=$HOME/local/opt/dealii-mfmg
+
+    -D BUILD_SHARED_LIBS=ON
+
+    ### COMPILERS AND FLAGS ###
+    -D DEAL_II_WITH_CUDA=ON
+    -D DEAL_II_WITH_CXX14=OFF
+
+    ### TPLS ###
+    -D DEAL_II_WITH_MPI=ON
+    -D DEAL_II_WITH_P4EST=ON
+    -D DEAL_II_WITH_TRILINOS=ON
+    -D DEAL_II_WITH_ARPACK=ON
+    )
+
+cmake -GNinja "${ARGS[@]}" $EXTRA_ARGS ../ | tee configure.log
+exit_status=$?
+
+if [ $exit_status -eq 0 ]; then
+  # Record environment for future
+  [[ -f build.env    ]] && mv build.env    build.env.old
+  [[ -f build.module ]] && mv build.module build.module.old
+  env          > build.env
+  module list &> build.module
+fi

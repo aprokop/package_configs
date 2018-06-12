@@ -1,0 +1,3 @@
+syn keyword cDefine
+    \ BOOST_TEST
+    \ BOOST_DATA_TEST_CASE

@@ -132,7 +132,7 @@ ARGS=(
 
     )
 
-cmake -GNinja "${ARGS[@]}" $EXTRA_ARGS ../../ | tee configure.log
+cmake -GNinja "${ARGS[@]}" $EXTRA_ARGS "${TRILINOS_DIR:-../../}" | tee configure.log
 exit_status=$?
 
 if [ $exit_status -eq 0 ]; then

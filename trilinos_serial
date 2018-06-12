@@ -109,7 +109,7 @@ if [ "$MATLAB" == "true" ]; then
 fi
 
 # cmake "${ARGS[@]}" $EXTRA_ARGS ../../ | tee configure.log
-cmake -GNinja "${ARGS[@]}" $EXTRA_ARGS ../../ | tee configure.log
+cmake -GNinja "${ARGS[@]}" $EXTRA_ARGS "${TRILINOS_DIR:-../../}" | tee configure.log
 
 # Record environment for future
 env         > build.env

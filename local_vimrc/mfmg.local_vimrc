@@ -1,3 +1,4 @@
+source $HOME/.personal/trilinos_configs/local_vimrc/boost.local_vimrc
 source $HOME/.personal/trilinos_configs/local_vimrc/dealii.local_vimrc
 source $HOME/.personal/trilinos_configs/local_vimrc/cuda.local_vimrc
 
@@ -5,9 +6,15 @@ set ts=8
 set sw=2
 
 " Configure clang-format
-let g:clang_format#command = "clang-format"
+let g:clang_format#command = "clang-format-5.0"
 let g:clang_format#detect_style_file = 1
 let g:clang_format#auto_format = 1
+
+" Custom commenting
+augroup filetypedetect
+  au BufNewFile,BufRead *.info setf info
+augroup END
+let g:NERDCustomDelimiters = { 'info': { 'left': ';'} }
 
 " Ignore build directory (for CtrlP)
 set wildignore+=*/build/*
@@ -17,7 +24,7 @@ autocmd BufNewFile,BufRead *.cuh set syntax=cpp
 
 " MFMG
 syn keyword cDefine
-    \ BOOST_TEST
+    \ ASSERT_THROW_NOT_IMPLEMENTED
     \ INSTANTIATE_DIM
     \ INSTANTIATE_DIM_SCALARTYPE
     \ TUPLE

@@ -18,7 +18,7 @@ ARGS=(
     -D Trilinos_ENABLE_CXX11=ON
         -D Trilinos_CXX11_FLAGS="-std=c++11 -expt-extended-lambda"
     -D CMAKE_CXX_FLAGS="-Wall \
-        -lineinfo -arch=sm_61 \
+        -lineinfo \
         -DKOKKOSP_ENABLE_PROFILING \
         -Xcudafe --diag_suppress=initialization_not_reachable \
         -Xcudafe --diag_suppress=cc_clobber_ignored \
@@ -44,6 +44,7 @@ ARGS=(
         -D Tpetra_INST_INT_LONG_LONG=OFF
     -D Kokkos_ENABLE_Cuda_UVM=ON
     -D Kokkos_ENABLE_Cuda_Lambda=ON
+    -D KOKKOS_ARCH="Pascal61"
     -D Kokkos_ENABLE_Serial=ON
     -D Tpetra_INST_SERIAL=ON
 

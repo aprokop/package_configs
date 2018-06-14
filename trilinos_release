@@ -18,44 +18,12 @@ elif [ "$OMPI_MPICXX" == "clang++" ]; then
     CXX_FLAGS_COMPILER_SPECIFIC=""
 fi
 
-HOST="localhost"
-SHARED="true"
-
-### TPLS ###
-if [ "$HOST" == "localhost" ]; then
-    BLAS_PATH="/usr/lib64"
-    LAPACK_PATH="/usr/lib64"
-    MPI_PATH="$HOME/local/opt/openmpi-1.10.0/"
-
-    if [ "$SHARED" == "true" ]; then
-        BLAS_LIB="${BLAS_PATH}/libblas.so"
-
-    else
-        BLAS_LIB="${BLAS_PATH}/libblas.a"
-    fi
-
-elif [ "$HOST" == "volta" ]; then
-    BLAS_PATH="/opt/cray/libsci/13.0.0/gnu/49/ivybridge/lib/"
-    LAPACK_PATH="${BLAS_PATH}"
-    MPI_PATH="/opt/cray/mpt/7.0.1/gni/mpich2-intel/140"
-
-    if [ "$SHARED" == "true" ]; then
-        echo "Use STATIC build on Volta"
-        exit 1
-
-    else
-        BLAS_LIB="${BLAS_PATH}/libsci_gnu_49_mpi.a"
-        LAPACK_LIB="${LAPACK_PATH}/libsci_gnu_49_mpi.a"
-    fi
-fi
-
-
 ARGS=(
     -D CMAKE_BUILD_TYPE=RELWITHDEBINFO
 
     -D CMAKE_INSTALL_PREFIX=$HOME/local/opt/trilinos/
 
-    -D BUILD_SHARED_LIBS="$SHARED"
+    -D BUILD_SHARED_LIBS=ON
 
     ### COMPILERS AND FLAGS ###
     -D Trilinos_ENABLE_Fortran=OFF
@@ -64,11 +32,8 @@ ARGS=(
 
     ### TPLS ###
     -D TPL_ENABLE_MPI=ON
-        -D MPI_BASE_DIR="${MPI_PATH}"
     -D TPL_ENABLE_BLAS=ON
-        -D TPL_BLAS_LIBRARIES=${BLAS_LIB}
     -D TPL_ENABLE_LAPACK=ON
-        -D TPL_LAPACK_LIBRARIES=${LAPACK_LIB}
 
     ### ETI ###
     -D Trilinos_ENABLE_EXPLICIT_INSTANTIATION=ON

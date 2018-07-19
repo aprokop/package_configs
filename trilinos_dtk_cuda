@@ -75,8 +75,8 @@ ARGS=(
 
     )
 
-# cmake -GNinja "${ARGS[@]}" $EXTRA_ARGS ../../ | tee configure.log
-cmake "${ARGS[@]}" $EXTRA_ARGS "${TRILINOS_DIR:-../../}" | tee configure.log
+# cmake -GNinja "${ARGS[@]}" $EXTRA_ARGS ../../ 2>&1 | tee configure.log
+cmake "${ARGS[@]}" $EXTRA_ARGS "${TRILINOS_DIR:-../../}" 2>&1 | tee configure.log
 
 # Record environment for future
 [[ -f build.env    ]] && mv build.env    build.env.old

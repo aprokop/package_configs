@@ -147,7 +147,7 @@ else
 fi
 
 # Cannot use ninja as some packages require Fortran
-cmake "${ARGS_BASE[@]}" "${TPLS[@]}" $EXTRA_ARGS "${TRILINOS_DIR:-../../}" | tee configure.log
+cmake "${ARGS_BASE[@]}" "${TPLS[@]}" $EXTRA_ARGS "${TRILINOS_DIR:-../../}" 2>&1 | tee configure.log
 
 # Record environment for future
 [[ -f build.env    ]] && mv build.env    build.env.old

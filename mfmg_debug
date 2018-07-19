@@ -28,7 +28,7 @@ ARGS=(
     # -D MFMG_ENABLE_ClangFormat=ON
   )
 
-cmake -GNinja "${ARGS[@]}" $EXTRA_ARGS ../../ | tee configure.log
+cmake -GNinja "${ARGS[@]}" $EXTRA_ARGS "${MFMG_DIR:-../../}" 2>&1 | tee configure.log
 exit_status=$?
 
 if [ $exit_status -eq 0 ]; then

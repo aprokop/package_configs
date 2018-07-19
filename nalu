@@ -30,10 +30,13 @@ ARGS=(
 
     # -D TEST_TOLERANCE=".0001"
  )
-cmake -GNinja "${ARGS[@]}" $EXTRA_ARGS ../.. | tee configure.log
+cmake -GNinja "${ARGS[@]}" $EXTRA_ARGS "${NALU_DIR:-../..}" 2>&1 | tee configure.log
+exit_status=$?
 
-# Record environment for future
-[[ -f build.env    ]] && mv build.env    build.env.old
-[[ -f build.module ]] && mv build.module build.module.old
-env          > build.env
-module list &> build.module
+if [ $exit_status -eq 0 ]; then
+    # Record environment for future
+    [[ -f build.env    ]] && mv build.env    build.env.old
+    [[ -f build.module ]] && mv build.module build.module.old
+    env          > build.env
+    module list &> build.module
+fi

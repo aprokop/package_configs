@@ -26,7 +26,7 @@ syn keyword cType
     \ BasicGeometryExtraData
     \ BasicGeometryLocalMap
     \ BasicGeometryManager
-    \ BBox
+    \ Box
     \ BoxGeometry
     \ BoxGeometryImpl
     \ BuhmannBasis
@@ -75,6 +75,7 @@ syn keyword cType
     \ MultivariablePolynomialBasis
     \ NanoflannTree
     \ NewtonSolver
+    \ Node
     \ NodeToNodeOperator
     \ NonlinearProblemTraits
     \ ParallelSearch

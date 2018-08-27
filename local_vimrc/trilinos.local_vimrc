@@ -40,6 +40,7 @@ syn keyword cType
 " Kokkos
 syn keyword cDefine
     \ KOKKOS_FORCEINLINE_FUNCTION
+    \ KOKKOS_FUNCTION
     \ KOKKOS_INLINE_FUNCTION
     \ KOKKOS_LAMBDA
     \ parallel_for

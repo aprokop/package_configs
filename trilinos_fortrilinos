@@ -18,6 +18,7 @@ ARGS=(
     -D Trilinos_ENABLE_Fortran=ON
     -D Trilinos_TPL_SYSTEM_INCLUDE_DIRS=ON
     -D CMAKE_CXX_FLAGS="-Wall -Wpedantic"
+    -D CMAKE_Fortran_FLAGS="-fcheck=all -fbacktrace -ffpe-trap=invalid,zero,overflow"
 
     ### TPLs ###
     -D TPL_ENABLE_MPI=ON
@@ -48,6 +49,7 @@ ARGS=(
     -D Trilinos_ENABLE_Ifpack2=ON
     -D Trilinos_ENABLE_MueLu=ON
     -D Trilinos_ENABLE_Stratimikos=ON
+    -D Trilinos_ENABLE_Teuchos=ON
     -D Trilinos_ENABLE_Tpetra=ON
     -D Trilinos_ENABLE_Thyra=ON
 
@@ -57,13 +59,22 @@ ARGS=(
         -D ForTrilinos_ENABLE_EXAMPLES=ON
         -D ForTrilinos_ENABLE_TESTS=ON
         -D ForTrilinos_ENABLE_ReadTheDocs=ON
+
+    ### MISC ###
+    -D CMAKE_EXPORT_COMPILE_COMMANDS=ON
+    -D Trilinos_ENABLE_INSTALL_CMAKE_CONFIG_FILES=ON
+    -D Trilinos_DEPS_XML_OUTPUT_FILE=""
+
     )
 
 # cmake -GNinja "${ARGS[@]}" $EXTRA_ARGS ../../ 2>&1 | tee configure.log
 cmake "${ARGS[@]}" $EXTRA_ARGS "${TRILINOS_DIR:-../../}" 2>&1 | tee configure.log
+exit_status=$?
 
-# Record environment for future
-[[ -f build.env    ]] && mv build.env    build.env.old
-[[ -f build.module ]] && mv build.module build.module.old
-env          > build.env
-module list &> build.module
+if [ $exit_status -eq 0 ]; then
+  # Record environment for future
+  [[ -f build.env    ]] && mv build.env    build.env.old
+  [[ -f build.module ]] && mv build.module build.module.old
+  env          > build.env
+  module list &> build.module
+fi

@@ -6,7 +6,6 @@ rm -rf CMakeFiles/
 rm -f  build.ninja
 rm -f  rules.ninja
 
-SWIG_DIR="$HOME/code/swig"
 ARGS=(
     -D CMAKE_BUILD_TYPE=RelWithDebInfo
 
@@ -25,8 +24,6 @@ ARGS=(
     -D TPL_ENABLE_BLAS=ON
     -D TPL_ENABLE_LAPACK=ON
     -D TPL_ENABLE_Pthread=OFF
-      -D SWIG_EXECUTABLE="$SWIG_DIR/swig"
-      -D SWIG_DIR="$SWIG_DIR/Lib"
 
     ### ETI ###
     -D Trilinos_ENABLE_EXPLICIT_INSTANTIATION=ON
@@ -60,10 +57,10 @@ ARGS=(
 
     ### FORTRILINOS ###
     -D Trilinos_ENABLE_ForTrilinos=ON
-        -D ForTrilinos_ENABLE_DeveloperMode=ON
+        -D ForTrilinos_ENABLE_DeveloperMode=OFF
         -D ForTrilinos_ENABLE_EXAMPLES=ON
         -D ForTrilinos_ENABLE_TESTS=ON
-        -D ForTrilinos_ENABLE_ReadTheDocs=ON
+        -D ForTrilinos_ENABLE_ReadTheDocs=OFF
 
     ### MISC ###
     -D CMAKE_EXPORT_COMPILE_COMMANDS=ON

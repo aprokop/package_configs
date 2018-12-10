@@ -40,7 +40,6 @@ ARGS=(
     -D HOMME_FIND_BLASLAPACK=ON
     -D NetCDF_C_PATH="${NETCDF_DIR}"
     -D NetCDF_Fortran_PATH="${NETCDFF_DIR}"
-        # -D NetCDF_Fortran_INCLUDE_DIR="${NETCDFF_DIR}/include"
     -D WITH_PNETCDF=OFF
 
     ### PACKAGES CONFIGURATION ###
@@ -64,7 +63,7 @@ ARGS=(
     # More info here:
     #   wiki.ucar.edu/display/homme/How+to+run+the+regression+tests
     # This CMake var points to the gold baseline
-    -D HOMME_BASELINE_DIR="`pwd`/tests/baseline"
+    -D HOMME_BASELINE_DIR="`pwd`"
 )
 
 cmake "${ARGS[@]}" "$EXTRA_ARGS" $HOMME_ROOT | tee configure.log

@@ -1,8 +1,16 @@
+source $HOME/.personal/trilinos_configs/local_vimrc/kokkos.local_vimrc
+
 set ts=8
 set sw=2
 
 au! BufEnter *_decl.hpp let b:fswitchdst = 'hpp' | let b:fswitchfnames = '/_decl/_def/'
 au! BufEnter *_def.hpp  let b:fswitchdst = 'hpp' | let b:fswitchfnames = '/_def/_decl/'
+
+" Configure clang-format
+" let g:clang_format#command = "clang-format-6.0"
+" let g:clang_format#detect_style_file = 1
+" let g:clang_format#auto_format = 1
+
 
 " Trilinos Types
 syn keyword cType
@@ -36,19 +44,6 @@ syn keyword cType
     \ ParameterList
     \ Ptr
     \ TimeMonitor
-
-" Kokkos
-syn keyword cDefine
-    \ KOKKOS_FORCEINLINE_FUNCTION
-    \ KOKKOS_FUNCTION
-    \ KOKKOS_INLINE_FUNCTION
-    \ KOKKOS_LAMBDA
-    \ parallel_for
-    \ parallel_reduce
-    \ parallel_scan
-syn keyword cType
-    \ DualView
-    \ View
 
 " Tpetra
 syn keyword cType

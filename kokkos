@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+../generate_makefile.bash \
+    --prefix="$HOME/local/opt/kokkos" \
+    --with-serial \
+    --with-openmp \
+    --with-cuda \
+    --with-cuda-options=enable_lambda,enable_uvm \
+    --cxxstandard=c++14 \
+    --arch=Pascal61 \
+    # --compiler=???

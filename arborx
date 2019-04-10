@@ -1,0 +1,41 @@
+#!/bin/bash
+EXTRA_ARGS=$@
+
+rm -f  CMakeCache.txt
+rm -rf CMakeFiles/
+rm -f  build.ninja
+rm -f  rules.ninja
+
+ARGS=(
+    -D CMAKE_BUILD_TYPE=RELWITHDEBINFO
+
+    -D BUILD_SHARED_LIBS=ON
+
+    ### TPLs
+    -D CMAKE_PREFIX_PATH="$HOME/local/opt/kokkos"
+    -D CMAKE_CXX_COMPILER="mpicxx"
+
+    ### COMPILERS AND FLAGS ###
+    -D CMAKE_CXX_FLAGS="-Wall \
+        -lineinfo \
+        -DKOKKOSP_ENABLE_PROFILING \
+        -Xcudafe --diag_suppress=initialization_not_reachable \
+        -Xcudafe --diag_suppress=cc_clobber_ignored \
+        -Xcudafe --diag_suppress=conversion_function_not_usable \
+        -Xcudafe --diag_suppress=code_is_unreachable"
+
+    ### MISC ###
+    -D CMAKE_EXPORT_COMPILE_COMMANDS=ON
+    )
+
+cmake -GNinja "${ARGS[@]}" $EXTRA_ARGS "${ARBORX_DIR:-../../}" 2>&1 | tee configure.log
+# cmake "${ARGS[@]}" $EXTRA_ARGS "${ARBORX_DIR:-..}" 2>&1 | tee configure.log
+exit_status=$?
+
+if [ $exit_status -eq 0 ]; then
+  # Record environment for future
+  [[ -f build.env    ]] && mv build.env    build.env.old
+  [[ -f build.module ]] && mv build.module build.module.old
+  env          > build.env
+  module list -t | tail -n +2 &> build.module
+fi

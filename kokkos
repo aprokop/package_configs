@@ -8,3 +8,13 @@
     --cxxstandard=c++14 \
     --arch=Pascal61 \
     # --compiler=???
+
+exit_status=$?
+
+if [ $exit_status -eq 0 ]; then
+  # Record environment for future
+  [[ -f build.env    ]] && mv build.env    build.env.old
+  [[ -f build.module ]] && mv build.module build.module.old
+  env          > build.env
+  module list &> build.module
+fi

@@ -97,6 +97,7 @@ ARGS=(
 
     )
 
+set -o pipefail
 cmake -GNinja "${ARGS[@]}" $EXTRA_ARGS "${TRILINOS_DIR:-../../}" 2>&1 | tee configure.log
 exit_status=$?
 
@@ -105,5 +106,5 @@ if [ $exit_status -eq 0 ]; then
   [[ -f build.env    ]] && mv build.env    build.env.old
   [[ -f build.module ]] && mv build.module build.module.old
   env          > build.env
-  module list &> build.module
+  module list -t | tail -n +2 &> build.module
 fi

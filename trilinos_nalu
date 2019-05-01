@@ -146,11 +146,15 @@ else
       )
 fi
 
+set -o pipefail
 # Cannot use ninja as some packages require Fortran
 cmake "${ARGS_BASE[@]}" "${TPLS[@]}" $EXTRA_ARGS "${TRILINOS_DIR:-../../}" 2>&1 | tee configure.log
+exit_status=$?
 
-# Record environment for future
-[[ -f build.env    ]] && mv build.env    build.env.old
-[[ -f build.module ]] && mv build.module build.module.old
-env          > build.env
-module list &> build.module
+if [ $exit_status -eq 0 ]; then
+  # Record environment for future
+  [[ -f build.env    ]] && mv build.env    build.env.old
+  [[ -f build.module ]] && mv build.module build.module.old
+  env          > build.env
+  module list -t | tail -n +2 &> build.module
+fi

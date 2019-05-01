@@ -28,8 +28,8 @@ ARGS=(
     -D CMAKE_EXPORT_COMPILE_COMMANDS=ON
     )
 
-cmake -GNinja "${ARGS[@]}" $EXTRA_ARGS "${ARBORX_DIR:-../../}" 2>&1 | tee configure.log
-# cmake "${ARGS[@]}" $EXTRA_ARGS "${ARBORX_DIR:-..}" 2>&1 | tee configure.log
+set -o pipefail
+cmake -GNinja "${ARGS[@]}" "${EXTRA_ARGS[@]}" "${ARBORX_DIR:-../}" 2>&1 | tee configure.log
 exit_status=$?
 
 if [ $exit_status -eq 0 ]; then

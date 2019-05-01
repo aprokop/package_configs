@@ -66,13 +66,14 @@ ARGS=(
     -D HOMME_BASELINE_DIR="`pwd`"
 )
 
+set -o pipefail
 cmake "${ARGS[@]}" "$EXTRA_ARGS" $HOMME_ROOT | tee configure.log
 exit_status=$?
 
 if [ $exit_status -eq 0 ]; then
-    # Record environment for future
-    [[ -f build.env    ]] && mv build.env    build.env.old
-    [[ -f build.module ]] && mv build.module build.module.old
-    env          > build.env
-    module list &> build.module
+  # Record environment for future
+  [[ -f build.env    ]] && mv build.env    build.env.old
+  [[ -f build.module ]] && mv build.module build.module.old
+  env          > build.env
+  module list -t | tail -n +2 &> build.module
 fi

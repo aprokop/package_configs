@@ -25,7 +25,8 @@ ARGS=(
     -D DEAL_II_WITH_ARPACK=ON
     )
 
-cmake -GNinja "${ARGS[@]}" $EXTRA_ARGS ../ | tee configure.log
+set -o pipefail
+cmake -GNinja "${ARGS[@]}" $EXTRA_ARGS ../../ | tee configure.log
 exit_status=$?
 
 if [ $exit_status -eq 0 ]; then
@@ -33,5 +34,5 @@ if [ $exit_status -eq 0 ]; then
   [[ -f build.env    ]] && mv build.env    build.env.old
   [[ -f build.module ]] && mv build.module build.module.old
   env          > build.env
-  module list &> build.module
+  module list -t | tail -n +2 &> build.module
 fi

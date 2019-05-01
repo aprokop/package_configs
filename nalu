@@ -30,13 +30,15 @@ ARGS=(
 
     # -D TEST_TOLERANCE=".0001"
  )
+
+set -o pipefail
 cmake -GNinja "${ARGS[@]}" $EXTRA_ARGS "${NALU_DIR:-../..}" 2>&1 | tee configure.log
 exit_status=$?
 
 if [ $exit_status -eq 0 ]; then
-    # Record environment for future
-    [[ -f build.env    ]] && mv build.env    build.env.old
-    [[ -f build.module ]] && mv build.module build.module.old
-    env          > build.env
-    module list &> build.module
+  # Record environment for future
+  [[ -f build.env    ]] && mv build.env    build.env.old
+  [[ -f build.module ]] && mv build.module build.module.old
+  env          > build.env
+  module list -t | tail -n +2 &> build.module
 fi

@@ -7,6 +7,9 @@ syn keyword cDefine
     \ parallel_reduce
     \ parallel_scan
 syn keyword cType
+    \ Array
+    \ Device
     \ DualView
     \ OffsetView
+    \ RangePolicy
     \ View

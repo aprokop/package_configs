@@ -1,10 +1,10 @@
 source $HOME/.personal/trilinos_configs/local_vimrc/kokkos.local_vimrc
 
 set ts=8
-set sw=4
+set sw=2
 
 " Configure clang-format
-let g:clang_format#command = "clang-format-6.0"
+let g:clang_format#command = "clang-format-7"
 let g:clang_format#detect_style_file = 1
 let g:clang_format#auto_format = 1
 
@@ -14,6 +14,7 @@ syn keyword cDefine
     \ ARBORX_MARK_REGION
 syn keyword cType
     \ BatchedQueries
+    \ BoostRTree
     \ BoundingVolumeHierarchy
     \ Box
     \ BVH

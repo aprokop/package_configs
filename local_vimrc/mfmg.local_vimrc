@@ -2,6 +2,8 @@ source $HOME/.personal/trilinos_configs/local_vimrc/boost.local_vimrc
 source $HOME/.personal/trilinos_configs/local_vimrc/dealii.local_vimrc
 source $HOME/.personal/trilinos_configs/local_vimrc/cuda.local_vimrc
 
+" set spell
+
 set ts=8
 set sw=2
 
@@ -24,6 +26,7 @@ autocmd BufNewFile,BufRead *.cuh set syntax=cpp
 
 " MFMG
 syn keyword cDefine
+    \ ASSERT
     \ ASSERT_THROW_NOT_IMPLEMENTED
     \ INSTANTIATE_DIM
     \ INSTANTIATE_DIM_SCALARTYPE
@@ -31,7 +34,9 @@ syn keyword cDefine
 syn keyword cType
     \ AMGe
     \ AMGe_device
+    \ AnasaziSolver
     \ global_dof_index
+    \ Lanczos
     \ Laplace
     \ Level
     \ Hierarchy

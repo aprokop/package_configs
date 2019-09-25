@@ -14,7 +14,7 @@ ARGS=(
     -D BUILD_SHARED_LIBS=ON
 
     ### TPLs ###
-    -D ArborX_ENABLE_MPI=ON
+    -D ARBORX_ENABLE_MPI=ON
     -D CMAKE_PREFIX_PATH="$HOME/local/opt/kokkos"
 
     ### COMPILERS AND FLAGS ###
@@ -30,8 +30,8 @@ ARGS=(
 
     ### MISC ###
     -D CMAKE_EXPORT_COMPILE_COMMANDS=ON
-    -D ArborX_ENABLE_TESTS=ON
-    -D ArborX_ENABLE_EXAMPLES=ON
+    -D ARBORX_ENABLE_TESTS=ON
+    -D ARBORX_ENABLE_EXAMPLES=ON
     )
 
 set -o pipefail

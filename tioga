@@ -1,0 +1,41 @@
+#!/bin/bash
+EXTRA_ARGS=("$@")
+
+rm -f  CMakeCache.txt
+rm -rf CMakeFiles/
+rm -f  build.ninja
+rm -f  rules.ninja
+
+export CPLUS_INCLUDE_PATH="$CPATH"
+
+ARGS=(
+    -D CMAKE_BUILD_TYPE=RELWITHDEBINFO
+
+    -D CMAKE_INSTALL_PREFIX=$HOME/local/opt/tioga
+
+    -D BUILD_SHARED_LIBS=ON
+
+    ### TPLs ###
+
+    ### COMPILERS AND FLAGS ###
+    -D CMAKE_CXX_COMPILER_LAUNCHER=ccache
+
+    ### CONFIGURATION ###
+    -D TIOGA_HAS_NODEGID=OFF
+    -D TIOGA_ENABLE_TIMERS=ON
+
+    ### MISC ###
+    -D CMAKE_EXPORT_COMPILE_COMMANDS=ON
+    )
+
+set -o pipefail
+cmake "${ARGS[@]}" "${EXTRA_ARGS[@]}" "${TIOGA_DIR:-../}" 2>&1 | tee configure.log
+exit_status=$?
+
+if [ $exit_status -eq 0 ]; then
+  # Record environment for future
+  [[ -f build.env    ]] && mv build.env    build.env.old
+  [[ -f build.module ]] && mv build.module build.module.old
+  env          > build.env
+  module list -t | tail -n +2 &> build.module
+fi

@@ -6,6 +6,8 @@ rm -rf CMakeFiles/
 rm -f  build.ninja
 rm -f  rules.ninja
 
+export CPLUS_INCLUDE_PATH="$CPATH"
+
 ARGS=(
     -D CMAKE_BUILD_TYPE=RELWITHDEBINFO
 

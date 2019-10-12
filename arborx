@@ -8,6 +8,7 @@ rm -f  rules.ninja
 
 export CPLUS_INCLUDE_PATH="$CPATH"
 
+KOKKOS_DIR="$HOME/local/opt/kokkos"
 ARGS=(
     -D CMAKE_BUILD_TYPE=RELWITHDEBINFO
 
@@ -17,23 +18,18 @@ ARGS=(
 
     ### TPLs ###
     -D ARBORX_ENABLE_MPI=ON
-    -D CMAKE_PREFIX_PATH="$HOME/local/opt/kokkos"
+    -D CMAKE_PREFIX_PATH="$KOKKOS_DIR"
 
     ### COMPILERS AND FLAGS ###
     -D CMAKE_CXX_COMPILER_LAUNCHER=ccache
     -D CMAKE_CXX_COMPILER="nvcc_wrapper"
-    -D CMAKE_CXX_FLAGS="-Wall \
-        -lineinfo \
-        -DKOKKOS_ENABLE_PROFILING \
-        -Xcudafe --diag_suppress=initialization_not_reachable \
-        -Xcudafe --diag_suppress=cc_clobber_ignored \
-        -Xcudafe --diag_suppress=conversion_function_not_usable \
-        -Xcudafe --diag_suppress=code_is_unreachable"
+    -D CMAKE_CXX_FLAGS="-lineinfo -DKOKKOS_ENABLE_PROFILING"
 
     ### MISC ###
     -D CMAKE_EXPORT_COMPILE_COMMANDS=ON
     -D ARBORX_ENABLE_TESTS=ON
     -D ARBORX_ENABLE_EXAMPLES=ON
+    -D ARBORX_ENABLE_BENCHMARKS=ON
     )
 
 set -o pipefail

@@ -6,12 +6,14 @@ rm -rf CMakeFiles/
 rm -f  build.ninja
 rm -f  rules.ninja
 
+ARBORX_DIR="$HOME/local/opt/arborx"
+KOKKOS_DIR="$HOME/local/opt/kokkos"
+
 export CPLUS_INCLUDE_PATH="$CPATH"
+export PKG_CONFIG_PATH="$KOKKOS_DIR/lib/pkgconfig:$PKG_CONFIG_PATH"
 
 ARGS=(
     -D CMAKE_BUILD_TYPE=RELWITHDEBINFO
-
-    -D CMAKE_INSTALL_PREFIX=$HOME/local/opt/tioga
 
     -D BUILD_SHARED_LIBS=ON
 
@@ -19,10 +21,15 @@ ARGS=(
 
     ### COMPILERS AND FLAGS ###
     -D CMAKE_CXX_COMPILER_LAUNCHER=ccache
+    -D CMAKE_CXX_COMPILER="nvcc_wrapper"
+    -D CMAKE_Fortran_FLAGS="-cpp"
+
 
     ### CONFIGURATION ###
     -D TIOGA_HAS_NODEGID=OFF
     -D TIOGA_ENABLE_TIMERS=ON
+    -D TIOGA_ENABLE_ARBORX=ON
+      -D CMAKE_PREFIX_PATH="$ARBORX_DIR;$KOKKOS_DIR"
 
     ### MISC ###
     -D CMAKE_EXPORT_COMPILE_COMMANDS=ON

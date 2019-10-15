@@ -4,7 +4,7 @@
     --with-serial \
     --with-openmp \
     --with-cuda \
-    --with-cuda-options=enable_lambda,enable_uvm \
+    --with-cuda-options=enable_lambda \
     --cxxstandard=c++14 \
     --cxxflags="-fPIC" \
     --arch=Pascal61 \

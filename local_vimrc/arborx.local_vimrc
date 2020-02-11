@@ -8,6 +8,11 @@ let g:clang_format#command = "clang-format-7"
 let g:clang_format#detect_style_file = 1
 let g:clang_format#auto_format = 1
 
+augroup markdown
+    au!
+    au BufNewFile,BufRead *.md setlocal filetype=ghmarkdown
+augroup END
+
 " DTK
 syn keyword cDefine
     \ ARBORX_ASSERT

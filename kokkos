@@ -1,15 +1,35 @@
-#!/usr/bin/env bash
-../generate_makefile.bash \
-    --prefix="$HOME/local/opt/kokkos" \
-    --with-serial \
-    --with-openmp \
-    --with-cuda \
-    --with-cuda-options=enable_lambda \
-    --cxxstandard=c++14 \
-    --cxxflags="-fPIC" \
-    --arch=Pascal61 \
-    # --compiler=???
+#!/bin/bash
+EXTRA_ARGS=("$@")
 
+rm -f  CMakeCache.txt
+rm -rf CMakeFiles/
+rm -f  build.ninja
+rm -f  rules.ninja
+
+export CPLUS_INCLUDE_PATH="$CPATH"
+
+KOKKOS_DIR=$(readlink -f "${KOKKOS_DIR:-../}")
+ARGS=(
+    -D CMAKE_BUILD_TYPE=RELWITHDEBINFO
+
+    -D CMAKE_INSTALL_PREFIX=$HOME/local/opt/kokkos
+
+    ### COMPILERS AND FLAGS ###
+    -D CMAKE_CXX_COMPILER_LAUNCHER=ccache
+    -D CMAKE_CXX_COMPILER="$KOKKOS_DIR/bin/nvcc_wrapper"
+    -D CMAKE_CXX_STANDARD=14
+
+    ### MISC ###
+    -D Kokkos_ENABLE_SERIAL=ON
+    -D Kokkos_ENABLE_OPENMP=ON
+    -D Kokkos_ENABLE_CUDA=ON
+        -D Kokkos_ENABLE_CUDA_LAMBDA=ON
+    -D Kokkos_ENABLE_DEPRECATED_CODE=OFF
+    -D Kokkos_ARCH_PASCAL61=ON
+    )
+
+set -o pipefail
+cmake -GNinja "${ARGS[@]}" "${EXTRA_ARGS[@]}" "${KOKKOS_DIR}" 2>&1 | tee configure.log
 exit_status=$?
 
 if [ $exit_status -eq 0 ]; then
@@ -17,5 +37,5 @@ if [ $exit_status -eq 0 ]; then
   [[ -f build.env    ]] && mv build.env    build.env.old
   [[ -f build.module ]] && mv build.module build.module.old
   env          > build.env
-  module list &> build.module
+  module list -t | tail -n +2 &> build.module
 fi

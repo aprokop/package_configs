@@ -23,7 +23,8 @@ ARGS=(
     ### COMPILERS AND FLAGS ###
     -D CMAKE_CXX_COMPILER_LAUNCHER=ccache
     -D CMAKE_CXX_COMPILER="$KOKKOS_DIR/bin/nvcc_wrapper"
-    -D CMAKE_CXX_FLAGS="-lineinfo -DKOKKOS_ENABLE_PROFILING"
+    -D CMAKE_CXX_FLAGS="-lineinfo -DKOKKOS_ENABLE_PROFILING -Wall -Wextra -Werror"
+    -D CMAKE_CXX_EXTENSIONS=OFF # required by Kokkos
 
     ### MISC ###
     -D CMAKE_EXPORT_COMPILE_COMMANDS=ON

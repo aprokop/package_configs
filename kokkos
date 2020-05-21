@@ -37,5 +37,5 @@ if [ $exit_status -eq 0 ]; then
   [[ -f build.env    ]] && mv build.env    build.env.old
   [[ -f build.module ]] && mv build.module build.module.old
   env          > build.env
-  module list -t | tail -n +2 &> build.module
+  module list -t 2>&1 | tail -n +2 > build.module
 fi

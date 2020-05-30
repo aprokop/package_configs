@@ -1,0 +1,4 @@
+" Setup Black
+let g:black_skip_string_normalization = 1
+let g:black_linelength = 79
+au! BufWritePre *.py execute ':Black'

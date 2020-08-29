@@ -1,9 +1,9 @@
 source $HOME/.personal/trilinos_configs/local_vimrc/kokkos.local_vimrc
+source $HOME/.personal/trilinos_configs/local_vimrc/boost.local_vimrc
 
 set ts=8
 set sw=2
 
-" Configure clang-format
 let g:clang_format#command = "clang-format-7"
 let g:clang_format#detect_style_file = 1
 let g:clang_format#auto_format = 1
@@ -13,11 +13,18 @@ augroup markdown
     au BufNewFile,BufRead *.md setlocal filetype=ghmarkdown
 augroup END
 
+au BufRead,BufNewFile .jenkins set ft=Jenkinsfile
+
+let g:ctrlp_custom_ignore = 'build*'
+
 " DTK
 syn keyword cDefine
     \ ARBORX_ASSERT
     \ ARBORX_MARK_REGION
+    \ STATIC_ASSERT
+
 syn keyword cType
+    \ AccessTraits
     \ BatchedQueries
     \ BoostRTree
     \ BoundingVolumeHierarchy
@@ -26,18 +33,20 @@ syn keyword cType
     \ DistributedSearchTree
     \ Distributor
     \ Exception
+    \ Intersects
     \ Nearest
+    \ NearestPredicateTag
     \ Node
     \ Point
+    \ Predicates
+    \ PredicateWithAttachment
+    \ Primitives
+    \ PrimitivesTag
     \ PriorityQueue
+    \ SpatialPredicateTag
     \ Sphere
     \ Stack
     \ StaticVector
     \ TreeConstruction
     \ TreeTraversal
     \ TreeVisualization
-    \ Within
-
-syn keyword cType
-    \ DeviceType
-    \ ExecutionSpace

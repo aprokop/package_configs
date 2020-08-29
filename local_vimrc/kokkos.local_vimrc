@@ -6,10 +6,13 @@ syn keyword cDefine
     \ parallel_for
     \ parallel_reduce
     \ parallel_scan
+
 syn keyword cType
-    \ Array
-    \ Device
-    \ DualView
+    \ DeviceType
+    \ ExecutionSpace
+    \ MemorySpace
+    \ MinMaxScalar
     \ OffsetView
     \ RangePolicy
+    \ TeamPolicy
     \ View

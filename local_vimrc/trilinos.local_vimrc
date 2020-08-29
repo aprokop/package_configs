@@ -6,12 +6,6 @@ set sw=2
 au! BufEnter *_decl.hpp let b:fswitchdst = 'hpp' | let b:fswitchfnames = '/_decl/_def/'
 au! BufEnter *_def.hpp  let b:fswitchdst = 'hpp' | let b:fswitchfnames = '/_def/_decl/'
 
-" Configure clang-format
-" let g:clang_format#command = "clang-format-6.0"
-" let g:clang_format#detect_style_file = 1
-" let g:clang_format#auto_format = 1
-
-
 " Trilinos Types
 syn keyword cType
     \ GO GlobalOrdinal

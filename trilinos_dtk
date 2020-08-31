@@ -6,7 +6,7 @@ rm -rf CMakeFiles/
 rm -f  build.ninja
 rm -f  rules.ninja
 
-TRILINOS_DIR="${TRILINOS_DIR:-$(pwd)/../..}"
+TRILINOS_DIR="${TRILINOS_DIR:-$(pwd)/..}"
 
 ARGS=(
     -D CMAKE_BUILD_TYPE=RelWithDebInfo

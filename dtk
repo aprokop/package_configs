@@ -22,9 +22,10 @@ ARGS=(
     ### COMPILERS AND FLAGS ###
     -D CMAKE_CXX_COMPILER_LAUNCHER=ccache
     -D CMAKE_CXX_COMPILER="${TRILINOS_DIR}/bin/nvcc_wrapper"
+    -D CMAKE_CXX_EXTENSIONS=OFF
     -D CMAKE_CXX_STANDARD=14
     -D DataTransferKit_CXX11_FLAGS="-std=c++14 -expt-extended-lambda"
-    -D CMAKE_CXX_EXTENSIONS=OFF
+    -D DataTransferKit_ENABLE_OpenMP=ON
 
     ### DTK
     -D DataTransferKit_ENABLE_DataTransferKit=ON

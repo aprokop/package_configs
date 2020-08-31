@@ -1,0 +1,46 @@
+#!/bin/bash
+EXTRA_ARGS=("$@")
+
+rm -f  CMakeCache.txt
+rm -rf CMakeFiles/
+rm -f  build.ninja
+rm -f  rules.ninja
+
+TRILINOS_DIR="$HOME/local/opt/trilinos-dtk"
+
+ARGS=(
+    -D CMAKE_BUILD_TYPE=RelWithDebInfo
+
+    -D CMAKE_INSTALL_PREFIX=$HOME/local/opt/dtk
+
+    -D BUILD_SHARED_LIBS=ON
+
+    ### TPLs ###
+    -D TPL_Trilinos_DIR="${TRILINOS_DIR}"
+    -D TPL_ENABLE_BoostOrg=ON
+
+    ### COMPILERS AND FLAGS ###
+    -D CMAKE_CXX_COMPILER_LAUNCHER=ccache
+    -D CMAKE_CXX_COMPILER="${TRILINOS_DIR}/bin/nvcc_wrapper"
+    -D CMAKE_CXX_STANDARD=14
+    -D DataTransferKit_CXX11_FLAGS="-std=c++14 -expt-extended-lambda"
+    -D CMAKE_CXX_EXTENSIONS=OFF
+
+    ### DTK
+    -D DataTransferKit_ENABLE_DataTransferKit=ON
+    -D DataTransferKit_ENABLE_TESTS=ON
+    )
+cmake_cmd="cmake ${ARGS[@]} $EXTRA_ARGS ${DTK_DIR:-$(pwd)/../}"
+
+set -o pipefail
+echo $cmake_cmd
+eval $cmake_cmd 2>&1 | tee configure.log
+exit_status=$?
+
+if [ $exit_status -eq 0 ]; then
+  # Record environment for future
+  [[ -f build.env    ]] && mv build.env    build.env.old
+  [[ -f build.module ]] && mv build.module build.module.old
+  env          > build.env
+  module list -t 2>&1 | tail -n +2 > build.module
+fi

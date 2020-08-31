@@ -10,7 +10,7 @@ export CPLUS_INCLUDE_PATH="$CPATH"
 
 KOKKOS_DIR="$HOME/local/opt/kokkos"
 ARGS=(
-    -D CMAKE_BUILD_TYPE=RELWITHDEBINFO
+    -D CMAKE_BUILD_TYPE=RelWithDebInfo
 
     -D CMAKE_INSTALL_PREFIX=$HOME/local/opt/arborx
 
@@ -23,7 +23,7 @@ ARGS=(
     ### COMPILERS AND FLAGS ###
     -D CMAKE_CXX_COMPILER_LAUNCHER=ccache
     -D CMAKE_CXX_COMPILER="$KOKKOS_DIR/bin/nvcc_wrapper"
-    -D CMAKE_CXX_FLAGS="-lineinfo -DKOKKOS_ENABLE_PROFILING -Wall -Wextra -Werror"
+    -D CMAKE_CXX_FLAGS="-lineinfo -DKOKKOS_ENABLE_PROFILING -pedantic -Wall -Wextra -Werror"
     -D CMAKE_CXX_EXTENSIONS=OFF # required by Kokkos
 
     ### MISC ###

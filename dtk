@@ -8,6 +8,7 @@ rm -f  rules.ninja
 
 TRILINOS_DIR="$HOME/local/opt/trilinos-dtk"
 
+# NOTE: set OMPI_CXX to use nvcc_wrapper
 ARGS=(
     -D CMAKE_BUILD_TYPE=RelWithDebInfo
 
@@ -18,13 +19,13 @@ ARGS=(
     ### TPLs ###
     -D TPL_Trilinos_DIR="${TRILINOS_DIR}"
     -D TPL_ENABLE_BoostOrg=ON
+    -D DataTransferKit_TPL_SYSTEM_INCLUDE_DIRS=ON
 
     ### COMPILERS AND FLAGS ###
     -D CMAKE_CXX_COMPILER_LAUNCHER=ccache
-    -D CMAKE_CXX_COMPILER="${TRILINOS_DIR}/bin/nvcc_wrapper"
-    -D CMAKE_CXX_EXTENSIONS=OFF
     -D CMAKE_CXX_STANDARD=14
-    -D DataTransferKit_CXX11_FLAGS="-std=c++14 -expt-extended-lambda"
+    -D CMAKE_CXX_FLAGS="-expt-extended-lambda"
+    -D CMAKE_CXX_EXTENSIONS=OFF
     -D DataTransferKit_ENABLE_OpenMP=ON
 
     ### DTK

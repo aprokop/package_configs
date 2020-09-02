@@ -1,0 +1,12 @@
+set -o pipefail
+echo $cmake_cmd
+eval $cmake_cmd 2>&1 | tee configure.log
+exit_status=$?
+
+if [ $exit_status -eq 0 ]; then
+  # Record environment for future
+  [[ -f build.env    ]] && mv build.env    build.env.old
+  [[ -f build.module ]] && mv build.module build.module.old
+  env          > build.env
+  module list -t 2>&1 | tail -n +2 > build.module
+fi

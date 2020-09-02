@@ -1,6 +1,6 @@
-source $HOME/.personal/trilinos_configs/local_vimrc/boost.local_vimrc
-source $HOME/.personal/trilinos_configs/local_vimrc/dealii.local_vimrc
-source $HOME/.personal/trilinos_configs/local_vimrc/cuda.local_vimrc
+source $HOME/.personal/package_configs/local_vimrc/boost.local_vimrc
+source $HOME/.personal/package_configs/local_vimrc/dealii.local_vimrc
+source $HOME/.personal/package_configs/local_vimrc/cuda.local_vimrc
 
 " set spell
 

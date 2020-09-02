@@ -1,4 +1,4 @@
-source $HOME/.personal/trilinos_configs/local_vimrc/trilinos.local_vimrc
+source $HOME/.personal/package_configs/local_vimrc/trilinos.local_vimrc
 
 au BufRead,BufNewFile .jenkins set ft=Jenkinsfile
 

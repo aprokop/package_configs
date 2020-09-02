@@ -1,4 +1,4 @@
-source $HOME/.personal/trilinos_configs/local_vimrc/kokkos.local_vimrc
+source $HOME/.personal/package_configs/local_vimrc/kokkos.local_vimrc
 
 set ts=8
 set sw=2

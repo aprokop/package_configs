@@ -1,0 +1,69 @@
+#!/bin/bash
+EXTRA_ARGS=$@
+
+source $HOME/.personal/package_configs/preamble
+
+TRILINOS_DIR="${TRILINOS_DIR:-$(pwd)/..}"
+
+ARGS=(
+    -D CMAKE_BUILD_TYPE=RelWithDebInfo
+
+    -D CMAKE_INSTALL_PREFIX=$HOME/local/opt/trilinos/
+
+    -D BUILD_SHARED_LIBS=ON
+
+    ### COMPILERS AND FLAGS ###
+    -D CMAKE_CXX_COMPILER_LAUNCHER=ccache
+    -D CMAKE_CXX_STANDARD=14
+    -D Trilinos_TPL_SYSTEM_INCLUDE_DIRS=ON
+    -D Trilinos_ENABLE_Fortran=OFF
+
+    ### TPLS ###
+    -D TPL_ENABLE_MPI=ON
+    -D TPL_ENABLE_BLAS=ON
+    -D TPL_ENABLE_LAPACK=ON
+
+    ### ETI ###
+    -D Trilinos_ENABLE_EXPLICIT_INSTANTIATION=ON
+    # Serial
+    -D Kokkos_ENABLE_SERIAL=ON
+    -D Tpetra_INST_SERIAL=ON
+    # OpenMP
+    -D Trilinos_ENABLE_OpenMP=ON
+    -D Kokkos_ENABLE_OPENMP=ON
+    -D Tpetra_INST_OPENMP=ON
+    # CUDA
+    -D TPL_ENABLE_CUDA=ON
+    -D CMAKE_CXX_COMPILER="${TRILINOS_DIR}/packages/kokkos/bin/nvcc_wrapper"
+    -D Kokkos_ENABLE_CUDA=ON
+        -D Kokkos_ENABLE_CUDA_UVM=ON
+        -D Kokkos_ENABLE_CUDA_LAMBDA=ON
+        -D Kokkos_ARCH_PASCAL61=ON
+
+    ### PACKAGES CONFIGURATION ###
+    -D Trilinos_ENABLE_ALL_PACKAGES=OFF
+    -D Trilinos_ENABLE_ALL_OPTIONAL_PACKAGES=OFF
+    -D Trilinos_ASSERT_MISSING_PACKAGES=OFF
+
+    -D Trilinos_ENABLE_TESTS=OFF
+    -D Trilinos_ENABLE_EXAMPLES=OFF
+
+    -D Trilinos_ENABLE_Epetra=OFF
+    -D Trilinos_ENABLE_MueLu=ON
+        -D MueLu_ENABLE_Experimental=ON
+        -D MueLu_ENABLE_TESTS=OFF
+        -D MueLu_ENABLE_EXAMPLES=OFF
+        -D MueLu_ENABLE_Kokkos_Refactor=ON
+        # -D MueLu_ENABLE_PROFILING=ON
+    -D Trilinos_ENABLE_Xpetra=ON
+        -D Xpetra_ENABLE_Experimental=ON
+        -D Xpetra_ENABLE_Kokkos_Refactor=ON
+
+    ### MISC ###
+    -D CMAKE_EXPORT_COMPILE_COMMANDS=OFF
+    -D Trilinos_ENABLE_INSTALL_CMAKE_CONFIG_FILES=ON
+    -D Trilinos_DEPS_XML_OUTPUT_FILE=""
+    )
+cmake_cmd="cmake ${ARGS[@]} $EXTRA_ARGS ${TRILINOS_DIR}"
+
+source $HOME/.personal/package_configs/postamble

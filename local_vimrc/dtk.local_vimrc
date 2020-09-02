@@ -1,4 +1,5 @@
 source $HOME/.personal/trilinos_configs/local_vimrc/trilinos.local_vimrc
+source $HOME/.personal/trilinos_configs/local_vimrc/arborx.local_vimrc
 
 set ts=8
 set sw=4
@@ -26,7 +27,6 @@ syn keyword cType
     \ BasicGeometryExtraData
     \ BasicGeometryLocalMap
     \ BasicGeometryManager
-    \ Box
     \ BoxGeometry
     \ BoxGeometryImpl
     \ BuhmannBasis
@@ -79,7 +79,6 @@ syn keyword cType
     \ NodeToNodeOperator
     \ NonlinearProblemTraits
     \ ParallelSearch
-    \ Point
     \ PointCloudOperatorFactory
     \ PointInFaceVolumeOfInfluenceNonlinearProblem
     \ PolynomialMatrix
@@ -110,7 +109,3 @@ syn keyword cType
     \ VectorTools
     \ WendlandBasis
     \ WuBasis
-
-syn keyword cType
-    \ DeviceType
-    \ ExecutionSpace

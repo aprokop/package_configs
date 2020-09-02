@@ -1,10 +1,7 @@
 #!/bin/bash
 EXTRA_ARGS=("$@")
 
-rm -f  CMakeCache.txt
-rm -rf CMakeFiles/
-rm -f  build.ninja
-rm -f  rules.ninja
+source $HOME/.personal/package_configs/preamble
 
 export CPLUS_INCLUDE_PATH="$CPATH"
 
@@ -32,15 +29,6 @@ ARGS=(
     -D ARBORX_ENABLE_EXAMPLES=ON
     -D ARBORX_ENABLE_BENCHMARKS=ON
     )
+cmake_cmd="cmake ${ARGS[@]} $EXTRA_ARGS ${ARBORX_DIR:-../}"
 
-set -o pipefail
-cmake -GNinja "${ARGS[@]}" "${EXTRA_ARGS[@]}" "${ARBORX_DIR:-../}" 2>&1 | tee configure.log
-exit_status=$?
-
-if [ $exit_status -eq 0 ]; then
-  # Record environment for future
-  [[ -f build.env    ]] && mv build.env    build.env.old
-  [[ -f build.module ]] && mv build.module build.module.old
-  env          > build.env
-  module list -t 2>&1 | tail -n +2 > build.module
-fi
+source $HOME/.personal/package_configs/postamble

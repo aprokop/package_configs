@@ -15,7 +15,7 @@ augroup END
 
 au BufRead,BufNewFile .jenkins set ft=Jenkinsfile
 
-let g:ctrlp_custom_ignore = 'build*'
+let g:ctrlp_custom_ignore = { 'dir': 'build*' }
 
 " DTK
 syn keyword cDefine

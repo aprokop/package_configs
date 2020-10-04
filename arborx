@@ -15,20 +15,22 @@ ARGS=(
 
     ### TPLs ###
     -D ARBORX_ENABLE_MPI=ON
-    -D CMAKE_PREFIX_PATH="$KOKKOS_DIR"
+    -D Kokkos_ROOT=$KOKKOS_DIR
 
     ### COMPILERS AND FLAGS ###
     -D CMAKE_CXX_COMPILER_LAUNCHER=ccache
-    -D CMAKE_CXX_COMPILER="$KOKKOS_DIR/bin/nvcc_wrapper"
-    -D CMAKE_CXX_FLAGS="-lineinfo -DKOKKOS_ENABLE_PROFILING -pedantic -Wall -Wextra -Werror"
+    -D CMAKE_CXX_COMPILER=$KOKKOS_DIR/bin/nvcc_wrapper
+    -D CMAKE_CXX_FLAGS=\"-lineinfo -DKOKKOS_ENABLE_PROFILING -pedantic -Wall -Wextra -Werror\"
     -D CMAKE_CXX_EXTENSIONS=OFF # required by Kokkos
 
-    ### MISC ###
-    -D CMAKE_EXPORT_COMPILE_COMMANDS=ON
+    ### CONFIGURATION ###
     -D ARBORX_ENABLE_TESTS=ON
     -D ARBORX_ENABLE_EXAMPLES=ON
     -D ARBORX_ENABLE_BENCHMARKS=ON
+
+    ### MISC ###
+    -D CMAKE_EXPORT_COMPILE_COMMANDS=ON
     )
-cmake_cmd="cmake ${ARGS[@]} $EXTRA_ARGS ${ARBORX_DIR:-../}"
+cmake_cmd="cmake -GNinja ${ARGS[@]} $EXTRA_ARGS ${ARBORX_DIR:-../}"
 
 source $HOME/.personal/package_configs/postamble

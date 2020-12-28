@@ -11,17 +11,17 @@ ARGS=(
 
     -D CMAKE_INSTALL_PREFIX=$HOME/local/opt/kokkos
 
+    -D BUILD_SHARED_LIBS=ON
+
     ### COMPILERS AND FLAGS ###
     -D CMAKE_CXX_COMPILER_LAUNCHER=ccache
-    -D CMAKE_CXX_COMPILER="$KOKKOS_DIR/bin/nvcc_wrapper"
-    -D CMAKE_CXX_STANDARD=14
+    -D CMAKE_CXX_COMPILER=$KOKKOS_DIR/bin/nvcc_wrapper
 
     ### MISC ###
     -D Kokkos_ENABLE_SERIAL=ON
     -D Kokkos_ENABLE_OPENMP=ON
     -D Kokkos_ENABLE_CUDA=ON
         -D Kokkos_ENABLE_CUDA_LAMBDA=ON
-    -D Kokkos_ENABLE_DEPRECATED_CODE=OFF
     -D Kokkos_ARCH_PASCAL61=ON
     )
 cmake_cmd="cmake -GNinja ${ARGS[@]} ${EXTRA_ARGS[@]} ${KOKKOS_DIR}"

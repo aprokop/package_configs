@@ -1,0 +1,13 @@
+source $HOME/.personal/package_configs/local_vimrc/arborx.local_vimrc
+
+set ts=8
+set sw=2
+
+let g:clang_format#command = "/usr/local/Cellar/llvm\@7/7.1.0_2/bin/clang-format"
+let g:clang_format#detect_style_file = 1
+let g:clang_format#auto_format = 0
+
+syn keyword cType
+    \ MeshBlock
+    \ OBB
+    \ tioga

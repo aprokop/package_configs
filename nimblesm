@@ -1,0 +1,33 @@
+#!/bin/bash
+EXTRA_ARGS=("$@")
+
+source $HOME/.personal/package_configs/preamble
+
+KOKKOS_DIR="$HOME/local/opt/kokkos-no-cuda/"
+ARBORX_DIR="$HOME/local/opt/arborx"
+EXODUS_DIR=$(spack location -i exodusii)
+ARGS=(
+    -D CMAKE_BUILD_TYPE=Debug
+
+    ### TPLs ###
+    -D ARBORX_ENABLE_MPI=ON
+    -D Kokkos_ROOT=$KOKKOS_DIR
+    -D ArborX_ROOT=$ARBORX_DIR
+    -D Exodus_ROOT=$EXODUS_DIR
+
+    ### COMPILERS AND FLAGS ###
+    -D CMAKE_CXX_COMPILER_LAUNCHER=ccache
+    -D CMAKE_CXX_EXTENSIONS=OFF # required by Kokkos
+
+    ### CONFIGURATION ###
+    -D HAVE_KOKKOS=ON
+    -D HAVE_ARBORX=ON
+    -D USE_PURE_MPI=OFF
+    -D NIMBLE_ENABLE_UNIT_TESTS=ON
+
+    ### MISC ###
+    -D CMAKE_EXPORT_COMPILE_COMMANDS=ON
+    )
+cmake_cmd="cmake -GNinja ${ARGS[@]} $EXTRA_ARGS ${NIMBLESM_DIR:-../}"
+
+source $HOME/.personal/package_configs/postamble

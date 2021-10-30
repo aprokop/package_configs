@@ -7,7 +7,7 @@ export CPLUS_INCLUDE_PATH="$CPATH"
 
 KOKKOS_DIR=$(readlink -f "${KOKKOS_DIR:-../}")
 ARGS=(
-    -D CMAKE_BUILD_TYPE=RELWITHDEBINFO
+    -D CMAKE_BUILD_TYPE=RelWithDebInfo
 
     -D CMAKE_INSTALL_PREFIX=$HOME/local/opt/kokkos
 

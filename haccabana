@@ -1,0 +1,30 @@
+#!/bin/bash
+EXTRA_ARGS=("$@")
+
+source $HOME/.personal/package_configs/preamble
+
+KOKKOS_DIR="$HOME/local/opt/kokkos-3.4.01"
+CABANA_DIR="$HOME/local/opt/cabana"
+ARGS=(
+    -D CMAKE_BUILD_TYPE=RelWithDebInfo
+
+    -D CMAKE_INSTALL_PREFIX=$HOME/local/opt/cabana
+
+    -D BUILD_SHARED_LIBS=ON
+
+    ### TPLs ###
+    -D Kokkos_ROOT=$KOKKOS_DIR
+    -D Cabana_ROOT=$CABANA_DIR
+
+    ### COMPILERS AND FLAGS ###
+    # -D CMAKE_CXX_COMPILER_LAUNCHER=ccache
+    -D CMAKE_CXX_COMPILER=$KOKKOS_DIR/bin/nvcc_wrapper
+
+    ### CONFIGURATION ###
+
+    ### MISC ###
+    -D CMAKE_EXPORT_COMPILE_COMMANDS=ON
+    )
+cmake_cmd="cmake -GNinja ${ARGS[@]} $EXTRA_ARGS ${CABANAMD_DIR:-../}"
+
+source $HOME/.personal/package_configs/postamble

@@ -1,0 +1,14 @@
+#!/bin/bash
+EXTRA_ARGS=("$@")
+
+source $HOME/.personal/package_configs/preamble
+
+ARGS=(
+    -D CMAKE_INSTALL_PREFIX=$HOME/local/opt/benchmark
+
+    -D CMAKE_BUILD_TYPE=Release
+    -D BENCHMARK_ENABLE_TESTING=OFF
+)
+cmake_cmd="cmake ${ARGS[@]} $EXTRA_ARGS ${BENCHMARK_DIR:-../}"
+
+source $HOME/.personal/package_configs/postamble

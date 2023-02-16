@@ -1,0 +1,26 @@
+#!/bin/bash
+EXTRA_ARGS=("$@")
+
+source $HOME/.personal/package_configs/preamble
+
+KOKKOS_DIR="$HOME/local/opt/kokkos-3.7.00"
+ARBORX_DIR="$HOME/local/opt/arborx-1.3"
+ARGS=(
+    -D CMAKE_BUILD_TYPE=RelWithDebInfo
+
+    -D CMAKE_INSTALL_PREFIX=$HOME/local/opt/pyarborx
+
+    -D BUILD_SHARED_LIBS=ON
+
+    ### TPLs ###
+    -D Kokkos_ROOT=$KOKKOS_DIR
+    -D ArborX_ROOT=$ARBORX_DIR
+
+    ### CONFIGURATION ###
+
+    ### MISC ###
+    -D CMAKE_EXPORT_COMPILE_COMMANDS=ON
+    )
+cmake_cmd="cmake -GNinja ${ARGS[@]} $EXTRA_ARGS ${PYARBORX_DIR:-../}"
+
+source $HOME/.personal/package_configs/postamble

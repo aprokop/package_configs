@@ -1,0 +1,12 @@
+let g:clang_format#command = "clang-format-14"
+let g:clang_format#detect_style_file = 1
+let g:clang_format#auto_format = 1
+
+augroup markdown
+    au!
+    au BufNewFile,BufRead *.md setlocal filetype=ghmarkdown
+augroup END
+
+au BufRead,BufNewFile .jenkins set ft=Jenkinsfile
+
+let g:ctrlp_custom_ignore = { 'dir': 'build*' }

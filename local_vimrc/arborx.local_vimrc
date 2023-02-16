@@ -4,7 +4,7 @@ source $HOME/.personal/package_configs/local_vimrc/boost.local_vimrc
 set ts=8
 set sw=2
 
-let g:clang_format#command = "clang-format-7"
+let g:clang_format#command = "clang-format-14"
 let g:clang_format#detect_style_file = 1
 let g:clang_format#auto_format = 1
 
@@ -17,26 +17,30 @@ au BufRead,BufNewFile .jenkins set ft=Jenkinsfile
 
 let g:ctrlp_custom_ignore = { 'dir': 'build*' }
 
-" DTK
 syn keyword cDefine
     \ ARBORX_ASSERT
-    \ ARBORX_MARK_REGION
-    \ STATIC_ASSERT
 
 syn keyword cType
     \ AccessTraits
     \ BatchedQueries
     \ BoostRTree
+    \ BasicBoundingVolumeHierarchy
     \ BoundingVolumeHierarchy
     \ Box
+    \ BruteForce
     \ BVH
     \ DistributedSearchTree
+    \ DistributedTree
     \ Distributor
     \ Exception
     \ Intersects
+    \ KDOP
     \ Nearest
     \ NearestPredicateTag
     \ Node
+    \ OrderedSpatialPredicateTag
+    \ PairIndexRank
+    \ PermutedData
     \ Point
     \ Predicates
     \ PredicateWithAttachment

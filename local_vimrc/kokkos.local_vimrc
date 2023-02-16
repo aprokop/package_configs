@@ -8,6 +8,8 @@ syn keyword cDefine
     \ parallel_scan
 
 syn keyword cType
+    \ DefaultExecutionSpace
+    \ DefaultHostExecutionSpace
     \ DeviceType
     \ ExecutionSpace
     \ MemorySpace

@@ -29,10 +29,10 @@ syn keyword cType
     \ Box
     \ BruteForce
     \ BVH
-    \ DistributedSearchTree
     \ DistributedTree
     \ Distributor
     \ Exception
+    \ HappyTreeFriends
     \ Intersects
     \ KDOP
     \ Nearest

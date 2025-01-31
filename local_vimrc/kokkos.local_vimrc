@@ -1,8 +1,20 @@
+set ts=8
+set sw=2
+
+let g:clang_format#command = "/opt/homebrew/opt/llvm@16/bin/clang-format"
+let g:clang_format#detect_style_file = 1
+let g:clang_format#auto_format = 1
+
+let g:ctrlp_custom_ignore = { 'dir': 'build*' }
+
 syn keyword cDefine
     \ KOKKOS_ASSERT
+    \ KOKKOS_DEDUCTION_GUIDE
+    \ KOKKOS_DEFAULTED_FUNCTION
     \ KOKKOS_FORCEINLINE_FUNCTION
     \ KOKKOS_FUNCTION
     \ KOKKOS_INLINE_FUNCTION
+    \ KOKKOS_CLASS_LAMBDA
     \ KOKKOS_LAMBDA
     \ parallel_for
     \ parallel_reduce

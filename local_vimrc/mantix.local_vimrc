@@ -1,0 +1,26 @@
+source $HOME/.personal/package_configs/local_vimrc/kokkos.local_vimrc
+source $HOME/.personal/package_configs/local_vimrc/arborx.local_vimrc
+source $HOME/.personal/package_configs/local_vimrc/boost.local_vimrc
+
+set ts=8
+set sw=2
+
+let g:clang_format#command = "/opt/homebrew/opt/llvm@16/bin/clang-format"
+let g:clang_format#detect_style_file = 1
+let g:clang_format#auto_format = 1
+
+augroup markdown
+    au!
+    au BufNewFile,BufRead *.md setlocal filetype=ghmarkdown
+augroup END
+
+au BufRead,BufNewFile .jenkins set ft=Jenkinsfile
+
+let g:ctrlp_custom_ignore = { 'dir': 'build*' }
+
+" syn keyword cDefine
+    " \ MANTIX_
+
+syn keyword cType
+    \ MeshBlock
+    \ MeshTraits

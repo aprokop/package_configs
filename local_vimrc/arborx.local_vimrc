@@ -4,7 +4,7 @@ source $HOME/.personal/package_configs/local_vimrc/boost.local_vimrc
 set ts=8
 set sw=2
 
-let g:clang_format#command = "clang-format-14"
+let g:clang_format#command = "/opt/homebrew/opt/llvm@16/bin/clang-format"
 let g:clang_format#detect_style_file = 1
 let g:clang_format#auto_format = 1
 
@@ -22,35 +22,56 @@ syn keyword cDefine
 
 syn keyword cType
     \ AccessTraits
+    \ AccessValues
     \ BatchedQueries
     \ BoostRTree
-    \ BasicBoundingVolumeHierarchy
     \ BoundingVolumeHierarchy
     \ Box
     \ BruteForce
     \ BVH
+    \ Dendrogram
+    \ DirectedEdge
     \ DistributedTree
     \ Distributor
     \ Exception
     \ HappyTreeFriends
+    \ IndexableGetter
+    \ Indexables
+    \ InlineCallbackTag
+    \ InsertGenerator
     \ Intersects
     \ KDOP
+    \ LeafNode
+    \ LegacyCallbackWrapper
+    \ LegacyValues
+    \ MinimumSpanningTree
     \ Nearest
     \ NearestPredicateTag
     \ Node
+    \ OBB
     \ OrderedSpatialPredicateTag
     \ PairIndexRank
     \ PermutedData
     \ Point
     \ Predicates
+    \ PredicatesTag
     \ PredicateWithAttachment
     \ Primitives
     \ PrimitivesTag
     \ PriorityQueue
+    \ quartenion
+    \ RangeTraits
+    \ Ray
     \ SpatialPredicateTag
     \ Sphere
     \ Stack
     \ StaticVector
+    \ Tetrahedron
     \ TreeConstruction
     \ TreeTraversal
     \ TreeVisualization
+    \ Triangle
+    \ UnionFind
+    \ UnmanagedStaticVector
+    \ UnweightedEdge
+    \ WeightedEdge

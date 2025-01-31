@@ -2,3 +2,4 @@ rm -f  CMakeCache.txt
 rm -rf CMakeFiles/
 rm -f  build.ninja
 rm -f  rules.ninja
+rm -f  compile_commands.json

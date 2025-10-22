@@ -3,8 +3,6 @@ EXTRA_ARGS=("$@")
 
 source $HOME/.personal/package_configs/preamble
 
-export CPLUS_INCLUDE_PATH="$CPATH"
-
 KOKKOS_DIR=$(readlink -f "${KOKKOS_DIR:-../}")
 ARGS=(
     -D CMAKE_BUILD_TYPE=RelWithDebInfo
@@ -12,6 +10,7 @@ ARGS=(
     -D CMAKE_INSTALL_PREFIX=$HOME/local/opt/kokkos
 
     -D BUILD_SHARED_LIBS=ON
+    -D CMAKE_CXX_STANDARD=20
 
     ### COMPILERS AND FLAGS ###
     -D CMAKE_CXX_COMPILER_LAUNCHER=ccache

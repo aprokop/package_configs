@@ -1,0 +1,76 @@
+#!/bin/bash
+EXTRA_ARGS=$@
+
+source $HOME/.personal/package_configs/preamble
+
+TRILINOS_DIR="${TRILINOS_DIR:-$(pwd)/..}"
+
+# ARBORX_DIR="$HOME/local/opt/arborx-mpi-devel-0975b50e"
+ARGS=(
+    -D CMAKE_BUILD_TYPE=RelWithDebInfo
+
+    -D CMAKE_INSTALL_PREFIX=$HOME/local/opt/trilinos-arborx-16.2/
+
+    -D BUILD_SHARED_LIBS=ON
+
+    ### COMPILERS AND FLAGS ###
+    -D CMAKE_CXX_STANDARD=20
+    -D Trilinos_TPL_SYSTEM_INCLUDE_DIRS=ON
+    -D Trilinos_ENABLE_Fortran=OFF
+
+    ### TPLS ###
+    -D TPL_ENABLE_MPI=ON
+    -D TPL_ENABLE_Netcdf=ON
+        # -D Netcdf_LIBRARY_DIRS="/opt/homebrew/lib"
+        # -D Netcdf_INCLUDE_DIRS="/opt/homebrew/include"
+    # -D TPL_ENABLE_HDF5:BOOL=ON
+        # -D HDF5_LIBRARY_DIRS="/opt/homebrew/lib"
+        # -D HDF5_INCLUDE_DIRS="/opt/homebrew/include"
+    -D TPL_ENABLE_Pnetcdf=OFF
+    # -D TPL_ENABLE_BLAS=ON
+    # -D TPL_ENABLE_LAPACK=ON
+    # -D ArborX_ROOT=$ARBORX_DIR
+    # -D TPL_ENABLE_HDF5=TRUE
+    # -D TPL_ENABLE_Netcdf=ON
+
+    ### ETI ###
+    -D Trilinos_ENABLE_EXPLICIT_INSTANTIATION=ON
+
+    ### PACKAGES CONFIGURATION ###
+    -D Trilinos_ENABLE_ALL_PACKAGES=OFF
+    -D Trilinos_ENABLE_ALL_OPTIONAL_PACKAGES=OFF
+    -D Trilinos_ENABLE_SECONDARY_TESTED_CODE=OFF
+    -D Trilinos_ENABLE_Anasazi=ON
+    -D Trilinos_ENABLE_Belos=OFF
+    -D Trilinos_ENABLE_Ifpack2=OFF
+    -D Trilinos_ENABLE_KokkosKernels=ON
+    -D Trilinos_ENABLE_MueLu=OFF
+    -D Trilinos_ENABLE_Panzer=ON
+        -D Trilinos_ENABLE_PanzerAdaptersSTK=ON
+        -D Trilinos_ENABLE_PanzerMiniEM=OFF
+    -D Trilinos_ENABLE_Piro=ON
+    -D Trilinos_ENABLE_Sacado=ON
+    -D Trilinos_ENABLE_STK=ON
+        # FIXME(Trilinos 16.1):
+        # The next two options are required to avoid the following error:
+        # https://github.com/trilinos/Trilinos/issues/14034
+        # -D STK_HAVE_FP_ERRNO=False
+        # -D STK_HAVE_FP_EXCEPT=False
+    -D Trilinos_ENABLE_STKIO=ON
+    -D Trilinos_ENABLE_Teko=ON
+    -D Trilinos_ENABLE_Tpetra=ON
+    -D Trilinos_ENABLE_Xpetra=OFF
+    # -D Trilinos_ASSERT_MISSING_PACKAGES=OFF
+    -D Trilinos_ENABLE_SEACASExodus=ON
+
+    -D Trilinos_ENABLE_TESTS=OFF
+    -D Trilinos_ENABLE_EXAMPLES=OFF
+
+    ### MISC ###
+    -D CMAKE_EXPORT_COMPILE_COMMANDS=OFF
+    -D Trilinos_ENABLE_INSTALL_CMAKE_CONFIG_FILES=ON
+    -D Trilinos_DEPS_XML_OUTPUT_FILE=""
+    )
+cmake_cmd="cmake ${ARGS[@]} $EXTRA_ARGS ${TRILINOS_DIR}"
+
+source $HOME/.personal/package_configs/postamble

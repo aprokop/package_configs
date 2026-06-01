@@ -7,6 +7,9 @@ set sw=2
 let g:clang_format#command = "/opt/homebrew/opt/llvm@16/bin/clang-format"
 let g:clang_format#detect_style_file = 1
 let g:clang_format#auto_format = 1
+" let g:clang_format#auto_format_git_diff = 1
+
+let g:tagbar_ctags_bin = "/opt/homebrew/opt/ctags/bin/ctags"
 
 augroup markdown
     au!
@@ -33,6 +36,7 @@ syn keyword cType
     \ DirectedEdge
     \ DistributedTree
     \ Distributor
+    \ Ellipsoid
     \ Exception
     \ HappyTreeFriends
     \ IndexableGetter
@@ -62,6 +66,7 @@ syn keyword cType
     \ quartenion
     \ RangeTraits
     \ Ray
+    \ Segment
     \ SpatialPredicateTag
     \ Sphere
     \ Stack

@@ -6,6 +6,8 @@ set sw=2
 au! BufEnter *_decl.hpp let b:fswitchdst = 'hpp' | let b:fswitchfnames = '/_decl/_def/'
 au! BufEnter *_def.hpp  let b:fswitchdst = 'hpp' | let b:fswitchfnames = '/_def/_decl/'
 
+let g:tagbar_ctags_bin = "/opt/homebrew/opt/ctags/bin/ctags"
+
 " Trilinos Types
 syn keyword cType
     \ GO GlobalOrdinal

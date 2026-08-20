@@ -9,6 +9,7 @@ TRILINOS_DIR="${TRILINOS_DIR:-$(pwd)/..}"
 ARGS=(
     -D CMAKE_BUILD_TYPE=RelWithDebInfo
 
+    # -D CMAKE_INSTALL_PREFIX=$HOME/local/opt/trilinos-arborx-panzer-timers-16.2/
     -D CMAKE_INSTALL_PREFIX=$HOME/local/opt/trilinos-arborx-16.2/
 
     -D BUILD_SHARED_LIBS=ON
@@ -21,12 +22,12 @@ ARGS=(
     ### TPLS ###
     -D TPL_ENABLE_MPI=ON
     -D TPL_ENABLE_Netcdf=ON
-        # -D Netcdf_LIBRARY_DIRS="/opt/homebrew/lib"
-        # -D Netcdf_INCLUDE_DIRS="/opt/homebrew/include"
+        -D Netcdf_LIBRARY_DIRS="$HOME/local/opt/netcdf_c-4.10.0/lib/"
+        -D Netcdf_INCLUDE_DIRS="$HOME/local/opt/netcdf_c-4.10.0/include/"
     # -D TPL_ENABLE_HDF5:BOOL=ON
         # -D HDF5_LIBRARY_DIRS="/opt/homebrew/lib"
         # -D HDF5_INCLUDE_DIRS="/opt/homebrew/include"
-    -D TPL_ENABLE_Pnetcdf=OFF
+    # -D TPL_ENABLE_Pnetcdf=ON
     # -D TPL_ENABLE_BLAS=ON
     # -D TPL_ENABLE_LAPACK=ON
     # -D ArborX_ROOT=$ARBORX_DIR
@@ -43,6 +44,7 @@ ARGS=(
     -D Trilinos_ENABLE_Anasazi=ON
     -D Trilinos_ENABLE_Belos=OFF
     -D Trilinos_ENABLE_Ifpack2=OFF
+    -D Trilinos_ENABLE_Gtest=OFF
     -D Trilinos_ENABLE_KokkosKernels=ON
     -D Trilinos_ENABLE_MueLu=OFF
     -D Trilinos_ENABLE_Panzer=ON

@@ -1,0 +1,21 @@
+#!/bin/bash
+EXTRA_ARGS=$@
+
+source $HOME/.personal/package_configs/preamble
+
+ARGS=(
+    -D CMAKE_BUILD_TYPE=RelWithDebInfo
+
+    -D CMAKE_INSTALL_PREFIX=$HOME/local/opt/netcdf_c-4.10.0
+
+    -D BUILD_SHARED_LIBS=ON
+    # -D HDF5_ROOT=/opt/homebrew/opt/hdf5-mpi
+
+    -D NETCDF_ENABLE_NETCDF4=ON
+    -D NETCDF_ENABLE_PARALLEL4=ON
+    -D NETCDF_ENABLE_HDF5=ON
+    -D NETCDF_ENABLE_PNETCDF=ON
+    )
+cmake_cmd="cmake ${ARGS[@]} $EXTRA_ARGS .."
+
+source $HOME/.personal/package_configs/postamble
